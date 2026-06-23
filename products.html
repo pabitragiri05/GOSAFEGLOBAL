@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Products – GoSafe Global | Security Equipment India</title>
+  <meta name="description" content="Browse our complete range of security equipment — metal detectors, CCTV cameras, boom barriers, X-ray scanners, entrance automation, and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+        <span><i class="fas fa-envelope"></i> info@gosafeglobal.com</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fas fa-shield-halved"></i> Trusted by 500+ Organizations</span>
+        <span><i class="fas fa-certificate"></i> ISO Certified Products</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo" id="logo-link">
+          <div class="logo-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="20" fill="#34b79d"/>
+              <path d="M20 8L28 13V21C28 25.4 24.5 29.5 20 31C15.5 29.5 12 25.4 12 21V13L20 8Z" fill="white"/>
+              <text x="20" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="#150138" font-family="Montserrat">G</text>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-main">GoSafe</span>
+            <span class="logo-sub">GLOBAL</span>
+          </div>
+        </a>
+        <div class="header-search" id="header-search">
+          <input type="text" id="search-input" placeholder="Search products..." autocomplete="off" />
+          <button id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+          <div class="search-dropdown" id="search-dropdown"></div>
+        </div>
+        <div class="header-actions">
+          <button class="action-btn" id="wishlist-btn" aria-label="Wishlist">
+            <i class="fas fa-heart"></i>
+            <span class="badge" id="wishlist-count">0</span>
+          </button>
+          <button class="action-btn" id="cart-btn" aria-label="Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge" id="cart-count">0</span>
+          </button>
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="has-dropdown">
+            <a href="products.html">Security Devices <i class="fas fa-chevron-down"></i></a>
+            <div class="mega-menu">
+              <div class="mega-menu-col">
+                <h4>Metal Detectors</h4>
+                <ul>
+                  <li><a href="products.html?cat=handheld">Hand Held Metal Detector</a></li>
+                  <li><a href="products.html?cat=dfmd">Door Frame Metal Detector</a></li>
+                  <li><a href="products.html?cat=wall">Single Wall Type Detector</a></li>
+                  <li><a href="products.html?cat=pole">Pole Type Metal Detectors</a></li>
+                  <li><a href="products.html?cat=deep">Deep Search Metal Detectors</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu-col">
+                <h4>Entrance Automation</h4>
+                <ul>
+                  <li><a href="products.html?cat=boom">Boom Barrier</a></li>
+                  <li><a href="products.html?cat=flap">Flap Barrier</a></li>
+                  <li><a href="products.html?cat=swing">P Type Swing Gate</a></li>
+                  <li><a href="products.html?cat=speed">Speed Gate</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu-col">
+                <h4>Surveillance</h4>
+                <ul>
+                  <li><a href="products.html?cat=cctv">CCTV Cameras</a></li>
+                  <li><a href="products.html?cat=xray">X-Ray Baggage Scanners</a></li>
+                  <li><a href="products.html?cat=gps">GPS Tracking</a></li>
+                  <li><a href="products.html?cat=fire">Fire Safety</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li><a href="products.html" class="active">All Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Products</span>
+      </div>
+      <h1>Security Products Catalog</h1>
+      <p>Explore our complete range of cutting-edge security solutions</p>
+    </div>
+  </section>
+
+  <!-- PRODUCTS PAGE -->
+  <section class="products-page">
+    <div class="container">
+      <div class="products-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar-filters">
+          <h3>Filter Products</h3>
+
+          <div class="filter-section">
+            <h4>Category</h4>
+            <label class="filter-option"><input type="checkbox" value="metal" /> Metal Detectors <span class="filter-count">5</span></label>
+            <label class="filter-option"><input type="checkbox" value="entrance" /> Entrance Automation <span class="filter-count">3</span></label>
+            <label class="filter-option"><input type="checkbox" value="cctv" /> CCTV & Surveillance <span class="filter-count">2</span></label>
+            <label class="filter-option"><input type="checkbox" value="xray" /> X-Ray Scanners <span class="filter-count">2</span></label>
+            <label class="filter-option"><input type="checkbox" value="gps" /> GPS Tracking <span class="filter-count">3</span></label>
+          </div>
+
+          <div class="filter-section">
+            <h4>Application</h4>
+            <label class="filter-option"><input type="checkbox" value="airport" /> Airports</label>
+            <label class="filter-option"><input type="checkbox" value="mall" /> Shopping Malls</label>
+            <label class="filter-option"><input type="checkbox" value="corporate" /> Corporate Offices</label>
+            <label class="filter-option"><input type="checkbox" value="govt" /> Government Buildings</label>
+            <label class="filter-option"><input type="checkbox" value="hotel" /> Hotels & Resorts</label>
+          </div>
+
+          <div class="filter-section">
+            <h4>Rating</h4>
+            <label class="filter-option">
+              <input type="checkbox" value="5star" />
+              <span class="stars" style="font-size:.8rem">⭐⭐⭐⭐⭐</span> 5 Star
+            </label>
+            <label class="filter-option">
+              <input type="checkbox" value="4star" />
+              <span class="stars" style="font-size:.8rem">⭐⭐⭐⭐</span> 4+ Star
+            </label>
+          </div>
+
+          <button class="clear-filters" id="clear-filters-btn">
+            <i class="fas fa-times"></i> Clear All Filters
+          </button>
+        </aside>
+
+        <!-- Products Main -->
+        <div class="products-main">
+          <div class="products-toolbar">
+            <p class="products-count" id="products-page-count">Loading products...</p>
+            <div class="products-sort">
+              <label for="sort-select">Sort by:</label>
+              <select class="sort-select" id="sort-select">
+                <option value="default">Featured</option>
+                <option value="rating">Highest Rated</option>
+                <option value="reviews">Most Reviewed</option>
+                <option value="az">A–Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="products-grid products-grid-2" id="products-page-grid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-shopping-cart"></i> Inquiry Cart</h3>
+      <button class="cart-close" id="cart-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty" id="cart-empty">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Your inquiry cart is empty</p>
+        <a href="products.html" class="btn btn-primary btn-sm">Browse Products</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span>Total:</span>
+        <strong id="cart-total-price">₹0</strong>
+      </div>
+      <button class="btn btn-primary w-full" id="checkout-btn">Send Inquiry via WhatsApp <i class="fab fa-whatsapp"></i></button>
+      <p class="cart-note"><i class="fas fa-info-circle"></i> Final pricing provided by our team.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="product-modal" id="product-modal">
+    <button class="modal-close" id="modal-close"><i class="fas fa-times"></i></button>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="back-to-top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/919876543210?text=Hello, I'd like to inquire about your security products" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+    <span>Chat With Us</span>
+  </a>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="main-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="20" fill="#34b79d"/>
+                <path d="M20 8L28 13V21C28 25.4 24.5 29.5 20 31C15.5 29.5 12 25.4 12 21V13L20 8Z" fill="white"/>
+                <text x="20" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="#150138" font-family="Montserrat">G</text>
+              </svg>
+              <div>
+                <span class="footer-logo-main">GoSafe</span>
+                <span class="footer-logo-sub">GLOBAL</span>
+              </div>
+            </div>
+            <p>India's premier security equipment provider. Delivering trusted safety solutions since 2009.</p>
+            <div class="footer-socials">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">All Products</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Categories</h4>
+            <ul>
+              <li><a href="products.html?cat=metal">Metal Detectors</a></li>
+              <li><a href="products.html?cat=entrance">Entrance Automation</a></li>
+              <li><a href="products.html?cat=cctv">CCTV Cameras</a></li>
+              <li><a href="products.html?cat=xray">X-Ray Scanners</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <div class="contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <p>+91 98765 43210</p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <p>info@gosafeglobal.com</p>
+            </div>
+            <div class="footer-newsletter">
+              <h5>Newsletter</h5>
+              <div class="newsletter-form">
+                <input type="email" id="newsletter-email" placeholder="Your email" />
+                <button id="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2024 GoSafe Global. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

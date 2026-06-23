@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoSafe Global – Premium Security Solutions | Just Go Safe</title>
+  <meta name="description" content="GoSafe Global offers premium security equipment including metal detectors, CCTV cameras, boom barriers, X-ray baggage scanners, and entrance automation products. Just Go Safe." />
+  <meta name="keywords" content="metal detector, DFMD, boom barrier, CCTV, security equipment, X-ray scanner, flap barrier, speed gate, GoSafe Global" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+        <span><i class="fas fa-envelope"></i> info@gosafeglobal.com</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fas fa-shield-halved"></i> Trusted by 500+ Organizations</span>
+        <span><i class="fas fa-certificate"></i> ISO Certified Products</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER / NAV ===== -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <!-- Logo -->
+        <a href="index.html" class="logo" id="logo-link">
+          <div class="logo-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="20" fill="#34b79d"/>
+              <path d="M20 8L28 13V21C28 25.4 24.5 29.5 20 31C15.5 29.5 12 25.4 12 21V13L20 8Z" fill="white"/>
+              <text x="20" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="#150138" font-family="Montserrat">G</text>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-main">GoSafe</span>
+            <span class="logo-sub">GLOBAL</span>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="header-search" id="header-search">
+          <input type="text" id="search-input" placeholder="Search products..." autocomplete="off" />
+          <button id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+          <div class="search-dropdown" id="search-dropdown"></div>
+        </div>
+
+        <!-- Nav Actions -->
+        <div class="header-actions">
+          <button class="action-btn" id="wishlist-btn" aria-label="Wishlist">
+            <i class="fas fa-heart"></i>
+            <span class="badge" id="wishlist-count">0</span>
+          </button>
+          <button class="action-btn" id="cart-btn" aria-label="Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge" id="cart-count">0</span>
+          </button>
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Navigation -->
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li class="has-dropdown">
+            <a href="products.html">Security Devices <i class="fas fa-chevron-down"></i></a>
+            <div class="mega-menu">
+              <div class="mega-menu-col">
+                <h4>Metal Detectors</h4>
+                <ul>
+                  <li><a href="products.html?cat=handheld">Hand Held Metal Detector</a></li>
+                  <li><a href="products.html?cat=dfmd">Door Frame Metal Detector</a></li>
+                  <li><a href="products.html?cat=wall">Single Wall Type Detector</a></li>
+                  <li><a href="products.html?cat=pole">Pole Type Metal Detectors</a></li>
+                  <li><a href="products.html?cat=deep">Deep Search Metal Detectors</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu-col">
+                <h4>Entrance Automation</h4>
+                <ul>
+                  <li><a href="products.html?cat=boom">Boom Barrier</a></li>
+                  <li><a href="products.html?cat=flap">Flap Barrier</a></li>
+                  <li><a href="products.html?cat=swing">P Type Swing Gate</a></li>
+                  <li><a href="products.html?cat=speed">Speed Gate</a></li>
+                  <li><a href="products.html?cat=swingbarrier">Swing Barrier</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu-col">
+                <h4>Surveillance</h4>
+                <ul>
+                  <li><a href="products.html?cat=cctv">CCTV Cameras</a></li>
+                  <li><a href="products.html?cat=xray">X-Ray Baggage Scanners</a></li>
+                  <li><a href="products.html?cat=gps">GPS Tracking</a></li>
+                  <li><a href="products.html?cat=fire">Fire Safety</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <div class="hero-particles" id="hero-particles"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <i class="fas fa-shield-halved"></i>
+            <span>India's Trusted Security Partner</span>
+          </div>
+          <h1 class="hero-title">
+            Advanced Security<br />
+            <span class="hero-title-accent">Solutions</span> for Every Need
+          </h1>
+          <p class="hero-desc">
+            Protect what matters most with our cutting-edge security equipment. From metal detectors to smart entrance automation — we deliver enterprise-grade protection.
+          </p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-num" data-target="500">0</span><span class="stat-suffix">+</span>
+              <span class="stat-label">Organizations</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-target="15">0</span><span class="stat-suffix">+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-target="50">0</span><span class="stat-suffix">+</span>
+              <span class="stat-label">Products</span>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a href="products.html" class="btn btn-primary" id="explore-btn">
+              <i class="fas fa-th-large"></i> Explore Products
+            </a>
+            <a href="contact.html" class="btn btn-outline" id="quote-btn">
+              <i class="fas fa-file-invoice"></i> Get a Quote
+            </a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="hero-img-wrapper">
+            <img src="images/security_hero.png" alt="GoSafe Global Security Equipment" id="hero-img" />
+            <div class="hero-img-glow"></div>
+            <div class="floating-badge badge-1">
+              <i class="fas fa-check-circle"></i> ISO Certified
+            </div>
+            <div class="floating-badge badge-2">
+              <i class="fas fa-bolt"></i> Fast Delivery
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARQUEE TRUSTED BY ===== -->
+  <div class="trusted-bar">
+    <div class="trusted-inner">
+      <span class="trusted-label">TRUSTED BY:</span>
+      <div class="marquee-track">
+        <div class="marquee-content" id="marquee-content">
+          <span>Airports</span><span>•</span>
+          <span>Metro Stations</span><span>•</span>
+          <span>Shopping Malls</span><span>•</span>
+          <span>Hotels & Resorts</span><span>•</span>
+          <span>Government Buildings</span><span>•</span>
+          <span>IT Parks</span><span>•</span>
+          <span>Hospitals</span><span>•</span>
+          <span>Banks & ATMs</span><span>•</span>
+          <span>Corporate Offices</span><span>•</span>
+          <span>Educational Institutions</span><span>•</span>
+          <span>Airports</span><span>•</span>
+          <span>Metro Stations</span><span>•</span>
+          <span>Shopping Malls</span><span>•</span>
+          <span>Hotels & Resorts</span><span>•</span>
+          <span>Government Buildings</span><span>•</span>
+          <span>IT Parks</span><span>•</span>
+          <span>Hospitals</span><span>•</span>
+          <span>Banks & ATMs</span><span>•</span>
+          <span>Corporate Offices</span><span>•</span>
+          <span>Educational Institutions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CATEGORIES SECTION ===== -->
+  <section class="categories section" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What We Offer</span>
+        <h2 class="section-title">Product Categories</h2>
+        <p class="section-desc">Comprehensive security solutions for every application</p>
+      </div>
+      <div class="categories-grid" id="categories-grid">
+        <div class="category-card" onclick="window.location='products.html?cat=metal'">
+          <div class="category-icon">
+            <i class="fas fa-magnet"></i>
+          </div>
+          <h3>Metal Detectors</h3>
+          <p>Hand-held, door frame, wall-type & deep search detectors</p>
+          <span class="category-count">12+ Products</span>
+          <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="category-card" onclick="window.location='products.html?cat=entrance'">
+          <div class="category-icon">
+            <i class="fas fa-door-open"></i>
+          </div>
+          <h3>Entrance Automation</h3>
+          <p>Boom barriers, flap barriers, speed gates & swing gates</p>
+          <span class="category-count">10+ Products</span>
+          <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="category-card" onclick="window.location='products.html?cat=cctv'">
+          <div class="category-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3>CCTV & Surveillance</h3>
+          <p>HD cameras, NVR systems & complete surveillance solutions</p>
+          <span class="category-count">8+ Products</span>
+          <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="category-card" onclick="window.location='products.html?cat=xray'">
+          <div class="category-icon">
+            <i class="fas fa-radiation"></i>
+          </div>
+          <h3>X-Ray Scanners</h3>
+          <p>Baggage & parcel inspection systems for high-traffic areas</p>
+          <span class="category-count">5+ Products</span>
+          <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="category-card" onclick="window.location='products.html?cat=gps'">
+          <div class="category-icon">
+            <i class="fas fa-map-location-dot"></i>
+          </div>
+          <h3>GPS Tracking</h3>
+          <p>Fleet management and real-time vehicle tracking systems</p>
+          <span class="category-count">6+ Products</span>
+          <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="category-card" onclick="window.location='products.html?cat=fire'">
+          <div class="category-icon">
+            <i class="fas fa-fire-extinguisher"></i>
+          </div>
+          <h3>Fire Safety</h3>
+          <p>Detection systems, alarms & suppression equipment</p>
+          <span class="category-count">7+ Products</span>
+          <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED PRODUCTS ===== -->
+  <section class="featured section" id="featured">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Top Picks</span>
+        <h2 class="section-title">Featured Products</h2>
+        <p class="section-desc">Our most popular security solutions trusted by hundreds of organizations</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs" id="filter-tabs">
+        <button class="filter-tab active" data-filter="all" id="tab-all">All</button>
+        <button class="filter-tab" data-filter="metal" id="tab-metal">Metal Detectors</button>
+        <button class="filter-tab" data-filter="entrance" id="tab-entrance">Entrance</button>
+        <button class="filter-tab" data-filter="cctv" id="tab-cctv">CCTV</button>
+        <button class="filter-tab" data-filter="xray" id="tab-xray">X-Ray</button>
+      </div>
+
+      <div class="products-grid" id="products-grid">
+        <!-- Products rendered by JS -->
+      </div>
+
+      <div class="section-cta">
+        <a href="products.html" class="btn btn-primary" id="view-all-btn">
+          View All Products <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY CHOOSE US ===== -->
+  <section class="why-us section" id="why-us">
+    <div class="why-us-bg"></div>
+    <div class="container">
+      <div class="why-us-inner">
+        <div class="why-us-text">
+          <span class="section-tag light">Why GoSafe Global</span>
+          <h2 class="section-title light">Your Trusted Security Partner Since 2009</h2>
+          <p class="why-us-desc">
+            We combine cutting-edge technology with unmatched expertise to deliver security solutions that stand the test of time. Every product is rigorously tested and certified.
+          </p>
+          <div class="features-list">
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+              <div>
+                <h4>ISO Certified Quality</h4>
+                <p>All products meet international quality standards</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-headset"></i></div>
+              <div>
+                <h4>24/7 Technical Support</h4>
+                <p>Expert assistance available round the clock</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-tools"></i></div>
+              <div>
+                <h4>AMC & Warranty</h4>
+                <p>Comprehensive maintenance contracts and warranties</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+              <div>
+                <h4>Pan-India Delivery</h4>
+                <p>Fast and secure delivery across all states</p>
+              </div>
+            </div>
+          </div>
+          <a href="about.html" class="btn btn-light" id="learn-more-btn">Learn More About Us <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="why-us-image">
+          <div class="achievement-cards">
+            <div class="achievement-card" id="ach1">
+              <i class="fas fa-building"></i>
+              <span class="ach-num">500+</span>
+              <span class="ach-label">Happy Clients</span>
+            </div>
+            <div class="achievement-card" id="ach2">
+              <i class="fas fa-star"></i>
+              <span class="ach-num">4.9</span>
+              <span class="ach-label">Average Rating</span>
+            </div>
+            <div class="achievement-card" id="ach3">
+              <i class="fas fa-award"></i>
+              <span class="ach-num">15+</span>
+              <span class="ach-label">Awards Won</span>
+            </div>
+            <div class="achievement-card" id="ach4">
+              <i class="fas fa-globe-asia"></i>
+              <span class="ach-num">28+</span>
+              <span class="ach-label">States Covered</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="testimonials section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Customer Reviews</span>
+        <h2 class="section-title">What Our Clients Say</h2>
+        <p class="section-desc">Trusted by hundreds of organizations across India</p>
+      </div>
+      <div class="testimonials-slider" id="testimonials-slider">
+        <div class="testimonials-track" id="testimonials-track">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>"GoSafe Global provided excellent metal detectors for our airport. The 18-zone DFMD is incredibly accurate with zero false alarms. Highly recommended!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">RK</div>
+              <div>
+                <strong>Rajesh Kumar</strong>
+                <span>Security Manager, Delhi Airport</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>"The boom barriers installed at our IT park have been flawless. Excellent build quality and the after-sales service is outstanding. True professionals!"</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">PS</div>
+              <div>
+                <strong>Priya Sharma</strong>
+                <span>Facility Head, Infosys Campus</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+            <p>"We deployed their X-Ray baggage scanners across 5 mall entrances. Exceptional performance and their team handled the full installation professionally."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">AM</div>
+              <div>
+                <strong>Arjun Mehta</strong>
+                <span>Operations Director, Phoenix Mall</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+            </div>
+            <p>"Speed gates from GoSafe have transformed our office entry management. Elegant design, fast throughput, and very reliable. Perfect for our HQ."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">SN</div>
+              <div>
+                <strong>Sunita Nair</strong>
+                <span>Admin Manager, TCS Bangalore</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonials-controls">
+          <button class="slider-btn" id="prev-testimonial" aria-label="Previous">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="slider-dots" id="slider-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+          <button class="slider-btn" id="next-testimonial" aria-label="Next">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section class="cta-section" id="cta-section">
+    <div class="cta-bg">
+      <div class="cta-pattern"></div>
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Secure Your Premises?</h2>
+        <p>Get a customized security solution quote within 24 hours. Our experts are ready to help.</p>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn btn-light" id="cta-contact-btn">
+            <i class="fas fa-phone-alt"></i> Contact Us Now
+          </a>
+          <a href="products.html" class="btn btn-outline-light" id="cta-catalog-btn">
+            <i class="fas fa-book-open"></i> View Catalog
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="main-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="20" fill="#34b79d"/>
+                <path d="M20 8L28 13V21C28 25.4 24.5 29.5 20 31C15.5 29.5 12 25.4 12 21V13L20 8Z" fill="white"/>
+                <text x="20" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="#150138" font-family="Montserrat">G</text>
+              </svg>
+              <div>
+                <span class="footer-logo-main">GoSafe</span>
+                <span class="footer-logo-sub">GLOBAL</span>
+              </div>
+            </div>
+            <p>India's premier security equipment provider. Delivering trusted safety solutions since 2009. Just Go Safe.</p>
+            <div class="footer-socials">
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">All Products</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">AMC Services</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links">
+            <h4>Product Categories</h4>
+            <ul>
+              <li><a href="products.html?cat=metal">Metal Detectors</a></li>
+              <li><a href="products.html?cat=entrance">Entrance Automation</a></li>
+              <li><a href="products.html?cat=cctv">CCTV Cameras</a></li>
+              <li><a href="products.html?cat=xray">X-Ray Scanners</a></li>
+              <li><a href="products.html?cat=gps">GPS Tracking</a></li>
+              <li><a href="products.html?cat=fire">Fire Safety</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>123 Security Plaza, Connaught Place, New Delhi – 110001, India</p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <p>+91 98765 43210<br />+91 11 4567 8900</p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <p>info@gosafeglobal.com<br />sales@gosafeglobal.com</p>
+            </div>
+            <div class="footer-newsletter">
+              <h5>Subscribe to Newsletter</h5>
+              <div class="newsletter-form">
+                <input type="email" id="newsletter-email" placeholder="Your email address" />
+                <button id="newsletter-btn" aria-label="Subscribe"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2024 GoSafe Global. All rights reserved. | Designed with <i class="fas fa-heart" style="color:#34b79d"></i> for Security</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CART DRAWER ===== -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+      <button class="cart-close" id="cart-close" aria-label="Close cart"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty" id="cart-empty">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Your cart is empty</p>
+        <a href="products.html" class="btn btn-primary btn-sm">Browse Products</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span>Total:</span>
+        <strong id="cart-total-price">₹0</strong>
+      </div>
+      <button class="btn btn-primary w-full" id="checkout-btn">Proceed to Checkout <i class="fas fa-arrow-right"></i></button>
+      <p class="cart-note"><i class="fas fa-info-circle"></i> Prices are indicative. Final quote will be provided by our team.</p>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT QUICK VIEW MODAL ===== -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="product-modal" id="product-modal">
+    <button class="modal-close" id="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/919876543210?text=Hello, I'd like to inquire about your security products" class="whatsapp-float" id="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span>Chat With Us</span>
+  </a>
+
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
