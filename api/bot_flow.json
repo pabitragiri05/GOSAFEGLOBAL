@@ -1,0 +1,332 @@
+{
+  "chatbot": {
+    "name": "GoSafeGlobal Website Chatbot",
+    "steps": [
+      {
+        "id": "step_1_welcome",
+        "label": "Welcome Message & Main Menu",
+        "trigger": "on_chat_open",
+        "bot_message": "Hi there! Welcome to GoSafeGlobal. We provide smart safety, security, and enterprise solutions to protect your business, assets, and people. How can we help you today?",
+        "options": [
+          { "id": "opt_explore_products",   "label": " Explore Products",       "next_step": "path_1_explore_products" },
+          { "id": "opt_request_quote",      "label": " Request a Quote",        "next_step": "path_2_request_quote" },
+          { "id": "opt_book_demo",          "label": " Book a Demo",            "next_step": "path_3_book_demo" },
+          { "id": "opt_technical_support",  "label": " Technical Support",      "next_step": "path_4_technical_support" },
+          { "id": "opt_talk_to_sales",      "label": " Talk to Sales",          "next_step": "path_5_talk_to_sales" },
+          { "id": "opt_about_us",           "label": " About Us / Contact",     "next_step": "path_6_about_us" }
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "id": "path_1_explore_products",
+        "label": " Path 1: Explore Products",
+        "steps": [
+          {
+            "id": "p1_step_1_category",
+            "bot_message": "Great! Which product category are you looking to secure or improve?",
+            "input_type": "buttons",
+            "options": [
+              {
+                "id": "cat_security_devices",
+                "label": " Security Devices",
+                "description": "Access Control, CCTV, Surveillance"
+              },
+              {
+                "id": "cat_human_safety",
+                "label": " Human Safety",
+                "description": "Visitor Management, Attendance, Employee Safety"
+              },
+              {
+                "id": "cat_parking_safety",
+                "label": " Parking Safety & Signs",
+                "description": "Barriers, Guidance Systems, Safety Signs, Wayfinding"
+              }
+            ],
+            "next_step": "p1_step_2_industry"
+          },
+          {
+            "id": "p1_step_2_industry",
+            "bot_message": "Excellent choice. To guide you to the perfect solution, which industry best describes your organization?",
+            "input_type": "buttons",
+            "options": [
+              { "id": "ind_manufacturing",    "label": "Manufacturing" },
+              { "id": "ind_healthcare",       "label": "Healthcare" },
+              { "id": "ind_corporate_retail", "label": "Corporate / Retail" },
+              { "id": "ind_logistics",        "label": "Logistics" },
+              { "id": "ind_education",        "label": "Education" },
+              { "id": "ind_other",            "label": "Other" }
+            ],
+            "next_step": "p1_step_3_solution_type"
+          },
+          {
+            "id": "p1_step_3_solution_type",
+            "bot_message": "Got it. Are you looking for hardware, software, or an integrated solution?",
+            "input_type": "buttons",
+            "options": [
+              { "id": "sol_hardware",    "label": "Hardware Only" },
+              { "id": "sol_software",    "label": "Software Only" },
+              { "id": "sol_integrated",  "label": "Integrated Solution" }
+            ],
+            "next_step": "p1_step_4_pivot"
+          },
+          {
+            "id": "p1_step_4_pivot",
+            "bot_message": "[Brief 1-sentence description of the chosen category based on their industry]. Would you like to download our product brochure, request a customized quotation, or book a live demo?",
+            "note": "Bot dynamically generates a 1-sentence description based on the selected category and industry.",
+            "input_type": "buttons",
+            "options": [
+              {
+                "id": "pivot_brochure",
+                "label": " Download Brochure",
+                "next_step": "path_2_request_quote"
+              },
+              {
+                "id": "pivot_quote",
+                "label": " Request a Quotation",
+                "next_step": "path_2_request_quote"
+              },
+              {
+                "id": "pivot_demo",
+                "label": " Book a Live Demo",
+                "next_step": "path_3_book_demo"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "path_2_request_quote",
+        "label": " Path 2: Request a Quote (Lead Capture)",
+        "steps": [
+          {
+            "id": "p2_step_1_intro",
+            "bot_message": "I'd be happy to help you get a customized pricing estimate! Let's gather a few details so our team can build an accurate quote for you.",
+            "input_type": "none",
+            "next_step": "p2_step_2_name"
+          },
+          {
+            "id": "p2_step_2_name",
+            "bot_message": "May I please have your full name?",
+            "input_type": "text",
+            "field": "full_name",
+            "next_step": "p2_step_3_company"
+          },
+          {
+            "id": "p2_step_3_company",
+            "bot_message": "Thanks, {full_name}! What is your company name and the city/state you are located in?",
+            "input_type": "text",
+            "field": "company_and_location",
+            "next_step": "p2_step_4_email"
+          },
+          {
+            "id": "p2_step_4_email",
+            "bot_message": "What is your business email address? (We'll send the quote here)",
+            "input_type": "email",
+            "field": "business_email",
+            "validation": "email_format",
+            "next_step": "p2_step_5_phone"
+          },
+          {
+            "id": "p2_step_5_phone",
+            "bot_message": "And your best contact number?",
+            "input_type": "phone",
+            "field": "contact_number",
+            "validation": "phone_format",
+            "next_step": "p2_step_6_requirement"
+          },
+          {
+            "id": "p2_step_6_requirement",
+            "bot_message": "Perfect. To make sure the quote is accurate, please briefly describe your requirement (e.g., number of cameras, doors, users, or sites).",
+            "input_type": "text",
+            "field": "requirement_description",
+            "next_step": "p2_step_7_timeline"
+          },
+          {
+            "id": "p2_step_7_timeline",
+            "label": "Smart Qualification Question (Optional)",
+            "bot_message": "What is your expected timeline for implementation?",
+            "input_type": "buttons",
+            "field": "implementation_timeline",
+            "options": [
+              { "id": "tl_1_month",     "label": "Within 1 Month" },
+              { "id": "tl_1_3_months",  "label": "1–3 Months" },
+              { "id": "tl_researching", "label": "Just Researching" }
+            ],
+            "next_step": "p2_step_8_project_type"
+          },
+          {
+            "id": "p2_step_8_project_type",
+            "label": "Smart Qualification Question (Optional)",
+            "bot_message": "Is this for a new project or an upgrade of an existing system?",
+            "input_type": "buttons",
+            "field": "project_type",
+            "options": [
+              { "id": "proj_new",     "label": "New Project" },
+              { "id": "proj_upgrade", "label": "Upgrading Current System" }
+            ],
+            "next_step": "p2_step_9_close"
+          },
+          {
+            "id": "p2_step_9_close",
+            "bot_message": "Thank you, {full_name}! Your requirement has been sent directly to our pricing team. We will contact you via email/phone within 24 hours with your customized quote. Have a great day!",
+            "input_type": "none",
+            "action": "submit_lead_to_crm"
+          }
+        ]
+      },
+      {
+        "id": "path_3_book_demo",
+        "label": " Path 3: Book a Demo (High-Intent Conversion)",
+        "steps": [
+          {
+            "id": "p3_step_1_product_line",
+            "bot_message": "Smart move! A live demo is the best way to see our solutions in action. Which product line would you like to see?",
+            "input_type": "buttons",
+            "field": "demo_product_line",
+            "options": [
+              { "id": "demo_security",  "label": " Security Devices" },
+              { "id": "demo_safety",    "label": " Human Safety" },
+              { "id": "demo_parking",   "label": " Parking Safety & Signs" }
+            ],
+            "next_step": "p3_step_2_demo_type"
+          },
+          {
+            "id": "p3_step_2_demo_type",
+            "bot_message": "Would you prefer an online video demo or an onsite demo at your facility?",
+            "input_type": "buttons",
+            "field": "demo_type",
+            "options": [
+              { "id": "demo_online",  "label": " Online Demo" },
+              { "id": "demo_onsite",  "label": " Onsite Demo" }
+            ],
+            "next_step": "p3_step_3_datetime"
+          },
+          {
+            "id": "p3_step_3_datetime",
+            "bot_message": "Please share your preferred date and time (e.g., Friday at 2 PM).",
+            "input_type": "text",
+            "field": "preferred_datetime",
+            "next_step": "p3_step_4_contact"
+          },
+          {
+            "id": "p3_step_4_contact",
+            "bot_message": "Lastly, please provide your Name, Business Email, and Phone Number so our expert can send you the calendar invite and confirm the slot.",
+            "input_type": "text",
+            "fields": ["full_name", "business_email", "phone_number"],
+            "next_step": "p3_step_5_close"
+          },
+          {
+            "id": "p3_step_5_close",
+            "bot_message": "You're all set! Our team will reach out shortly to officially confirm your demo slot. Look out for an email from GoSafeGlobal!",
+            "input_type": "none",
+            "action": "schedule_demo_and_notify_sales"
+          }
+        ]
+      },
+      {
+        "id": "path_4_technical_support",
+        "label": " Path 4: Technical Support (Existing Customers)",
+        "steps": [
+          {
+            "id": "p4_step_1_existing_customer",
+            "bot_message": "Are you an existing GoSafeGlobal customer?",
+            "input_type": "buttons",
+            "options": [
+              { "id": "cust_yes", "label": "Yes",                           "next_step": "p4_step_2_product" },
+              { "id": "cust_no",  "label": "No, I have a pre-sales question", "next_step": "path_5_talk_to_sales" }
+            ]
+          },
+          {
+            "id": "p4_step_2_product",
+            "bot_message": "Which product or system are you facing an issue with?",
+            "input_type": "text",
+            "field": "product_with_issue",
+            "next_step": "p4_step_3_describe_issue"
+          },
+          {
+            "id": "p4_step_3_describe_issue",
+            "bot_message": "Please describe the issue briefly. You can also mention if this is affecting your daily operations.",
+            "input_type": "text",
+            "field": "issue_description",
+            "next_step": "p4_step_4_account_lookup"
+          },
+          {
+            "id": "p4_step_4_account_lookup",
+            "bot_message": "Please share your registered Company Name or your Support Ticket ID so we can look up your account.",
+            "input_type": "text",
+            "field": "company_name_or_ticket_id",
+            "next_step": "p4_step_5_close"
+          },
+          {
+            "id": "p4_step_5_close",
+            "bot_message": "Thank you for bringing this to our attention. Your ticket has been escalated to our technical team, and a support engineer will reach out to you shortly.",
+            "input_type": "none",
+            "action": "create_support_ticket"
+          }
+        ]
+      },
+      {
+        "id": "path_5_talk_to_sales",
+        "label": " Path 5: Talk to Sales ",
+        "steps": [
+          {
+            "id": "p5_step_1_contact_preference",
+            "bot_message": "I can definitely connect you with a human expert! Would you prefer a quick phone call right now, an email response, or a WhatsApp chat?",
+            "input_type": "buttons",
+            "options": [
+              { "id": "contact_call",      "label": " Call Me",                  "next_step": "p5_step_2a_call" },
+              { "id": "contact_email",     "label": " Email Me",                 "next_step": "p5_step_2b_email" },
+              { "id": "contact_whatsapp",  "label": " Connect via WhatsApp",     "next_step": "p5_step_2c_whatsapp" }
+            ]
+          },
+          {
+            "id": "p5_step_2a_call",
+            "bot_message": "Great! Please drop your contact number and the best time to call you.",
+            "input_type": "text",
+            "fields": ["contact_number", "preferred_call_time"],
+            "action": "trigger_instant_sales_notification",
+            "next_step": "p5_close"
+          },
+          {
+            "id": "p5_step_2b_email",
+            "bot_message": "Please share your business email and a brief note on what you'd like to discuss.",
+            "input_type": "text",
+            "fields": ["business_email", "discussion_note"],
+            "next_step": "p5_close"
+          },
+          {
+            "id": "p5_step_2c_whatsapp",
+            "bot_message": "Click the link below to chat directly with our team on WhatsApp!",
+            "input_type": "none",
+            "action": "redirect_to_whatsapp",
+            "whatsapp_url": "https://wa.me/918512020020"
+          },
+          {
+            "id": "p5_close",
+            "bot_message": "Our sales team has been notified and will be in touch with you very soon. Thank you!",
+            "input_type": "none"
+          }
+        ]
+      },
+      {
+        "id": "path_6_about_us",
+        "label": " Path 6: About Us & Contact Info",
+        "steps": [
+          {
+            "id": "p6_step_1_info",
+            "bot_message": "GoSafeGlobal is a trusted provider of enterprise-grade safety, security, and tracking solutions designed to streamline operations and protect business assets.",
+            "contact_info": {
+              "phone":   "+91-851-20-200-20",
+              "email":   "sales@gosafeglobal.com",
+              "address": "#923Z DB Industrial Area, Gurugram -122001, (HR.) INDIA",
+              "website": "https://gosafeglobal.com/"
+            },
+            "follow_up": "How else can I help you today?",
+            "next_step": "step_1_welcome"
+          }
+        ]
+      }
+    ]
+  }
+}

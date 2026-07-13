@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -34,17 +34,7 @@
       <div class="header-inner">
         <!-- Logo -->
         <a href="index.html" class="logo" id="logo-link">
-          <div class="logo-icon">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="20" fill="#34b79d"/>
-              <path d="M20 8L28 13V21C28 25.4 24.5 29.5 20 31C15.5 29.5 12 25.4 12 21V13L20 8Z" fill="white"/>
-              <text x="20" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="#150138" font-family="Montserrat">G</text>
-            </svg>
-          </div>
-          <div class="logo-text">
-            <span class="logo-main">GoSafe</span>
-            <span class="logo-sub">GLOBAL</span>
-          </div>
+          <img src="images/logo-cropped.png" alt="GoSafe Global &ndash; Just Go Safe" class="logo-img" id="site-logo" />
         </a>
 
         <!-- Search Bar -->
@@ -71,44 +61,24 @@
       </div>
 
       <!-- Main Navigation -->
-      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+            <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
         <ul>
           <li><a href="index.html" class="active">Home</a></li>
           <li class="has-dropdown">
-            <a href="products.html">Security Devices <i class="fas fa-chevron-down"></i></a>
-            <div class="mega-menu">
-              <div class="mega-menu-col">
-                <h4>Metal Detectors</h4>
+            <a href="products.html">All Products <i class="fas fa-chevron-down"></i></a>
+            <div class="mega-menu" style="width: 250px; padding: 16px;">
+              <div class="mega-menu-col" style="width: 100%;">
                 <ul>
-                  <li><a href="products.html?cat=handheld">Hand Held Metal Detector</a></li>
-                  <li><a href="products.html?cat=dfmd">Door Frame Metal Detector</a></li>
-                  <li><a href="products.html?cat=wall">Single Wall Type Detector</a></li>
-                  <li><a href="products.html?cat=pole">Pole Type Metal Detectors</a></li>
-                  <li><a href="products.html?cat=deep">Deep Search Metal Detectors</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu-col">
-                <h4>Entrance Automation</h4>
-                <ul>
-                  <li><a href="products.html?cat=boom">Boom Barrier</a></li>
-                  <li><a href="products.html?cat=flap">Flap Barrier</a></li>
-                  <li><a href="products.html?cat=swing">P Type Swing Gate</a></li>
-                  <li><a href="products.html?cat=speed">Speed Gate</a></li>
-                  <li><a href="products.html?cat=swingbarrier">Swing Barrier</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu-col">
-                <h4>Surveillance</h4>
-                <ul>
-                  <li><a href="products.html?cat=cctv">CCTV Cameras</a></li>
-                  <li><a href="products.html?cat=xray">X-Ray Baggage Scanners</a></li>
-                  <li><a href="products.html?cat=gps">GPS Tracking</a></li>
-                  <li><a href="products.html?cat=fire">Fire Safety</a></li>
+                  <li><a href="products.html?cat=security-devices">Security Devices</a></li>
+                  <li><a href="products.html?cat=human-safety">Human Safety</a></li>
+                  <li><a href="products.html?cat=parking-safety">Parking Safety & Signs</a></li>
+                  <li><a href="products.html?cat=tools-lockers">Tools & Lockers</a></li>
+                  <li><a href="products.html?cat=electric-fence">Electric Fence</a></li>
+                  <li><a href="products.html?cat=porta-cabins">Porta Cabins</a></li>
                 </ul>
               </div>
             </div>
           </li>
-          <li><a href="products.html">All Products</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -117,14 +87,24 @@
   </header>
 
   <!-- ===== HERO SECTION ===== -->
-  <section class="hero" id="hero">
-    <div class="hero-bg">
-      <div class="hero-particles" id="hero-particles"></div>
-      <div class="hero-grid"></div>
+  <section class="hero hero-slider" id="hero">
+    <!-- Slide Track -->
+    <div class="hero-slides" id="hero-slides">
+      <div class="hero-slide active" style="background-image: url('images/hero-banner-3.jpg')">
+        <div class="hero-slide-overlay"></div>
+      </div>
+      <div class="hero-slide" style="background-image: url('images/hero-banner-2.jpg')">
+        <div class="hero-slide-overlay"></div>
+      </div>
+      <div class="hero-slide" style="background-image: url('images/hero-banner-1.jpg')">
+        <div class="hero-slide-overlay"></div>
+      </div>
     </div>
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-text">
+
+    <!-- Content -->
+    <div class="hero-slider-content">
+      <div class="container">
+        <div class="hero-text hero-text-center">
           <div class="hero-badge">
             <i class="fas fa-shield-halved"></i>
             <span>India's Trusted Security Partner</span>
@@ -159,20 +139,18 @@
             </a>
           </div>
         </div>
-        <div class="hero-image">
-          <div class="hero-img-wrapper">
-            <img src="images/security_hero.png" alt="GoSafe Global Security Equipment" id="hero-img" />
-            <div class="hero-img-glow"></div>
-            <div class="floating-badge badge-1">
-              <i class="fas fa-check-circle"></i> ISO Certified
-            </div>
-            <div class="floating-badge badge-2">
-              <i class="fas fa-bolt"></i> Fast Delivery
-            </div>
-          </div>
-        </div>
       </div>
     </div>
+
+    <!-- Slider Controls -->
+    <button class="hero-prev" id="hero-prev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></button>
+    <button class="hero-next" id="hero-next" aria-label="Next slide"><i class="fas fa-chevron-right"></i></button>
+    <div class="hero-dots" id="hero-dots">
+      <span class="hero-dot active" data-slide="0"></span>
+      <span class="hero-dot" data-slide="1"></span>
+      <span class="hero-dot" data-slide="2"></span>
+    </div>
+
     <div class="hero-scroll">
       <div class="scroll-indicator">
         <div class="scroll-dot"></div>
@@ -220,63 +198,63 @@
         <p class="section-desc">Comprehensive security solutions for every application</p>
       </div>
       <div class="categories-grid" id="categories-grid">
-        <div class="category-card" onclick="window.location='products.html?cat=metal'">
+        <div class="category-card" onclick="window.location='products.html?cat=security-devices'">
           <div class="category-icon">
-            <i class="fas fa-magnet"></i>
+            <i class="fas fa-shield-alt"></i>
           </div>
-          <h3>Metal Detectors</h3>
-          <p>Hand-held, door frame, wall-type & deep search detectors</p>
-          <span class="category-count">12+ Products</span>
+          <h3>Security Devices</h3>
+          <p>Metal detectors, entrance automation & security equipment</p>
+          <span class="category-count">24+ Products</span>
           <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="category-card" onclick="window.location='products.html?cat=entrance'">
+        <div class="category-card" onclick="window.location='products.html?cat=human-safety'">
           <div class="category-icon">
-            <i class="fas fa-door-open"></i>
+            <i class="fas fa-hard-hat"></i>
           </div>
-          <h3>Entrance Automation</h3>
-          <p>Boom barriers, flap barriers, speed gates & swing gates</p>
+          <h3>Human Safety</h3>
+          <p>Helmets, gloves & protective gear</p>
           <span class="category-count">10+ Products</span>
           <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="category-card" onclick="window.location='products.html?cat=cctv'">
+        <div class="category-card" onclick="window.location='products.html?cat=parking-safety'">
           <div class="category-icon">
-            <i class="fas fa-video"></i>
+            <i class="fas fa-car"></i>
           </div>
-          <h3>CCTV & Surveillance</h3>
-          <p>HD cameras, NVR systems & complete surveillance solutions</p>
-          <span class="category-count">8+ Products</span>
+          <h3>Parking Safety & Signs</h3>
+          <p>Traffic cones, barriers & signage</p>
+          <span class="category-count">10+ Products</span>
           <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="category-card" onclick="window.location='products.html?cat=xray'">
+        <div class="category-card" onclick="window.location='products.html?cat=electric-fence'">
           <div class="category-icon">
-            <i class="fas fa-radiation"></i>
+            <i class="fas fa-bolt"></i>
           </div>
-          <h3>X-Ray Scanners</h3>
-          <p>Baggage & parcel inspection systems for high-traffic areas</p>
+          <h3>Electric Fence</h3>
+          <p>Industrial & residential fencing</p>
           <span class="category-count">5+ Products</span>
           <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="category-card" onclick="window.location='products.html?cat=gps'">
+        <div class="category-card" onclick="window.location='products.html?cat=tools-lockers'">
           <div class="category-icon">
-            <i class="fas fa-map-location-dot"></i>
+            <i class="fas fa-toolbox"></i>
           </div>
-          <h3>GPS Tracking</h3>
-          <p>Fleet management and real-time vehicle tracking systems</p>
-          <span class="category-count">6+ Products</span>
+          <h3>Tools & Lockers</h3>
+          <p>Industrial tools & storage</p>
+          <span class="category-count">Coming Soon</span>
           <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
         </div>
-        <div class="category-card" onclick="window.location='products.html?cat=fire'">
+        <div class="category-card" onclick="window.location='products.html?cat=porta-cabins'">
           <div class="category-icon">
-            <i class="fas fa-fire-extinguisher"></i>
+            <i class="fas fa-home"></i>
           </div>
-          <h3>Fire Safety</h3>
-          <p>Detection systems, alarms & suppression equipment</p>
-          <span class="category-count">7+ Products</span>
+          <h3>Porta Cabins</h3>
+          <p>Portable security cabins</p>
+          <span class="category-count">Coming Soon</span>
           <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
   <!-- ===== FEATURED PRODUCTS ===== -->
   <section class="featured section" id="featured">
@@ -290,10 +268,12 @@
       <!-- Filter Tabs -->
       <div class="filter-tabs" id="filter-tabs">
         <button class="filter-tab active" data-filter="all" id="tab-all">All</button>
-        <button class="filter-tab" data-filter="metal" id="tab-metal">Metal Detectors</button>
-        <button class="filter-tab" data-filter="entrance" id="tab-entrance">Entrance</button>
-        <button class="filter-tab" data-filter="cctv" id="tab-cctv">CCTV</button>
-        <button class="filter-tab" data-filter="xray" id="tab-xray">X-Ray</button>
+        <button class="filter-tab" data-filter="security-devices" id="tab-security">Security Devices</button>
+        <button class="filter-tab" data-filter="human-safety" id="tab-human">Human Safety</button>
+        <button class="filter-tab" data-filter="parking-safety" id="tab-parking">Parking Safety</button>
+        <button class="filter-tab" data-filter="electric-fence" id="tab-electric">Electric Fence</button>
+        <button class="filter-tab" data-filter="tools-lockers" id="tab-tools">Tools & Lockers</button>
+        <button class="filter-tab" data-filter="porta-cabins" id="tab-porta">Porta Cabins</button>
       </div>
 
       <div class="products-grid" id="products-grid">
@@ -481,6 +461,34 @@
     </div>
   </section>
 
+  <!-- ===== OUR VALUABLE CLIENTS ===== -->
+  <section class="clients section" id="clients">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Trusted Partners</span>
+        <h2 class="section-title">Our Valuable Clients</h2>
+        <p class="section-desc">Proudly serving leading organizations across India</p>
+      </div>
+      <div class="clients-grid" id="clients-grid">
+        <div class="client-logo-card">
+          <img src="images/client-concor.jpg" alt="CONCOR" loading="lazy" />
+        </div>
+        <div class="client-logo-card">
+          <img src="images/client-bob.png" alt="Bank of Baroda" loading="lazy" />
+        </div>
+        <div class="client-logo-card">
+          <img src="images/client-dlf.png" alt="DLF" loading="lazy" />
+        </div>
+        <div class="client-logo-card">
+          <img src="images/client-pvr.jpg" alt="PVR Cinemas" loading="lazy" />
+        </div>
+        <div class="client-logo-card">
+          <img src="images/client-philips.png" alt="Philips" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== FOOTER ===== -->
   <footer class="footer" id="main-footer">
     <div class="footer-top">
@@ -488,15 +496,7 @@
         <div class="footer-grid">
           <div class="footer-brand">
             <div class="footer-logo">
-              <svg width="36" height="36" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="20" fill="#34b79d"/>
-                <path d="M20 8L28 13V21C28 25.4 24.5 29.5 20 31C15.5 29.5 12 25.4 12 21V13L20 8Z" fill="white"/>
-                <text x="20" y="23" text-anchor="middle" font-size="10" font-weight="bold" fill="#150138" font-family="Montserrat">G</text>
-              </svg>
-              <div>
-                <span class="footer-logo-main">GoSafe</span>
-                <span class="footer-logo-sub">GLOBAL</span>
-              </div>
+              <img src="images/logo-cropped.png" alt="GoSafe Global" class="footer-logo-img" />
             </div>
             <p>India's premier security equipment provider. Delivering trusted safety solutions since 2009. Just Go Safe.</p>
             <div class="footer-socials">
@@ -559,7 +559,7 @@
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p>&copy; 2024 GoSafe Global. All rights reserved. | Designed with <i class="fas fa-heart" style="color:#34b79d"></i> for Security</p>
+        <p>&copy; 2024 GoSafe Global. All rights reserved. | Designed with <i class="fas fa-heart" style="color:#f5a623"></i> for Security</p>
         <div class="footer-bottom-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>

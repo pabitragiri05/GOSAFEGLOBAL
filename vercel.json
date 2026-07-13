@@ -3,11 +3,20 @@
   "name": "gosafe-global",
   "builds": [
     {
-      "src": "**/*",
-      "use": "@vercel/static"
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "zeroConfig": true }
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
     {
       "src": "/(.*)",
       "dest": "/$1"

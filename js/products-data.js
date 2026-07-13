@@ -1,268 +1,68 @@
-// ================================================================
-//  GoSafe Global — Products Data
-// ================================================================
-const PRODUCTS = [
-  // ── Metal Detectors ──
-  {
-    id: 1,
-    name: 'Weapon Scanner (Hand-Held)',
-    category: 'metal',
-    categoryLabel: 'Metal Detectors',
-    image: 'images/handheld.png',
-    rating: 4.8,
-    reviews: 42,
-    badge: 'hot',
-    priceOnRequest: true,
-    shortDesc: 'Fast weapon screening with large search head for extra coverage. Digital go-no-go threshold circuit.',
-    features: [
-      'Large search head for extra coverage',
-      'No false alarms – digital go-no-go threshold',
-      'High sensitivity for non-intrusive body searching',
-      'Instant visual and audio alarms',
-      'Detects Ferrous, Non-Ferrous & Alloys',
-      'Rechargeable battery operation'
-    ],
-    sku: 'HHMD-WS-01'
-  },
-  {
-    id: 2,
-    name: '18 Zone Door Frame Metal Detector (DFMD-18Z)',
-    category: 'metal',
-    categoryLabel: 'Metal Detectors',
-    image: 'images/metal_detector.png',
-    rating: 4.9,
-    reviews: 67,
-    badge: 'new',
-    priceOnRequest: true,
-    shortDesc: '18-zone detection for precise target location with internal battery backup over 12 hrs.',
-    features: [
-      'Internal battery backup over 12 hrs',
-      'Reliable microprocessor based design',
-      '18 zone detection for precise target location',
-      'Individual zone sensitivity adjustment',
-      'Intelligent traffic counter',
-      'Password protection'
-    ],
-    sku: 'DFMD-18Z'
-  },
-  {
-    id: 3,
-    name: '33 Zone Door Frame Metal Detector (DFMD-33Z)',
-    category: 'metal',
-    categoryLabel: 'Metal Detectors',
-    image: 'images/metal_detector.png',
-    rating: 5.0,
-    reviews: 29,
-    badge: 'hot',
-    priceOnRequest: true,
-    shortDesc: 'High performance 33-zone multi-zone detection. 250 levels of zone-wise sensitivity adjustment.',
-    features: [
-      '33 detection zones for accurate pinpointing',
-      'Exceptional immunity to external interference',
-      '250 levels of zone-wise sensitivity adjustment',
-      'Auto calibration – no zero adjustment required',
-      'LED bar graph signal strength indicator',
-      'Built-in battery backup for over 12 hours',
-      'Wireless remote control'
-    ],
-    sku: 'DFMD-33Z'
-  },
-  {
-    id: 4,
-    name: 'Single Zone Door Frame Metal Detector',
-    category: 'metal',
-    categoryLabel: 'Metal Detectors',
-    image: 'images/metal_detector.png',
-    rating: 4.7,
-    reviews: 18,
-    badge: null,
-    priceOnRequest: true,
-    shortDesc: 'Quick installation, no training required. 9 levels of sensitivity and 2 alarm levels.',
-    features: [
-      'Intelligent counter for traffic entry & exit',
-      'Quick installation – no training required',
-      'Automatic zero adjustment',
-      'Ignores external metals',
-      '9 levels of sensitivity and 2 levels of alarm',
-      '10 step bar-graph indicator'
-    ],
-    sku: 'DFMD-SZ'
-  },
-  {
-    id: 5,
-    name: 'Single Wall Type Metal Detector (SPMD)',
-    category: 'metal',
-    categoryLabel: 'Metal Detectors',
-    image: 'images/metal_detector.png',
-    rating: 5.0,
-    reviews: 15,
-    badge: 'new',
-    priceOnRequest: true,
-    shortDesc: '6 horizontal zones. LCD display, password protected, detects on both sides.',
-    features: [
-      '6 zones horizontally',
-      'Multi-alarm sounds to choose',
-      'LCD Display for better visualization',
-      'Can detect on both sides',
-      'Password protected for better security',
-      '250 levels of zone-wise sensitivity adjustment'
-    ],
-    sku: 'SPMD-01'
-  },
-
-  // ── Entrance Automation ──
-  {
-    id: 6,
-    name: 'Boom Barrier Gate',
-    category: 'entrance',
-    categoryLabel: 'Entrance Automation',
-    image: 'images/boom_barrier.png',
-    rating: 4.8,
-    reviews: 53,
-    badge: 'hot',
-    priceOnRequest: true,
-    shortDesc: 'Automatic vehicle access control. Fast arm operation with loop detector integration.',
-    features: [
-      'Fast opening/closing speed (1.5s–6s)',
-      'Long arm versions up to 6m',
-      'Loop detector and remote control compatible',
-      'LED arm lighting available',
-      'Manual release in case of power failure',
-      'Waterproof and dustproof housing'
-    ],
-    sku: 'BB-AUTO-01'
-  },
-  {
-    id: 7,
-    name: 'Flap Barrier Turnstile',
-    category: 'entrance',
-    categoryLabel: 'Entrance Automation',
-    image: 'images/flap_barrier.png',
-    rating: 4.7,
-    reviews: 38,
-    badge: null,
-    priceOnRequest: true,
-    shortDesc: 'Elegant pedestrian access control with bi-directional flap panels for office/metro use.',
-    features: [
-      'Bi-directional access control',
-      'Stainless steel housing with glass flaps',
-      'Card reader, fingerprint & face recognition compatible',
-      'Anti-pinch safety mechanism',
-      'Emergency unlock on power failure',
-      'High traffic throughput (30–40 persons/min)'
-    ],
-    sku: 'FB-ELITE-01'
-  },
-  {
-    id: 8,
-    name: 'Speed Gate',
-    category: 'entrance',
-    categoryLabel: 'Entrance Automation',
-    image: 'images/speed_gate.png',
-    rating: 4.9,
-    reviews: 24,
-    badge: 'new',
-    priceOnRequest: true,
-    shortDesc: 'High-speed glass wing gates for premium corporate/hotel lobbies. Sleek, silent operation.',
-    features: [
-      'High-speed glass wing panels',
-      'Silent brushless motor operation',
-      'ADA compliant wide lane option',
-      'Full-height integration capable',
-      'Customizable wing colors',
-      '50+ persons/min throughput'
-    ],
-    sku: 'SG-PREMIUM-01'
-  },
-
-  // ── CCTV ──
-  {
-    id: 9,
-    name: 'IP Security Camera System',
-    category: 'cctv',
-    categoryLabel: 'CCTV & Surveillance',
-    image: 'images/cctv.png',
-    rating: 4.8,
-    reviews: 76,
-    badge: 'hot',
-    priceOnRequest: true,
-    shortDesc: 'Full HD IP cameras with night vision, motion detection and remote mobile access.',
-    features: [
-      '4K Ultra HD resolution available',
-      'IR night vision up to 30m',
-      'Motion detection alerts to mobile',
-      'IP67 weatherproof rating',
-      'Wide angle 104° lens',
-      'H.265+ video compression'
-    ],
-    sku: 'CCTV-IP-4K'
-  },
-  {
-    id: 10,
-    name: 'PTZ Dome Camera',
-    category: 'cctv',
-    categoryLabel: 'CCTV & Surveillance',
-    image: 'images/cctv.png',
-    rating: 4.7,
-    reviews: 31,
-    badge: null,
-    priceOnRequest: true,
-    shortDesc: 'Pan-Tilt-Zoom dome camera with 30x optical zoom and 360° continuous rotation.',
-    features: [
-      '30x optical zoom',
-      '360° continuous pan rotation',
-      'Auto-tracking feature',
-      'IR night vision up to 100m',
-      'AI-powered motion analytics',
-      'Vandal-proof housing'
-    ],
-    sku: 'PTZ-DOME-30X'
-  },
-
-  // ── X-Ray ──
-  {
-    id: 11,
-    name: 'X-Ray Baggage Scanner',
-    category: 'xray',
-    categoryLabel: 'X-Ray Scanners',
-    image: 'images/xray.png',
-    rating: 4.9,
-    reviews: 19,
-    badge: 'new',
-    priceOnRequest: true,
-    shortDesc: 'Dual-energy X-ray baggage inspection system for airports, malls, and government buildings.',
-    features: [
-      'Dual energy color imaging',
-      'Tunnel size: 620mm × 440mm',
-      'Penetration: 30mm steel',
-      'Wire resolution: 0.1mm diameter',
-      'Image storage for 100,000+ images',
-      'Operator safety certified'
-    ],
-    sku: 'XRY-BAG-6040'
-  },
-  {
-    id: 12,
-    name: 'Parcel X-Ray Scanner (Large)',
-    category: 'xray',
-    categoryLabel: 'X-Ray Scanners',
-    image: 'images/xray.png',
-    rating: 4.8,
-    reviews: 12,
-    badge: null,
-    priceOnRequest: true,
-    shortDesc: 'Large tunnel X-ray scanner for parcel and cargo inspection. High-throughput conveyor system.',
-    features: [
-      'Large tunnel: 1000mm × 800mm',
-      'High-speed conveyor belt',
-      'Multi-view imaging',
-      'Automated threat detection',
-      'Network connectivity for remote monitoring',
-      'CE and RoHS certified'
-    ],
-    sku: 'XRY-PKG-1080'
-  }
+﻿// Product Data compiled from live site
+window.GOSAFE_PRODUCTS = [
+  { id: 1, name: "18 Zone Door Frame Metal Detector (DFMD-18Z)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DFMD-18Z-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 2, name: "33 Zone Door Frame Metal Detector (DFMD-33Z)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DFMD-33Z-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 3, name: "9 Zone Door Frame Metal Detector (DFMD-9Z)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DFMD-9Z-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 4, name: "Agriculturel Electric Fencing", category: "electric-fence", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/agriculture-fancing-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 5, name: "Anti Vibration Gloves", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Anti-Vibration-Gloves-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 6, name: "Barricade Tape (CAUTION)", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/BARRICADE-TAPE-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 7, name: "Boimatric Device", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Biomatric-Device-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 8, name: "Boom Barrier (BB-600)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/BB-600HS-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 9, name: "Car Stopper", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Car-Stopper-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 10, name: "CHEMICAL RESISTANT & DISPOSABLE COVERALLS", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Chemical-Resistant-and-Disposable-Coveralls-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 11, name: "Chemical Resistant Gloves", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Chemical-Resistant-Gloves-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 12, name: "Commercial Electric Fencing", category: "electric-fence", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/commercial-fancing-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 13, name: "Convex Mirror", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/CONVEX-MIRROR-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 14, name: "Deep Search Metal Detector (DSMD)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DSMD-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 15, name: "DISPOSABLE APRONS", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/apron-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 16, name: "DISPOSABLE BEARD COVER", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/beard_cover_1-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 17, name: "DISPOSABLE BOUFFANT CAPS", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Bouffant-Cap-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 18, name: "DISPOSABLE FACE MASK", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/FACE-MASK-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 19, name: "DISPOSABLE NITRILE GLOVES", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/DISPOSABLE-NITRILE-GLOVES-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 20, name: "Dual Zone Door Frame Metal Detector (DFMD-DZ)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DFMD-DZ-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 21, name: "EAR PLUG", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/orange-ear-plugs-500x500-copy-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 22, name: "Expandable Traffic Barriers (ETB-1)", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Expandable-Traffic-Barrier-ETB-1-1-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 23, name: "Expandable Traffic Barriers (ETB-2)", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Expandable-Traffic-Barrier-ETB-2-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 24, name: "FACE COVERING SHIELD", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Face-Mask-Sheild-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 25, name: "Flap Barrier", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Flap-Barrier-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 26, name: "Floor Marking Tape (Yellow-Black)", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Floor-Marking-Tape-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 27, name: "Guard Tour System", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Guard-Monitoring-GTX-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 28, name: "Guard Tour System GT", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Guard-Monitoring-GT-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 29, name: "Headband Earmuffs", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/earmuffs-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 30, name: "Industrial Electric Fencing", category: "electric-fence", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/industrial-fancing-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 31, name: "LED TOURCH LIGHT", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Flash-Light-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 32, name: "N95 FACE MASK", category: "human-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/N95-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 33, name: "P Type Swing Gate", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/P-Type-Swing-Gate-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 34, name: "Pole Type Metal Detector (POLESCAN)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Pole-Scan-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 35, name: "Pole Type Metal Detector (SECURITY POLE)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Security-Pole-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 36, name: "Portable Telescopic Under Vehicle Inspection Mirror", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Portable-Telescopic-Under-Vehicle-Inspection-Mirror-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 37, name: "Residential Electric Fencing", category: "electric-fence", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/redidential-electric-fancing-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 38, name: "SAFETY GOGGLES", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Safety-goggles-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 39, name: "SAFETY HELMET", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Safety-Helmet-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 40, name: "Safety Signs", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Safety-Sign-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 41, name: "Search Light (MAXLITE)", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Search-Light-MAXLITE-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 42, name: "Single Wall Type Metal Detector (SPMD)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Wall-Type-Metal-Detector-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 43, name: "Single Zone Door Frame Metal Detector", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DFMD-SZ-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 44, name: "Single Zone Door Frame Metal Detector (DFMD-SZ-ULTRA)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/DFMD-SZ-Ultra-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 45, name: "Speed Breaker", category: "parking-safety", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Speed-Breaker-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 46, name: "Speed Gate", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Speed-Gate-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 47, name: "Spring Post", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/spring-post-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 48, name: "Super Light -ll", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Search-Light-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 49, name: "Swing Barrier", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Swing-Barrier-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 50, name: "Traffic Barriers (GG-TB-1)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/GG-TB-1-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 51, name: "Traffic Barriers (GG-TB-2)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/TB2-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 52, name: "Traffic Barriers (GG-TB-3)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/RB3-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 53, name: "Traffic Barriers (GG-TB-4)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/RB4-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 54, name: "TRAFFIC BATONS & FLASHERS", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Flash-Light-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 55, name: "Traffic Cone (GG-TC-1)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Traffic-Cone_1-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 56, name: "Traffic Cone (GG-TC-2)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Traffic-Cone_2-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 57, name: "Traffic Cone (GG-TC-3)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/Traffic-Cone_3-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 58, name: "Trolley Mounted Under Vehicle Inspection Mirror", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Trolly-Mounted-Under-Vehicle-Inspection-Mirror-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 59, name: "Turnstile", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Turnstile-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 60, name: "Ultra Scan", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/ultra-scan-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 61, name: "Walkie Talkie (License Free)", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/Walkie-Talkie-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 62, name: "Weapon Scanner", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/weapon-scanner-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 63, name: "WHEEL LOCK CLAMP", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/10/wheel-clamp-lock-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 64, name: "X-Ray Baggage Scanner 501", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/X-Ray-Baggage-Scanner-501-300x300.jpg", price: "Enquire Now", badge: "" },
+  { id: 65, name: "X-Ray Baggage Scanner 601", category: "security-devices", image: "https://gosafeglobal.com/wp-content/uploads/2024/09/X-Ray-Baggage-Scanner-601-1-300x300.jpg", price: "Enquire Now", badge: "" }
 ];
-
-// Make available globally
-window.GOSAFE_PRODUCTS = PRODUCTS;
