@@ -7,9 +7,8 @@
       "use": "@vercel/python"
     },
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "zeroConfig": true }
+      "src": "**/*",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
