@@ -347,6 +347,7 @@ function initMobileMenu() {
       spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
     }
   });
+}
 // -- Search --
 function getCatLabel(cat) {
   const map = {
