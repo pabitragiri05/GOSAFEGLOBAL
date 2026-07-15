@@ -1,4 +1,4 @@
-﻿// ================================================================
+// ================================================================
 //  GoSafe Global � Main JavaScript
 // ================================================================
 
@@ -350,6 +350,18 @@ function initMobileMenu() {
 }
 
 // -- Search --
+function getCatLabel(cat) {
+  const map = {
+    'security-devices': 'Security Devices',
+    'human-safety': 'Human Safety',
+    'parking-safety': 'Parking Safety & Signs',
+    'electric-fence': 'Electric Fence',
+    'tools-lockers': 'Tools & Lockers',
+    'porta-cabins': 'Porta Cabins'
+  };
+  return map[cat] || cat;
+}
+
 function initSearch() {
   const input = document.getElementById('search-input');
   const dropdown = document.getElementById('search-dropdown');
@@ -358,16 +370,20 @@ function initSearch() {
   input.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
     if (q.length < 2) { dropdown.classList.remove('show'); return; }
-    const results = window.GOSAFE_PRODUCTS.filter(p =>
-      p.name.toLowerCase().includes(q) || p.categoryLabel.toLowerCase().includes(q)
-    ).slice(0, 5);
+    const results = window.GOSAFE_PRODUCTS.filter(p => {
+      const nameMatch = p.name && p.name.toLowerCase().includes(q);
+      const catMatch = p.category && getCatLabel(p.category).toLowerCase().includes(q);
+      const descMatch = p.shortDesc && p.shortDesc.toLowerCase().includes(q);
+      return nameMatch || catMatch || descMatch;
+    }).slice(0, 5);
+    
     if (results.length === 0) { dropdown.classList.remove('show'); return; }
     dropdown.innerHTML = results.map(p => `
       <div class="search-result-item" onclick="openQuickView(${p.id}); this.closest('.search-dropdown').classList.remove('show');">
         <img src="${p.image}" alt="${p.name}" onerror="this.src='images/handheld.png'">
         <div class="search-result-info">
           <strong>${p.name}</strong>
-          <span>${p.categoryLabel}</span>
+          <span>${getCatLabel(p.category)}</span>
         </div>
       </div>`).join('');
     dropdown.classList.add('show');
@@ -538,11 +554,12 @@ function initProductsPage() {
     products = products.filter(p => p.category === catFilter || (p.sku && p.sku.toLowerCase().includes(catFilter)));
   }
   if (searchQ) {
-    products = products.filter(p =>
-      p.name.toLowerCase().includes(searchQ) ||
-      (p.categoryLabel && p.categoryLabel.toLowerCase().includes(searchQ)) ||
-      (p.shortDesc && p.shortDesc.toLowerCase().includes(searchQ))
-    );
+    products = products.filter(p => {
+      const nameMatch = p.name && p.name.toLowerCase().includes(searchQ);
+      const catMatch = p.category && getCatLabel(p.category).toLowerCase().includes(searchQ);
+      const descMatch = p.shortDesc && p.shortDesc.toLowerCase().includes(searchQ);
+      return nameMatch || catMatch || descMatch;
+    });
   }
 
   const count = document.getElementById('products-page-count');
