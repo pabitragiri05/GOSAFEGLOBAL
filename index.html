@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -634,10 +634,9 @@
       box-shadow: 0 6px 30px rgba(245,158,11,.85), 0 0 0 4px rgba(245,158,11,.25);
       font-size: 32px;
       line-height: 1;
-      animation: gs-roam 7s ease-in-out infinite;
     }
+      #gs-chat-launcher { transition: transform .25s, box-shadow .25s; }
     #gs-chat-launcher:hover {
-      animation-play-state: paused;
       transform: scale(1.1) rotate(-5deg);
       box-shadow: 0 10px 40px rgba(245,158,11,1), 0 0 0 6px rgba(245,158,11,.35);
     }
@@ -1053,6 +1052,8 @@
     }
   })();
   </script>
+  <script src="js/robot-anim.js"></script>
 </body>
 </html>
+
 
