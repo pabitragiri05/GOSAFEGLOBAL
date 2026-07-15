@@ -404,29 +404,57 @@ function initSearch() {
 // -- Testimonials Slider --
 function initTestimonialsSlider() {
   const track = document.getElementById('testimonials-track');
-  const dots = document.querySelectorAll('.slider-dots .dot');
-  if (!track) return;
+  const dotsContainer = document.getElementById('slider-dots');
+  if (!track || !dotsContainer) return;
 
   const cards = track.querySelectorAll('.testimonial-card');
   const total = cards.length;
   let perView = window.innerWidth > 992 ? 3 : window.innerWidth > 768 ? 2 : 1;
+  let numPages = Math.max(1, total - perView + 1);
+  let dots = [];
+
+  function buildDots() {
+    dotsContainer.innerHTML = '';
+    dots = [];
+    for (let i = 0; i < numPages; i++) {
+      const d = document.createElement('span');
+      d.className = 'dot' + (i === state.testimonialIndex ? ' active' : '');
+      d.dataset.index = i;
+      d.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(d);
+      dots.push(d);
+    }
+  }
 
   function goTo(idx) {
-    state.testimonialIndex = Math.max(0, Math.min(idx, total - perView));
+    state.testimonialIndex = Math.max(0, Math.min(idx, numPages - 1));
     const offset = -(state.testimonialIndex * (100 / perView));
     track.style.transform = `translateX(${offset}%)`;
     dots.forEach((d, i) => d.classList.toggle('active', i === state.testimonialIndex));
   }
 
+  buildDots();
+  goTo(0);
+
   document.getElementById('prev-testimonial')?.addEventListener('click', () => goTo(state.testimonialIndex - 1));
   document.getElementById('next-testimonial')?.addEventListener('click', () => goTo(state.testimonialIndex + 1));
-  dots.forEach(dot => dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index))));
 
   // Auto-slide
-  let autoSlide = setInterval(() => goTo((state.testimonialIndex + 1) % (total - perView + 1)), 4000);
+  let autoSlide = setInterval(() => goTo((state.testimonialIndex + 1) % numPages), 4000);
   track.parentElement.addEventListener('mouseenter', () => clearInterval(autoSlide));
   track.parentElement.addEventListener('mouseleave', () => {
-    autoSlide = setInterval(() => goTo((state.testimonialIndex + 1) % (total - perView + 1)), 4000);
+    autoSlide = setInterval(() => goTo((state.testimonialIndex + 1) % numPages), 4000);
+  });
+
+  window.addEventListener('resize', () => {
+    const newPerView = window.innerWidth > 992 ? 3 : window.innerWidth > 768 ? 2 : 1;
+    if (newPerView !== perView) {
+      perView = newPerView;
+      numPages = Math.max(1, total - perView + 1);
+      state.testimonialIndex = Math.min(state.testimonialIndex, numPages - 1);
+      buildDots();
+      goTo(state.testimonialIndex);
+    }
   });
 }
 
