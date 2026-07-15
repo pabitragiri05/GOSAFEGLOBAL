@@ -157,13 +157,26 @@
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   function doBurst() { burstEl.classList.remove('pop'); void burstEl.offsetWidth; burstEl.classList.add('pop') }
   function showBot() {
-    launcher.style.fontSize = '0';
+    const icon = document.getElementById('gs-launcher-icon');
+    if (icon) {
+      icon.textContent = 'Ask\nUs!';
+      icon.style.fontSize = '14px';
+      icon.style.fontWeight = 'bold';
+      icon.style.lineHeight = '1.2';
+      icon.style.whiteSpace = 'pre-line';
+      icon.style.display = 'block';
+      icon.style.marginTop = '-2px';
+    }
     const d = launcher.querySelector('.gs-notif-dot'); if (d) d.style.opacity = '0';
     wrap.style.display = 'flex';
   }
   function hideBot() {
     wrap.style.display = 'none';
-    launcher.style.fontSize = '';
+    const icon = document.getElementById('gs-launcher-icon');
+    if (icon) {
+      icon.textContent = chatOpen() ? '×' : '🤖';
+      icon.style.cssText = '';
+    }
     const d = launcher.querySelector('.gs-notif-dot'); if (d) d.style.opacity = '';
     wrap.style.transition = 'none'; wrap.style.bottom = '24px'; wrap.style.right = '24px'; wrap.style.transform = 'scaleX(1)';
     ['walk', 'kick', 'climb', 'wave', 'to-orb'].forEach(c => wrap.classList.remove(c));
