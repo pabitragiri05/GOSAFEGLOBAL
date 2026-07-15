@@ -1,7 +1,6 @@
 ﻿/* =====================================================================
-   GoSafe Global – Robot Animation v3
-   - Slower, natural walk gait
-   - Arms grip ladder rails; step-by-step rung climbing
+   GoSafe Global – Robot Animation v4
+   Human-like ladder climb (contralateral arms+legs), very slow walk
    ===================================================================== */
 (function () {
   'use strict';
@@ -34,132 +33,108 @@
   .gs-robo-shin{width:10px;height:12px;background:linear-gradient(180deg,#4c1d95,#3b0e8c);border-radius:0 0 3px 3px;border:1px solid rgba(245,158,11,.3)}
   .gs-robo-foot{width:14px;height:5px;background:#f59e0b;border-radius:3px;margin-top:-1px;box-shadow:0 2px 5px rgba(245,158,11,.5)}
 
-  /* ════════════════════════════════════════════
-     WALK – slower, natural 0.85s gait cycle
-  ════════════════════════════════════════════ */
-  #gs-robo-wrap.walk .gs-robo{animation:gs-body-bob .85s ease-in-out infinite}
-  @keyframes gs-body-bob{
+  /* ═══════════════════════════════════════════════════════
+     WALK  –  very slow deliberate gait  (1.4s cycle, 50px/s)
+  ═══════════════════════════════════════════════════════ */
+  #gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob 1.4s ease-in-out infinite}
+  @keyframes gs-walk-bob{
     0%,100%{transform:translateY(0) rotate(1.5deg)}
     25%,75%{transform:translateY(-2px) rotate(0.5deg)}
-    50%    {transform:translateY(1px) rotate(-1deg)}
+    50%    {transform:translateY(0.5px) rotate(-1deg)}
   }
-  #gs-robo-wrap.walk .gs-leg-l{animation:gs-gait-l .85s ease-in-out infinite}
+  #gs-robo-wrap.walk .gs-leg-l{animation:gs-gait-l 1.4s ease-in-out infinite}
   @keyframes gs-gait-l{
-    0%  {transform:rotate(-22deg)}
-    18% {transform:rotate(-8deg)}
-    45% {transform:rotate(22deg)}
-    65% {transform:rotate(16deg)}
+    0%  {transform:rotate(-20deg)}
+    20% {transform:rotate(-6deg)}
+    45% {transform:rotate(20deg)}
+    65% {transform:rotate(14deg)}
     82% {transform:rotate(2deg)}
-    100%{transform:rotate(-22deg)}
+    100%{transform:rotate(-20deg)}
   }
-  #gs-robo-wrap.walk .gs-leg-r{animation:gs-gait-r .85s ease-in-out infinite}
+  #gs-robo-wrap.walk .gs-leg-r{animation:gs-gait-r 1.4s ease-in-out infinite}
   @keyframes gs-gait-r{
-    0%  {transform:rotate(22deg)}
-    18% {transform:rotate(16deg)}
-    45% {transform:rotate(-22deg)}
-    65% {transform:rotate(-8deg)}
-    82% {transform:rotate(22deg)}
-    100%{transform:rotate(22deg)}
+    0%  {transform:rotate(20deg)}
+    18% {transform:rotate(14deg)}
+    45% {transform:rotate(-20deg)}
+    65% {transform:rotate(-6deg)}
+    82% {transform:rotate(20deg)}
+    100%{transform:rotate(20deg)}
   }
-  #gs-robo-wrap.walk .gs-arm-l{animation:gs-arm-swing-r .85s ease-in-out infinite}
-  #gs-robo-wrap.walk .gs-arm-r{animation:gs-arm-swing-l .85s ease-in-out infinite}
-  @keyframes gs-arm-swing-l{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
-  @keyframes gs-arm-swing-r{0%,100%{transform:rotate(20deg)}50%{transform:rotate(-20deg)}}
+  #gs-robo-wrap.walk .gs-arm-l{animation:gs-arm-swing-r 1.4s ease-in-out infinite}
+  #gs-robo-wrap.walk .gs-arm-r{animation:gs-arm-swing-l 1.4s ease-in-out infinite}
+  @keyframes gs-arm-swing-l{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(18deg)}}
+  @keyframes gs-arm-swing-r{0%,100%{transform:rotate(18deg)}50%{transform:rotate(-18deg)}}
 
-  /* ════════════════════════════════════════════
-     KICK – wind-up → explosive kick → hold
-  ════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════════════════
+     KICK
+  ═══════════════════════════════════════════════════════ */
   #gs-robo-wrap.kick .gs-leg-r{animation:gs-kick-leg .65s ease-in-out forwards}
   #gs-robo-wrap.kick .gs-arm-l{animation:gs-kick-arm .65s ease-in-out forwards}
   #gs-robo-wrap.kick .gs-robo{animation:gs-kick-lean .65s ease-in-out forwards}
-  @keyframes gs-kick-leg{
-    0%  {transform:rotate(0)}
-    20% {transform:rotate(-30deg)}
-    55% {transform:rotate(72deg)}
-    70% {transform:rotate(72deg)}
-    100%{transform:rotate(0)}
-  }
-  @keyframes gs-kick-arm{
-    0%  {transform:rotate(0)}
-    20% {transform:rotate(35deg)}
-    55% {transform:rotate(-18deg)}
-    100%{transform:rotate(0)}
-  }
-  @keyframes gs-kick-lean{
-    0%  {transform:rotate(0)}
-    20% {transform:rotate(-5deg)}
-    55% {transform:rotate(8deg)}
-    100%{transform:rotate(0)}
+  @keyframes gs-kick-leg{0%{transform:rotate(0)}20%{transform:rotate(-30deg)}55%{transform:rotate(72deg)}70%{transform:rotate(72deg)}100%{transform:rotate(0)}}
+  @keyframes gs-kick-arm{0%{transform:rotate(0)}20%{transform:rotate(35deg)}55%{transform:rotate(-18deg)}100%{transform:rotate(0)}}
+  @keyframes gs-kick-lean{0%{transform:rotate(0)}20%{transform:rotate(-5deg)}55%{transform:rotate(8deg)}100%{transform:rotate(0)}}
+
+  /* ═══════════════════════════════════════════════════════
+     CLIMB  –  human contralateral pattern
+     Right-arm + Left-leg move together (0s delay)
+     Left-arm  + Right-leg move together (0.35s delay = half of 0.7s cycle)
+
+     ARM keyframe: quick reach UP → hold grip → arm slides DOWN as body rises → release
+     LEG keyframe: foot planted → knee LIFTS → foot finds next rung → plants
+  ═══════════════════════════════════════════════════════ */
+
+  /* subtle body tilt as weight shifts side to side */
+  #gs-robo-wrap.climb .gs-robo{animation:gs-climb-tilt .7s ease-in-out infinite}
+  @keyframes gs-climb-tilt{
+    0%,100%{transform:rotate(-2deg) translateX(-1px)}
+    50%    {transform:rotate(2deg)  translateX(1px)}
   }
 
-  /* ════════════════════════════════════════════
-     CLIMB – arms GRIP rails, legs step rung-by-rung
-     CSS cycle = 0.5s to match JS step interval
-  ════════════════════════════════════════════ */
+  /* ARM shared keyframe */
+  @keyframes gs-arm-climb{
+    0%   {transform:rotate(-88deg)}  /* ★ gripping rung above – arm almost vertical/up */
+    42%  {transform:rotate(-88deg)}  /* still holding; body rising */
+    58%  {transform:rotate(-14deg)}  /* arm relaxes/releases as other arm takes over */
+    92%  {transform:rotate(-14deg)}  /* resting at side */
+    100% {transform:rotate(-88deg)}  /* snaps up to grab next rung */
+  }
+  /* Right arm grabs first (delay 0) */
+  #gs-robo-wrap.climb .gs-arm-r{animation:gs-arm-climb .7s ease-in-out infinite 0s}
+  /* Left arm grabs half-cycle later */
+  #gs-robo-wrap.climb .gs-arm-l{animation:gs-arm-climb .7s ease-in-out infinite .35s}
 
-  /* Subtle side-sway of body while climbing */
-  #gs-robo-wrap.climb .gs-robo{animation:gs-climb-sway .5s ease-in-out infinite}
-  @keyframes gs-climb-sway{
-    0%,100%{transform:translateX(-1.5px) rotate(-1.5deg)}
-    50%    {transform:translateX(1.5px)  rotate(1.5deg)}
+  /* LEG shared keyframe – contralateral: left-leg pairs with right-arm */
+  @keyframes gs-leg-climb{
+    0%   {transform:rotate(8deg)}    /* ★ foot planted on rung – pushing up */
+    42%  {transform:rotate(8deg)}    /* planted while paired arm is gripping */
+    52%  {transform:rotate(-36deg)}  /* knee lifts – stepping to next rung */
+    90%  {transform:rotate(-36deg)}  /* foot searching for rung */
+    100% {transform:rotate(8deg)}    /* foot plants firmly */
   }
+  /* Left leg steps when right arm grabs (delay 0) */
+  #gs-robo-wrap.climb .gs-leg-l{animation:gs-leg-climb .7s ease-in-out infinite 0s}
+  /* Right leg steps when left arm grabs (delay 0.35s) */
+  #gs-robo-wrap.climb .gs-leg-r{animation:gs-leg-climb .7s ease-in-out infinite .35s}
 
-  /* LEFT ARM: grips high rail → slides down as body rises → releases → re-grips */
-  #gs-robo-wrap.climb .gs-arm-l{animation:gs-grip-l .5s ease-in-out infinite}
-  @keyframes gs-grip-l{
-    0%  {transform:rotate(-82deg)}  /* arm UP, gripping rail above */
-    40% {transform:rotate(-82deg)}  /* holding tight */
-    50% {transform:rotate(-38deg)}  /* body rose — arm slides down rail */
-    90% {transform:rotate(-38deg)}  /* still gripping at lower position */
-    100%{transform:rotate(-82deg)}  /* snap: reaches up for next rung */
-  }
-  /* RIGHT ARM: offset half-cycle (grips while left releases) */
-  #gs-robo-wrap.climb .gs-arm-r{animation:gs-grip-r .5s ease-in-out infinite}
-  @keyframes gs-grip-r{
-    0%  {transform:rotate(-38deg)}
-    40% {transform:rotate(-38deg)}
-    50% {transform:rotate(-82deg)}
-    90% {transform:rotate(-82deg)}
-    100%{transform:rotate(-38deg)}
-  }
-
-  /* LEFT LEG: knee lifts → foot plants on rung → push */
-  #gs-robo-wrap.climb .gs-leg-l{animation:gs-rung-l .5s ease-in-out infinite}
-  @keyframes gs-rung-l{
-    0%  {transform:rotate(-32deg)}  /* knee up — stepping */
-    40% {transform:rotate(-32deg)}  /* mid-step */
-    55% {transform:rotate(6deg)}    /* foot planted, pushing down */
-    90% {transform:rotate(6deg)}    /* planted */
-    100%{transform:rotate(-32deg)}  /* lifts again */
-  }
-  /* RIGHT LEG: offset */
-  #gs-robo-wrap.climb .gs-leg-r{animation:gs-rung-r .5s ease-in-out infinite}
-  @keyframes gs-rung-r{
-    0%  {transform:rotate(6deg)}
-    40% {transform:rotate(6deg)}
-    55% {transform:rotate(-32deg)}
-    90% {transform:rotate(-32deg)}
-    100%{transform:rotate(6deg)}
-  }
-
-  /* ════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════
      WAVE
-  ════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════════ */
   #gs-robo-wrap.wave .gs-arm-r{animation:gs-wave .4s ease-in-out 5 alternate}
   @keyframes gs-wave{from{transform:rotate(-8deg)}to{transform:rotate(68deg)}}
 
-  /* ════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════
      LADDER
-  ════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════════ */
   #gs-ladder-el{position:fixed;right:46px;z-index:9996;pointer-events:none;display:none;flex-direction:column;justify-content:space-between;width:28px}
   .gs-post{position:absolute;top:0;bottom:0;width:3px;border-radius:2px;background:linear-gradient(180deg,rgba(245,158,11,.95),rgba(217,119,6,.5))}
   .gs-post.l{left:0}.gs-post.r{right:0}
   .gs-ladder-rung{width:100%;height:4px;background:#f59e0b;border-radius:2px;box-shadow:0 2px 5px rgba(245,158,11,.55);transform:scaleX(0);transition:transform .1s ease-out;position:relative;z-index:1}
   .gs-ladder-rung.show{transform:scaleX(1)}
 
-  /* ════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════════
      BURST RING
-  ════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════════ */
   #gs-burst-ring{position:fixed;bottom:14px;right:14px;width:76px;height:76px;border-radius:50%;border:3px solid #f59e0b;pointer-events:none;opacity:0;z-index:10001}
   #gs-burst-ring.pop{animation:gs-burst .5s ease-out forwards}
   @keyframes gs-burst{0%{transform:scale(1);opacity:1}100%{transform:scale(3);opacity:0}}
@@ -230,7 +205,7 @@
     destRight=Math.max(destRight,4);
 
     const travelPx=window.innerWidth-24-destRight-44;
-    const walkDur=Math.max(travelPx/80,1.5); // slower: 80px/s
+    const walkDur=Math.max(travelPx/50,2.0); // very slow: 50px/s
 
     wrap.style.transform='scaleX(-1)';
     setMode('walk');
@@ -259,7 +234,7 @@
     await sleep(2000);
   }
 
-  /* ── Phase 2: Ladder climb step-by-step ── */
+  /* ── Phase 2: Ladder climb step-by-step (1 rung per CSS cycle = 0.7s) ── */
   async function phase2(){
     if(chatOpen())return;
 
@@ -272,31 +247,28 @@
     ladderEl.style.bottom=(24+ROBOT_H)+'px';
     ladderEl.style.display='flex';
 
-    // Reveal rungs bottom → top
     for(const r of [...rungs].reverse()){r.classList.add('show');await sleep(55)}
     await sleep(300);
     if(chatOpen()){await retractLadder();return}
 
-    // Materialise
     doBurst();
     wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
     showBot();await sleep(350);
 
-    /* ── Step-by-step climb UP ── */
-    // Each step = one rung. CSS animation cycle = 0.5s, so step interval = 500ms
-    const STEP_DUR_MS  = 320;  // time to move up one rung (transition)
-    const STEP_HOLD_MS = 180;  // pause on rung (gripping)
+    /* Step-by-step climb UP – each step = 0.7s CSS cycle */
+    const STEP_MOVE = 420; // ms – movement transition per rung
+    const STEP_GRIP = 280; // ms – pause on rung (gripping)
     const stepPx = climbPx / RUNGS;
 
     setMode('climb');
     for(let i=1; i<=RUNGS; i++){
-      if(chatOpen()) break;
-      wrap.style.transition=`bottom ${STEP_DUR_MS}ms ease-in-out`;
-      wrap.style.bottom=(24 + i*stepPx)+'px';
-      await sleep(STEP_DUR_MS + STEP_HOLD_MS);
+      if(chatOpen())break;
+      wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
+      wrap.style.bottom=(24+i*stepPx)+'px';
+      await sleep(STEP_MOVE + STEP_GRIP);
     }
 
-    // Say Hii! at the top
+    /* Hii at top */
     setMode('');
     bubble.classList.add('show');
     setMode('wave');
@@ -305,12 +277,12 @@
     setMode('');
     await sleep(200);
 
-    /* ── Step-by-step climb DOWN ── */
+    /* Step-by-step climb DOWN */
     setMode('climb');
     for(let i=RUNGS-1; i>=0; i--){
-      wrap.style.transition=`bottom ${STEP_DUR_MS}ms ease-in-out`;
-      wrap.style.bottom=(24 + i*stepPx)+'px';
-      await sleep(STEP_DUR_MS + STEP_HOLD_MS);
+      wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
+      wrap.style.bottom=(24+i*stepPx)+'px';
+      await sleep(STEP_MOVE + STEP_GRIP);
     }
 
     setMode('');doBurst();await sleep(350);hideBot();
@@ -323,7 +295,6 @@
     ladderEl.style.display='none';
   }
 
-  /* ── Main loop ── */
   async function loop(){
     await sleep(3500);
     while(true){
