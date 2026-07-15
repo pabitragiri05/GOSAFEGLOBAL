@@ -689,8 +689,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Restore state
-  updateCartCount();
-  updateWishlistCount();
+  updateCartUI();
+  updateWishlistUI();
   initEventListeners();
   initHeaderScroll();
   initMobileMenu();
