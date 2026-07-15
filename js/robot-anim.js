@@ -1,318 +1,380 @@
 ﻿/* =====================================================================
-   GoSafe Global – Robot Animation v6
-   - Ladder tilts RIGHT (top leans toward right wall/edge)
-   - STEP-BASED WALKING: robot takes discrete steps (no more sliding)
-   - Body leans slightly right while climbing right-tilted ladder
+   GoSafe Global – Robot Animation v7
+   Full articulated robot: knees + elbows
+   Proper walk (hip+knee) | Proper climb (shoulder+elbow, hip+knee)
+   Ladder at right wall edge
    ===================================================================== */
-(function () {
-  'use strict';
+(function(){
+'use strict';
 
-  const TILT_DEG = 18; // ladder tilt angle (positive = top tilts RIGHT)
+/* ── INJECT CSS ── */
+document.head.insertAdjacentHTML('beforeend',`<style>
+/* ── wrapper ── */
+#gs-robo-wrap{position:fixed;bottom:24px;right:24px;z-index:9997;pointer-events:none;flex-direction:column;align-items:center;display:none}
+.gs-robo-bubble{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;border:2px solid #f59e0b;background:#fff;color:#4c1d95;white-space:nowrap;margin-bottom:6px;box-shadow:0 3px 12px rgba(0,0,0,.2);position:relative;transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.gs-robo-bubble.show{transform:scale(1)}
+.gs-robo-bubble::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#f59e0b;border-bottom:0}
 
-  document.head.insertAdjacentHTML('beforeend', `<style>
-  #gs-robo-wrap{position:fixed;bottom:24px;right:24px;z-index:9997;pointer-events:none;flex-direction:column;align-items:center;display:none}
+/* ── ROBOT BODY ── */
+.gs-robo{display:flex;flex-direction:column;align-items:center;width:34px;filter:drop-shadow(0 4px 12px rgba(109,40,217,.65))}
 
-  .gs-robo-bubble{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;border:2px solid #f59e0b;background:#fff;color:#4c1d95;white-space:nowrap;margin-bottom:6px;box-shadow:0 3px 12px rgba(0,0,0,.2);position:relative;transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
-  .gs-robo-bubble.show{transform:scale(1)}
-  .gs-robo-bubble::after{content:'';position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#f59e0b;border-bottom:0}
+/* antenna */
+.gs-robo-ant{width:2px;height:9px;background:#f59e0b;border-radius:2px;position:relative}
+.gs-robo-ant::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:7px;height:7px;background:#ef4444;border-radius:50%;box-shadow:0 0 7px rgba(239,68,68,.9);animation:gs-ant-blink 1.5s ease-in-out infinite}
+@keyframes gs-ant-blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-  /* ── robot (small, ~32px wide) ── */
-  .gs-robo{display:flex;flex-direction:column;align-items:center;width:32px;filter:drop-shadow(0 4px 10px rgba(109,40,217,.6))}
-  .gs-robo-ant{width:2px;height:8px;background:#f59e0b;border-radius:2px;position:relative}
-  .gs-robo-ant::before{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:6px;height:6px;background:#ef4444;border-radius:50%;box-shadow:0 0 6px rgba(239,68,68,.9);animation:gs-ant-blink 1.5s ease-in-out infinite}
-  @keyframes gs-ant-blink{0%,100%{opacity:1}50%{opacity:.2}}
-  .gs-robo-head{width:22px;height:18px;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:6px;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;gap:4px;position:relative}
-  .gs-robo-eye{width:4px;height:5px;background:#60a5fa;border-radius:1.5px;box-shadow:0 0 5px rgba(96,165,250,.9);animation:gs-eye-blink 4s ease-in-out infinite}
-  .gs-robo-eye:last-of-type{animation-delay:.2s}
-  @keyframes gs-eye-blink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.06)}}
-  .gs-robo-mouth{position:absolute;bottom:3px;width:9px;height:2px;background:#f59e0b;border-radius:1px}
-  .gs-robo-neck{width:5px;height:3px;background:#5b21b6}
-  .gs-robo-mid{display:flex;align-items:center;gap:2px}
-  .gs-robo-arm{width:6px;height:14px;background:linear-gradient(180deg,#7c3aed,#5b21b6);border-radius:3px;border:1px solid rgba(245,158,11,.5);transform-origin:top center}
-  .gs-robo-torso{width:26px;height:22px;background:linear-gradient(135deg,#6d28d9,#4c1d95);border-radius:5px;border:1.5px solid #f59e0b;display:flex;align-items:center;justify-content:center}
-  .gs-robo-orb{width:10px;height:10px;background:radial-gradient(circle at 35% 35%,#fde68a,#f59e0b 60%,#d97706);border-radius:50%;box-shadow:0 0 8px rgba(245,158,11,.9);animation:gs-orb-pulse 2s ease-in-out infinite}
-  @keyframes gs-orb-pulse{0%,100%{box-shadow:0 0 8px rgba(245,158,11,.9)}50%{box-shadow:0 0 16px rgba(245,158,11,1)}}
-  .gs-robo-legs{display:flex;gap:5px;margin-top:1px}
-  .gs-leg-l,.gs-leg-r{display:flex;flex-direction:column;align-items:center;transform-origin:top center}
-  .gs-robo-thigh{width:8px;height:10px;background:linear-gradient(180deg,#5b21b6,#4c1d95);border-radius:2px 2px 0 0;border:1px solid rgba(245,158,11,.4)}
-  .gs-robo-shin{width:7px;height:9px;background:linear-gradient(180deg,#4c1d95,#3b0e8c);border-radius:0 0 2px 2px;border:1px solid rgba(245,158,11,.3)}
-  .gs-robo-foot{width:10px;height:4px;background:#f59e0b;border-radius:2px;margin-top:-1px;box-shadow:0 2px 4px rgba(245,158,11,.5)}
+/* head */
+.gs-robo-head{width:24px;height:20px;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:7px;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;gap:4px;position:relative}
+.gs-robo-eye{width:5px;height:6px;background:#60a5fa;border-radius:2px;box-shadow:0 0 5px rgba(96,165,250,.9);animation:gs-eye-blink 4s ease-in-out infinite}
+.gs-robo-eye:last-of-type{animation-delay:.2s}
+@keyframes gs-eye-blink{0%,88%,100%{transform:scaleY(1)}93%{transform:scaleY(.06)}}
+.gs-robo-mouth{position:absolute;bottom:4px;width:10px;height:2px;background:#f59e0b;border-radius:1px}
+.gs-robo-neck{width:6px;height:4px;background:#5b21b6}
 
-  /* ════════════════════════════════════════════════
-     WALK – gait synced to 0.9s step interval
-     Legs swing ±30° clearly; body bobs visibly
-  ════════════════════════════════════════════════ */
-  /* body bob on each step */
-  #gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob .9s ease-in-out infinite}
-  @keyframes gs-walk-bob{
-    0%,100%{transform:translateY(0)  rotate(2deg) }
-    25%    {transform:translateY(-3px) rotate(0deg) }
-    50%    {transform:translateY(0)  rotate(-2deg)}
-    75%    {transform:translateY(-3px) rotate(0deg) }
-  }
-  /* leg swing – crisp back-and-forth */
-  #gs-robo-wrap.walk .gs-leg-l{animation:gs-gait-l .9s ease-in-out infinite}
-  @keyframes gs-gait-l{
-    0%  {transform:rotate(-30deg)}   /* back  */
-    50% {transform:rotate(30deg)}    /* front */
-    100%{transform:rotate(-30deg)}
-  }
-  #gs-robo-wrap.walk .gs-leg-r{animation:gs-gait-r .9s ease-in-out infinite}
-  @keyframes gs-gait-r{
-    0%  {transform:rotate(30deg)}
-    50% {transform:rotate(-30deg)}
-    100%{transform:rotate(30deg)}
-  }
-  /* arm swing opposite to legs */
-  #gs-robo-wrap.walk .gs-arm-l{animation:gs-arm-swing-r .9s ease-in-out infinite}
-  #gs-robo-wrap.walk .gs-arm-r{animation:gs-arm-swing-l .9s ease-in-out infinite}
-  @keyframes gs-arm-swing-l{0%,100%{transform:rotate(-22deg)}50%{transform:rotate(22deg)}}
-  @keyframes gs-arm-swing-r{0%,100%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}}
+/* torso row */
+.gs-robo-mid{display:flex;align-items:flex-start;gap:2px}
+.gs-robo-torso{width:28px;height:24px;background:linear-gradient(135deg,#6d28d9,#4c1d95);border-radius:6px;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center}
+.gs-robo-orb{width:11px;height:11px;background:radial-gradient(circle at 35% 35%,#fde68a,#f59e0b 60%,#d97706);border-radius:50%;box-shadow:0 0 9px rgba(245,158,11,.9);animation:gs-orb-pulse 2s ease-in-out infinite}
+@keyframes gs-orb-pulse{0%,100%{box-shadow:0 0 9px rgba(245,158,11,.9)}50%{box-shadow:0 0 18px rgba(245,158,11,1)}}
 
-  /* ════════════════════════════════════════════════
-     KICK
-  ════════════════════════════════════════════════ */
-  #gs-robo-wrap.kick .gs-leg-r{animation:gs-kick-leg .65s ease-in-out forwards}
-  #gs-robo-wrap.kick .gs-arm-l{animation:gs-kick-arm .65s ease-in-out forwards}
-  #gs-robo-wrap.kick .gs-robo {animation:gs-kick-lean .65s ease-in-out forwards}
-  @keyframes gs-kick-leg{0%{transform:rotate(0)}20%{transform:rotate(-30deg)}55%{transform:rotate(72deg)}70%{transform:rotate(72deg)}100%{transform:rotate(0)}}
-  @keyframes gs-kick-arm{0%{transform:rotate(0)}20%{transform:rotate(35deg)}55%{transform:rotate(-18deg)}100%{transform:rotate(0)}}
-  @keyframes gs-kick-lean{0%{transform:rotate(0)}20%{transform:rotate(-5deg)}55%{transform:rotate(8deg)}100%{transform:rotate(0)}}
+/* ── ARM (shoulder → upper → elbow → forearm) ── */
+.gs-arm-wrap{transform-origin:top center;display:flex;flex-direction:column;align-items:center}
+.gs-upper-arm-seg{width:6px;height:10px;background:linear-gradient(180deg,#7c3aed,#5b21b6);border-radius:3px 3px 0 0;border:1px solid rgba(245,158,11,.5)}
+.gs-lower-arm-w{transform-origin:top center;display:flex;flex-direction:column;align-items:center}
+.gs-lower-arm-seg{width:5px;height:9px;background:linear-gradient(180deg,#5b21b6,#4c1d95);border-radius:0 0 3px 3px;border:1px solid rgba(245,158,11,.4)}
 
-  /* ════════════════════════════════════════════════
-     CLIMB – body leans RIGHT (into right-tilted ladder)
-             contralateral arm+leg pairs (0.7s cycle)
-  ════════════════════════════════════════════════ */
-  #gs-robo-wrap.climb .gs-robo{animation:gs-climb-tilt .7s ease-in-out infinite}
-  @keyframes gs-climb-tilt{
-    0%,100%{transform:rotate(11deg) translateX(1px)}   /* lean right */
-    50%    {transform:rotate(9deg)  translateX(-1px)}
-  }
+/* ── LEG (hip → thigh → knee → shin → foot) ── */
+.gs-robo-legs{display:flex;gap:6px;margin-top:1px}
+.gs-leg-wrap{transform-origin:top center;display:flex;flex-direction:column;align-items:center}
+.gs-thigh-seg{width:8px;height:12px;background:linear-gradient(180deg,#5b21b6,#4c1d95);border-radius:3px 3px 0 0;border:1px solid rgba(245,158,11,.4)}
+.gs-lower-leg-w{transform-origin:top center;display:flex;flex-direction:column;align-items:center}
+.gs-shin-seg{width:7px;height:11px;background:linear-gradient(180deg,#4c1d95,#3b0e8c);border-radius:0 0 3px 3px;border:1px solid rgba(245,158,11,.3)}
+.gs-robo-foot{width:11px;height:4px;background:#f59e0b;border-radius:3px;margin-top:-1px;box-shadow:0 2px 4px rgba(245,158,11,.5)}
 
-  @keyframes gs-arm-climb{
-    0%  {transform:rotate(-88deg)}
-    42% {transform:rotate(-88deg)}
-    58% {transform:rotate(-14deg)}
-    92% {transform:rotate(-14deg)}
-    100%{transform:rotate(-88deg)}
-  }
-  #gs-robo-wrap.climb .gs-arm-r{animation:gs-arm-climb .7s ease-in-out infinite 0s}
-  #gs-robo-wrap.climb .gs-arm-l{animation:gs-arm-climb .7s ease-in-out infinite .35s}
+/* ════════════════════════════════════════════════════
+   WALK — 1.1s gait | hip swing + KNEE BEND + elbow bend
+   Left arm/Right leg share timing; Right arm/Left leg share timing
+   ════════════════════════════════════════════════════ */
+/* body bob per step */
+#gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob 1.1s ease-in-out infinite}
+@keyframes gs-walk-bob{0%,100%{transform:translateY(0) rotate(1.5deg)}25%,75%{transform:translateY(-3px) rotate(0)}50%{transform:translateY(0) rotate(-1.5deg)}}
 
-  @keyframes gs-leg-climb{
-    0%  {transform:rotate(8deg)}
-    42% {transform:rotate(8deg)}
-    52% {transform:rotate(-36deg)}
-    90% {transform:rotate(-36deg)}
-    100%{transform:rotate(8deg)}
-  }
-  #gs-robo-wrap.climb .gs-leg-l{animation:gs-leg-climb .7s ease-in-out infinite 0s}
-  #gs-robo-wrap.climb .gs-leg-r{animation:gs-leg-climb .7s ease-in-out infinite .35s}
+/* LEFT LEG – hip */
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l{animation:gs-hip-l 1.1s ease-in-out infinite}
+@keyframes gs-hip-l{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}}
+/* LEFT LEG – knee bends mid-swing, straight at stance */
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l .gs-lower-leg-w{animation:gs-knee-l 1.1s ease-in-out infinite}
+@keyframes gs-knee-l{
+  0%  {transform:rotate(5deg)}   /* slight bend: push-off (leg back) */
+  25% {transform:rotate(38deg)}  /* MAX BEND: mid-swing forward */
+  50% {transform:rotate(6deg)}   /* nearly straight: heel-strike (leg front) */
+  75% {transform:rotate(2deg)}   /* straight: mid-stance */
+  100%{transform:rotate(5deg)}
+}
 
-  /* ════════════════════════════════════════════════
-     WAVE
-  ════════════════════════════════════════════════ */
-  #gs-robo-wrap.wave .gs-arm-r{animation:gs-wave .4s ease-in-out 5 alternate}
-  @keyframes gs-wave{from{transform:rotate(-8deg)}to{transform:rotate(68deg)}}
+/* RIGHT LEG – hip (half cycle ahead) */
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r{animation:gs-hip-r 1.1s ease-in-out infinite}
+@keyframes gs-hip-r{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}
+/* RIGHT LEG – knee */
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-knee-r 1.1s ease-in-out infinite}
+@keyframes gs-knee-r{
+  0%  {transform:rotate(6deg)}
+  25% {transform:rotate(2deg)}
+  50% {transform:rotate(5deg)}
+  75% {transform:rotate(38deg)}
+  100%{transform:rotate(6deg)}
+}
 
-  /* ════════════════════════════════════════════════
-     LADDER – tilted RIGHT (+18°)
-     Top leans toward right wall/edge of site
-     transform-origin: bottom center → base stays fixed
-  ════════════════════════════════════════════════ */
-  #gs-ladder-el{
-    position:fixed;right:50px;z-index:9996;pointer-events:none;
-    display:none;flex-direction:column;justify-content:space-between;
-    width:26px;
-    transform:rotate(18deg);          /* ← positive = top tilts RIGHT */
-    transform-origin:bottom center;
-  }
-  .gs-post{position:absolute;top:0;bottom:0;width:3px;border-radius:2px;background:linear-gradient(180deg,rgba(245,158,11,.95),rgba(217,119,6,.5))}
-  .gs-post.l{left:0}.gs-post.r{right:0}
-  .gs-ladder-rung{width:100%;height:4px;background:#f59e0b;border-radius:2px;box-shadow:0 2px 4px rgba(245,158,11,.55);transform:scaleX(0);transition:transform .1s ease-out;position:relative;z-index:1}
-  .gs-ladder-rung.show{transform:scaleX(1)}
+/* LEFT ARM – shoulder (swings opposite left leg = same as right leg) */
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l{animation:gs-shoulder-l 1.1s ease-in-out infinite}
+@keyframes gs-shoulder-l{0%,100%{transform:rotate(20deg)}50%{transform:rotate(-20deg)}}
+/* LEFT ARM – elbow */
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l .gs-lower-arm-w{animation:gs-elbow-l 1.1s ease-in-out infinite}
+@keyframes gs-elbow-l{0%,50%,100%{transform:rotate(12deg)}25%{transform:rotate(28deg)}75%{transform:rotate(22deg)}}
 
-  /* ════════════════════════════════════════════════
-     BURST
-  ════════════════════════════════════════════════ */
-  #gs-burst-ring{position:fixed;bottom:14px;right:14px;width:76px;height:76px;border-radius:50%;border:3px solid #f59e0b;pointer-events:none;opacity:0;z-index:10001}
-  #gs-burst-ring.pop{animation:gs-burst .5s ease-out forwards}
-  @keyframes gs-burst{0%{transform:scale(1);opacity:1}100%{transform:scale(3);opacity:0}}
-  </style>`);
+/* RIGHT ARM – shoulder */
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r{animation:gs-shoulder-r 1.1s ease-in-out infinite}
+@keyframes gs-shoulder-r{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
+/* RIGHT ARM – elbow */
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-elbow-r 1.1s ease-in-out infinite}
+@keyframes gs-elbow-r{0%,50%,100%{transform:rotate(12deg)}25%{transform:rotate(22deg)}75%{transform:rotate(28deg)}}
 
-  /* ── HTML ── */
-  const RUNGS = 12;
-  document.body.insertAdjacentHTML('beforeend', `
-  <div id="gs-robo-wrap">
-    <div class="gs-robo-bubble" id="gs-robo-bubble">Hii! 👋</div>
-    <div class="gs-robo">
-      <div class="gs-robo-ant"></div>
-      <div class="gs-robo-head">
-        <div class="gs-robo-eye"></div>
-        <div class="gs-robo-eye"></div>
-        <div class="gs-robo-mouth"></div>
+/* ════════════════════════════════════════════════════
+   KICK
+   ════════════════════════════════════════════════════ */
+#gs-robo-wrap.kick .gs-leg-wrap.gs-leg-r{animation:gs-kick-hip .65s ease-in-out forwards}
+#gs-robo-wrap.kick .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-kick-knee .65s ease-in-out forwards}
+#gs-robo-wrap.kick .gs-arm-wrap.gs-arm-l{animation:gs-kick-arm .65s ease-in-out forwards}
+#gs-robo-wrap.kick .gs-robo{animation:gs-kick-lean .65s ease-in-out forwards}
+@keyframes gs-kick-hip{0%{transform:rotate(0)}18%{transform:rotate(-28deg)}55%{transform:rotate(65deg)}70%{transform:rotate(65deg)}100%{transform:rotate(0)}}
+@keyframes gs-kick-knee{0%,18%{transform:rotate(35deg)}55%{transform:rotate(5deg)}100%{transform:rotate(0)}}
+@keyframes gs-kick-arm{0%{transform:rotate(0)}18%{transform:rotate(32deg)}55%{transform:rotate(-15deg)}100%{transform:rotate(0)}}
+@keyframes gs-kick-lean{0%{transform:rotate(0)}18%{transform:rotate(-5deg)}55%{transform:rotate(8deg)}100%{transform:rotate(0)}}
+
+/* ════════════════════════════════════════════════════
+   CLIMB  –  0.8s cycle  |  contralateral pairs
+   Right-arm + Left-leg: delay 0
+   Left-arm  + Right-leg: delay 0.4s (half)
+   
+   SHOULDER: reaches UP to grip rail → holds → slides down as body rises → releases
+   ELBOW:    bends to hook rung while reaching, straightens while gripping, bends to release
+   HIP:      knee lifts high to find next rung → foot plants → pushes
+   KNEE:     bends sharply when lifting, straightens when planted
+   ════════════════════════════════════════════════════ */
+#gs-robo-wrap.climb .gs-robo{animation:gs-climb-lean .8s ease-in-out infinite}
+@keyframes gs-climb-lean{0%,100%{transform:rotate(8deg) translateX(1px)}50%{transform:rotate(6deg) translateX(-1px)}}
+
+/* SHOULDER */
+@keyframes gs-climb-shoulder{
+  0%  {transform:rotate(-82deg)} /* arm UP: gripping rail above */
+  38% {transform:rotate(-82deg)} /* holding – body rising */
+  55% {transform:rotate(-16deg)} /* arm slides down rail */
+  90% {transform:rotate(-16deg)} /* at rest/releasing */
+  100%{transform:rotate(-82deg)} /* snaps up to next rung */
+}
+/* ELBOW – bends when reaching, hooks rung, releases */
+@keyframes gs-climb-elbow{
+  0%  {transform:rotate(45deg)} /* bent: arm curling around rung */
+  20% {transform:rotate(20deg)} /* straightening: secure grip */
+  38% {transform:rotate(15deg)} /* straight hold */
+  55% {transform:rotate(38deg)} /* bends as arm comes down */
+  90% {transform:rotate(38deg)} /* bent at side */
+  100%{transform:rotate(45deg)} /* bends ready to reach up */
+}
+
+/* Pair 1 – Right arm */
+#gs-robo-wrap.climb .gs-arm-wrap.gs-arm-r{animation:gs-climb-shoulder .8s ease-in-out infinite 0s}
+#gs-robo-wrap.climb .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-climb-elbow .8s ease-in-out infinite 0s}
+/* Pair 2 – Left arm (half cycle later) */
+#gs-robo-wrap.climb .gs-arm-wrap.gs-arm-l{animation:gs-climb-shoulder .8s ease-in-out infinite .4s}
+#gs-robo-wrap.climb .gs-arm-wrap.gs-arm-l .gs-lower-arm-w{animation:gs-climb-elbow .8s ease-in-out infinite .4s}
+
+/* HIP – lifts knee to step up to next rung */
+@keyframes gs-climb-hip{
+  0%  {transform:rotate(-32deg)} /* knee raised high: stepping up */
+  38% {transform:rotate(-32deg)} /* holding up */
+  55% {transform:rotate(8deg)}   /* foot plants on rung, pushing */
+  90% {transform:rotate(8deg)}   /* planted, weight bearing */
+  100%{transform:rotate(-32deg)} /* lifts again */
+}
+/* KNEE – bends sharply when lifting, straightens when planted */
+@keyframes gs-climb-knee{
+  0%  {transform:rotate(42deg)} /* max bend: foot pulled up */
+  38% {transform:rotate(42deg)} /* still bent searching for rung */
+  55% {transform:rotate(8deg)}  /* straightens as foot plants */
+  90% {transform:rotate(8deg)}  /* planted, nearly straight */
+  100%{transform:rotate(42deg)} /* bends: foot lifts */
+}
+
+/* Left leg + Right arm (pair 1, delay 0) */
+#gs-robo-wrap.climb .gs-leg-wrap.gs-leg-l{animation:gs-climb-hip .8s ease-in-out infinite 0s}
+#gs-robo-wrap.climb .gs-leg-wrap.gs-leg-l .gs-lower-leg-w{animation:gs-climb-knee .8s ease-in-out infinite 0s}
+/* Right leg + Left arm (pair 2, delay 0.4s) */
+#gs-robo-wrap.climb .gs-leg-wrap.gs-leg-r{animation:gs-climb-hip .8s ease-in-out infinite .4s}
+#gs-robo-wrap.climb .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-climb-knee .8s ease-in-out infinite .4s}
+
+/* ════════════════════════════════════════════════════
+   WAVE
+   ════════════════════════════════════════════════════ */
+#gs-robo-wrap.wave .gs-arm-wrap.gs-arm-r{animation:gs-wave-shoulder .4s ease-in-out 5 alternate}
+#gs-robo-wrap.wave .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-wave-elbow .4s ease-in-out 5 alternate}
+@keyframes gs-wave-shoulder{from{transform:rotate(-10deg)}to{transform:rotate(65deg)}}
+@keyframes gs-wave-elbow{from{transform:rotate(15deg)}to{transform:rotate(45deg)}}
+
+/* ════════════════════════════════════════════════════
+   LADDER – right edge of website, very slight right tilt
+   ════════════════════════════════════════════════════ */
+#gs-ladder-el{
+  position:fixed;right:6px;z-index:9996;pointer-events:none;
+  display:none;flex-direction:column;justify-content:space-between;
+  width:28px;
+  transform:rotate(4deg);
+  transform-origin:bottom center;
+}
+.gs-post{position:absolute;top:0;bottom:0;width:3px;border-radius:2px;background:linear-gradient(180deg,rgba(245,158,11,.95),rgba(217,119,6,.5))}
+.gs-post.l{left:0}.gs-post.r{right:0}
+.gs-ladder-rung{width:100%;height:4px;background:#f59e0b;border-radius:2px;box-shadow:0 2px 4px rgba(245,158,11,.55);transform:scaleX(0);transition:transform .1s ease-out;position:relative;z-index:1}
+.gs-ladder-rung.show{transform:scaleX(1)}
+
+/* ════════════════════════════════════════════════════
+   BURST
+   ════════════════════════════════════════════════════ */
+#gs-burst-ring{position:fixed;bottom:14px;right:14px;width:76px;height:76px;border-radius:50%;border:3px solid #f59e0b;pointer-events:none;opacity:0;z-index:10001}
+#gs-burst-ring.pop{animation:gs-burst .5s ease-out forwards}
+@keyframes gs-burst{0%{transform:scale(1);opacity:1}100%{transform:scale(3);opacity:0}}
+</style>`);
+
+/* ── INJECT HTML ── */
+const RUNGS=12;
+document.body.insertAdjacentHTML('beforeend',`
+<div id="gs-robo-wrap">
+  <div class="gs-robo-bubble" id="gs-robo-bubble">Hii! 👋</div>
+  <div class="gs-robo">
+    <div class="gs-robo-ant"></div>
+    <div class="gs-robo-head">
+      <div class="gs-robo-eye"></div>
+      <div class="gs-robo-eye"></div>
+      <div class="gs-robo-mouth"></div>
+    </div>
+    <div class="gs-robo-neck"></div>
+    <div class="gs-robo-mid">
+      <div class="gs-arm-wrap gs-arm-l">
+        <div class="gs-upper-arm-seg"></div>
+        <div class="gs-lower-arm-w">
+          <div class="gs-lower-arm-seg"></div>
+        </div>
       </div>
-      <div class="gs-robo-neck"></div>
-      <div class="gs-robo-mid">
-        <div class="gs-robo-arm gs-arm-l"></div>
-        <div class="gs-robo-torso"><div class="gs-robo-orb"></div></div>
-        <div class="gs-robo-arm gs-arm-r"></div>
+      <div class="gs-robo-torso"><div class="gs-robo-orb"></div></div>
+      <div class="gs-arm-wrap gs-arm-r">
+        <div class="gs-upper-arm-seg"></div>
+        <div class="gs-lower-arm-w">
+          <div class="gs-lower-arm-seg"></div>
+        </div>
       </div>
-      <div class="gs-robo-legs">
-        <div class="gs-leg-l"><div class="gs-robo-thigh"></div><div class="gs-robo-shin"></div><div class="gs-robo-foot"></div></div>
-        <div class="gs-leg-r"><div class="gs-robo-thigh"></div><div class="gs-robo-shin"></div><div class="gs-robo-foot"></div></div>
+    </div>
+    <div class="gs-robo-legs">
+      <div class="gs-leg-wrap gs-leg-l">
+        <div class="gs-thigh-seg"></div>
+        <div class="gs-lower-leg-w">
+          <div class="gs-shin-seg"></div>
+          <div class="gs-robo-foot"></div>
+        </div>
+      </div>
+      <div class="gs-leg-wrap gs-leg-r">
+        <div class="gs-thigh-seg"></div>
+        <div class="gs-lower-leg-w">
+          <div class="gs-shin-seg"></div>
+          <div class="gs-robo-foot"></div>
+        </div>
       </div>
     </div>
   </div>
-  <div id="gs-ladder-el">
-    <div class="gs-post l"></div><div class="gs-post r"></div>
-    ${Array.from({length:RUNGS},(_,i)=>`<div class="gs-ladder-rung" data-i="${i}"></div>`).join('')}
-  </div>
-  <div id="gs-burst-ring"></div>`);
+</div>
+<div id="gs-ladder-el">
+  <div class="gs-post l"></div><div class="gs-post r"></div>
+  ${Array.from({length:RUNGS},(_,i)=>`<div class="gs-ladder-rung"></div>`).join('')}
+</div>
+<div id="gs-burst-ring"></div>`);
 
-  /* ── Refs ── */
-  const launcher = document.getElementById('gs-chat-launcher');
-  const wrap     = document.getElementById('gs-robo-wrap');
-  const bubble   = document.getElementById('gs-robo-bubble');
-  const ladderEl = document.getElementById('gs-ladder-el');
-  const burstEl  = document.getElementById('gs-burst-ring');
-  const rungs    = Array.from(ladderEl.querySelectorAll('.gs-ladder-rung'));
-  if (!launcher || !wrap) return;
+/* ── REFS ── */
+const launcher=document.getElementById('gs-chat-launcher');
+const wrap=document.getElementById('gs-robo-wrap');
+const bubble=document.getElementById('gs-robo-bubble');
+const ladderEl=document.getElementById('gs-ladder-el');
+const burstEl=document.getElementById('gs-burst-ring');
+const rungs=Array.from(ladderEl.querySelectorAll('.gs-ladder-rung'));
+if(!launcher||!wrap)return;
 
-  const sleep = ms => new Promise(r => setTimeout(r, ms));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function doBurst(){burstEl.classList.remove('pop');void burstEl.offsetWidth;burstEl.classList.add('pop')}
+function showBot(){
+  launcher.style.fontSize='0';
+  const d=launcher.querySelector('.gs-notif-dot');if(d)d.style.opacity='0';
+  wrap.style.display='flex';
+}
+function hideBot(){
+  wrap.style.display='none';
+  launcher.style.fontSize='';
+  const d=launcher.querySelector('.gs-notif-dot');if(d)d.style.opacity='';
+  wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
+  ['walk','kick','climb','wave'].forEach(c=>wrap.classList.remove(c));
+  bubble.classList.remove('show');
+}
+function setMode(m){['walk','kick','climb','wave'].forEach(c=>wrap.classList.remove(c));if(m)wrap.classList.add(m)}
+function chatOpen(){const p=document.getElementById('gs-chat-popup');return p&&p.classList.contains('gs-active')}
 
-  function doBurst(){burstEl.classList.remove('pop');void burstEl.offsetWidth;burstEl.classList.add('pop')}
-
-  function showBot(){
-    launcher.style.fontSize='0';
-    const dot=launcher.querySelector('.gs-notif-dot');
-    if(dot)dot.style.opacity='0';
-    wrap.style.display='flex';
+/* ── STEP-BASED WALK (synced to 1.1s gait cycle) ── */
+async function stepWalk(destRight,facingLeft){
+  wrap.style.transform=facingLeft?'scaleX(-1)':'scaleX(1)';
+  setMode('walk');
+  const startRight=parseFloat(wrap.style.right)||24;
+  const totalPx=Math.abs(startRight-destRight);
+  const STEP_PX=50,STEP_MOVE=500,STEP_PAUSE=600; // 1.1s per step = gait cycle
+  const steps=Math.max(Math.ceil(totalPx/STEP_PX),1);
+  for(let i=1;i<=steps;i++){
+    if(chatOpen())break;
+    const t=i/steps;
+    const nextRight=startRight+(destRight-startRight)*t;
+    wrap.style.transition=`right ${STEP_MOVE}ms ease-in-out`;
+    wrap.style.right=nextRight+'px';
+    await sleep(STEP_MOVE+STEP_PAUSE);
   }
-  function hideBot(){
-    wrap.style.display='none';
-    launcher.style.fontSize='';
-    const dot=launcher.querySelector('.gs-notif-dot');
-    if(dot)dot.style.opacity='';
-    wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
-    ['walk','kick','climb','wave'].forEach(c=>wrap.classList.remove(c));
-    bubble.classList.remove('show');
+  setMode('');
+}
+
+/* ── PHASE 1: Walk → kick WhatsApp → return ── */
+async function phase1(){
+  if(chatOpen())return;
+  doBurst();
+  wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
+  showBot();await sleep(350);
+  const waBtn=document.querySelector('.whatsapp-float');
+  let destRight=waBtn?(window.innerWidth-waBtn.getBoundingClientRect().right-4):window.innerWidth-200;
+  destRight=Math.max(destRight,4);
+  await stepWalk(destRight,true);
+  wrap.style.transform='scaleX(-1)';await sleep(80);
+  setMode('kick');
+  if(waBtn){
+    waBtn.style.transition='transform .15s ease';waBtn.style.transform='translateX(18px) rotate(10deg)';
+    setTimeout(()=>{waBtn.style.transform='translateX(-6px) rotate(-4deg)'},190);
+    setTimeout(()=>{waBtn.style.transform='translateX(4px)'},340);
+    setTimeout(()=>{waBtn.style.transform='';waBtn.style.transition=''},490);
   }
-  function setMode(m){['walk','kick','climb','wave'].forEach(c=>wrap.classList.remove(c));if(m)wrap.classList.add(m)}
-  function chatOpen(){const p=document.getElementById('gs-chat-popup');return p&&p.classList.contains('gs-active')}
+  await sleep(800);
+  await stepWalk(24,false);
+  doBurst();await sleep(350);hideBot();
+  await sleep(2000);
+}
 
-  /* ── STEP-BASED WALK: takes discrete footsteps (no sliding) ── */
-  async function stepWalk(destRight, facingLeft) {
-    wrap.style.transform = facingLeft ? 'scaleX(-1)' : 'scaleX(1)';
-    setMode('walk');
-
-    const startRight = parseFloat(wrap.style.right) || 24;
-    const totalPx    = Math.abs(startRight - destRight);
-    const STEP_PX    = 55;   // pixels per footstep
-    const STEP_MOVE  = 450;  // ms to move one step
-    const STEP_PAUSE = 450;  // ms to pause on foot (matches 0.9s gait cycle)
-    const steps      = Math.max(Math.ceil(totalPx / STEP_PX), 1);
-
-    for (let i = 1; i <= steps; i++) {
-      if (chatOpen()) break;
-      const t = i / steps;
-      const nextRight = startRight + (destRight - startRight) * t;
-      wrap.style.transition = `right ${STEP_MOVE}ms ease-in-out`;
-      wrap.style.right = nextRight + 'px';
-      await sleep(STEP_MOVE + STEP_PAUSE);
-    }
-    setMode('');
+/* ── PHASE 2: Ladder climb step-by-step ── */
+async function phase2(){
+  if(chatOpen())return;
+  const headerEl=document.getElementById('header')||document.querySelector('header');
+  const headerBot=headerEl?headerEl.getBoundingClientRect().bottom:80;
+  const ROBOT_H=82;
+  const climbPx=Math.max(window.innerHeight-24-ROBOT_H-headerBot-10,150);
+  ladderEl.style.height=climbPx+'px';
+  ladderEl.style.bottom=(24+ROBOT_H)+'px';
+  ladderEl.style.display='flex';
+  for(const r of [...rungs].reverse()){r.classList.add('show');await sleep(55)}
+  await sleep(300);
+  if(chatOpen()){await retractLadder();return}
+  doBurst();
+  wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
+  showBot();await sleep(350);
+  const STEP_MOVE=440,STEP_GRIP=360; // 800ms = 0.8s climb CSS cycle
+  const stepPx=climbPx/RUNGS;
+  setMode('climb');
+  for(let i=1;i<=RUNGS;i++){
+    if(chatOpen())break;
+    wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
+    wrap.style.bottom=(24+i*stepPx)+'px';
+    await sleep(STEP_MOVE+STEP_GRIP);
   }
-
-  /* ── Phase 1: Walk → kick WhatsApp → walk home ── */
-  async function phase1(){
-    if(chatOpen())return;
-    doBurst();
-    wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
-    showBot();await sleep(350);
-
-    const waBtn=document.querySelector('.whatsapp-float');
-    let destRight=waBtn?(window.innerWidth-waBtn.getBoundingClientRect().right-4):window.innerWidth-200;
-    destRight=Math.max(destRight,4);
-
-    // Walk left (step by step)
-    await stepWalk(destRight, true);
-
-    // Kick
-    wrap.style.transform='scaleX(-1)';await sleep(60);
-    setMode('kick');
-    if(waBtn){
-      waBtn.style.transition='transform .15s ease';waBtn.style.transform='translateX(18px) rotate(10deg)';
-      setTimeout(()=>{waBtn.style.transform='translateX(-6px) rotate(-4deg)'},190);
-      setTimeout(()=>{waBtn.style.transform='translateX(4px)'},340);
-      setTimeout(()=>{waBtn.style.transform='';waBtn.style.transition=''},490);
-    }
-    await sleep(800);
-
-    // Walk back home (step by step, facing right)
-    await stepWalk(24, false);
-
-    doBurst();await sleep(350);hideBot();
-    await sleep(2000);
+  setMode('');bubble.classList.add('show');setMode('wave');await sleep(2000);
+  bubble.classList.remove('show');setMode('');await sleep(200);
+  setMode('climb');
+  for(let i=RUNGS-1;i>=0;i--){
+    wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
+    wrap.style.bottom=(24+i*stepPx)+'px';
+    await sleep(STEP_MOVE+STEP_GRIP);
   }
+  setMode('');doBurst();await sleep(350);hideBot();
+  await retractLadder();
+  await sleep(2000);
+}
 
-  /* ── Phase 2: Ladder climb (step-by-step, straight up) ── */
-  async function phase2(){
-    if(chatOpen())return;
+async function retractLadder(){
+  for(const r of rungs){r.classList.remove('show');await sleep(40)}
+  ladderEl.style.display='none';
+}
 
-    const headerEl=document.getElementById('header')||document.querySelector('header');
-    const headerBot=headerEl?headerEl.getBoundingClientRect().bottom:80;
-    const ROBOT_H=80;
-    const climbPx=Math.max(window.innerHeight-24-ROBOT_H-headerBot-10,150);
-
-    ladderEl.style.height=climbPx+'px';
-    ladderEl.style.bottom=(24+ROBOT_H)+'px';
-    ladderEl.style.display='flex';
-
-    for(const r of [...rungs].reverse()){r.classList.add('show');await sleep(55)}
-    await sleep(300);
-    if(chatOpen()){await retractLadder();return}
-
-    doBurst();
-    wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
-    showBot();await sleep(350);
-
-    const STEP_MOVE=420,STEP_GRIP=280;
-    const stepPx=climbPx/RUNGS;
-    setMode('climb');
-    for(let i=1;i<=RUNGS;i++){
-      if(chatOpen())break;
-      wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
-      wrap.style.bottom=(24+i*stepPx)+'px';
-      await sleep(STEP_MOVE+STEP_GRIP);
-    }
-
-    setMode('');bubble.classList.add('show');setMode('wave');await sleep(2000);
-    bubble.classList.remove('show');setMode('');await sleep(200);
-
-    setMode('climb');
-    for(let i=RUNGS-1;i>=0;i--){
-      wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
-      wrap.style.bottom=(24+i*stepPx)+'px';
-      await sleep(STEP_MOVE+STEP_GRIP);
-    }
-
-    setMode('');doBurst();await sleep(350);hideBot();
-    await retractLadder();
-    await sleep(2000);
+async function loop(){
+  await sleep(3500);
+  while(true){
+    if(!chatOpen())await phase1();else{await sleep(1200);continue}
+    if(!chatOpen())await phase2();else await sleep(1200);
   }
-
-  async function retractLadder(){
-    for(const r of rungs){r.classList.remove('show');await sleep(40)}
-    ladderEl.style.display='none';
-  }
-
-  async function loop(){
-    await sleep(3500);
-    while(true){
-      if(!chatOpen())await phase1();else{await sleep(1200);continue}
-      if(!chatOpen())await phase2();else await sleep(1200);
-    }
-  }
-  loop();
+}
+loop();
 })();
