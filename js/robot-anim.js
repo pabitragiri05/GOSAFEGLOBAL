@@ -1,10 +1,10 @@
 /* GoSafe Global – Robot Animation v9
    Ladder on screen | Robot on ladder | Orb-antenna ropeway return
    ================================================================ */
-(function(){
-'use strict';
+(function () {
+  'use strict';
 
-document.head.insertAdjacentHTML('beforeend',`<style>
+  document.head.insertAdjacentHTML('beforeend', `<style>
 #gs-robo-wrap{position:fixed;bottom:24px;right:24px;z-index:9997;pointer-events:none;flex-direction:column;align-items:center;display:none}
 .gs-robo-bubble{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;border:2px solid #f59e0b;background:#fff;color:#4c1d95;white-space:nowrap;margin-bottom:6px;box-shadow:0 3px 12px rgba(0,0,0,.2);position:relative;transform:scale(0);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
 .gs-robo-bubble.show{transform:scale(1)}
@@ -34,24 +34,24 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 .gs-shin-seg{width:7px;height:11px;background:linear-gradient(180deg,#4c1d95,#3b0e8c);border-radius:0 0 3px 3px;border:1px solid rgba(245,158,11,.3)}
 .gs-robo-foot{width:11px;height:4px;background:#f59e0b;border-radius:3px;margin-top:-1px;box-shadow:0 2px 4px rgba(245,158,11,.5)}
 
-/* WALK 0.12s fast gait */
-#gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob .12s ease-in-out infinite}
+/* WALK 0.35s gait */
+#gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob .35s ease-in-out infinite}
 @keyframes gs-walk-bob{0%,100%{transform:translateY(0) rotate(1.5deg)}50%{transform:translateY(-3px) rotate(-1.5deg)}}
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l{animation:gs-hip-l .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l{animation:gs-hip-l .35s ease-in-out infinite}
 @keyframes gs-hip-l{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}}
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l .gs-lower-leg-w{animation:gs-knee-l .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l .gs-lower-leg-w{animation:gs-knee-l .35s ease-in-out infinite}
 @keyframes gs-knee-l{0%{transform:rotate(5deg)}25%{transform:rotate(38deg)}50%{transform:rotate(6deg)}75%{transform:rotate(2deg)}100%{transform:rotate(5deg)}}
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r{animation:gs-hip-r .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r{animation:gs-hip-r .35s ease-in-out infinite}
 @keyframes gs-hip-r{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-knee-r .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-knee-r .35s ease-in-out infinite}
 @keyframes gs-knee-r{0%{transform:rotate(6deg)}25%{transform:rotate(2deg)}50%{transform:rotate(5deg)}75%{transform:rotate(38deg)}100%{transform:rotate(6deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l{animation:gs-shoulder-l .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l{animation:gs-shoulder-l .35s ease-in-out infinite}
 @keyframes gs-shoulder-l{0%,100%{transform:rotate(20deg)}50%{transform:rotate(-20deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l .gs-lower-arm-w{animation:gs-elbow-l .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l .gs-lower-arm-w{animation:gs-elbow-l .35s ease-in-out infinite}
 @keyframes gs-elbow-l{0%,100%{transform:rotate(12deg)}50%{transform:rotate(26deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r{animation:gs-shoulder-r .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r{animation:gs-shoulder-r .35s ease-in-out infinite}
 @keyframes gs-shoulder-r{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-elbow-r .12s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-elbow-r .35s ease-in-out infinite}
 @keyframes gs-elbow-r{0%,100%{transform:rotate(12deg)}50%{transform:rotate(26deg)}}
 
 /* KICK */
@@ -106,8 +106,8 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 @keyframes gs-burst{0%{transform:scale(1);opacity:1}100%{transform:scale(3);opacity:0}}
 </style>`);
 
-const RUNGS=12;
-document.body.insertAdjacentHTML('beforeend',`
+  const RUNGS = 12;
+  document.body.insertAdjacentHTML('beforeend', `
 <div id="gs-robo-wrap">
   <div class="gs-robo-bubble" id="gs-robo-bubble">Hii! 👋</div>
   <div class="gs-robo">
@@ -142,217 +142,215 @@ document.body.insertAdjacentHTML('beforeend',`
 </div>
 <div id="gs-ladder-el">
   <div class="gs-post l"></div><div class="gs-post r"></div>
-  ${Array.from({length:RUNGS},()=>`<div class="gs-ladder-rung"></div>`).join('')}
+  ${Array.from({ length: RUNGS }, () => `<div class="gs-ladder-rung"></div>`).join('')}
 </div>
 <div id="gs-burst-ring"></div>`);
 
-const launcher=document.getElementById('gs-chat-launcher');
-const wrap=document.getElementById('gs-robo-wrap');
-const bubble=document.getElementById('gs-robo-bubble');
-const ladderEl=document.getElementById('gs-ladder-el');
-const burstEl=document.getElementById('gs-burst-ring');
-const rungs=Array.from(ladderEl.querySelectorAll('.gs-ladder-rung'));
-if(!launcher||!wrap)return;
+  const launcher = document.getElementById('gs-chat-launcher');
+  const wrap = document.getElementById('gs-robo-wrap');
+  const bubble = document.getElementById('gs-robo-bubble');
+  const ladderEl = document.getElementById('gs-ladder-el');
+  const burstEl = document.getElementById('gs-burst-ring');
+  const rungs = Array.from(ladderEl.querySelectorAll('.gs-ladder-rung'));
+  if (!launcher || !wrap) return;
 
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-function doBurst(){burstEl.classList.remove('pop');void burstEl.offsetWidth;burstEl.classList.add('pop')}
-function showBot(){
-  // Fully hide launcher (opacity so layout preserved, pointerEvents so no mis-clicks)
-  launcher.style.opacity='0';
-  launcher.style.pointerEvents='none';
-  launcher.style.transform='scale(0)';
-  wrap.style.display='flex';
-}
-function hideBot(){
-  wrap.style.display='none';
-  launcher.style.opacity='';
-  launcher.style.pointerEvents='';
-  launcher.style.transform='';
-  launcher.style.transition='';
-  wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
-  ['walk','kick','climb','wave','to-orb'].forEach(c=>wrap.classList.remove(c));
-  bubble.classList.remove('show');
-}
-function setMode(m){['walk','kick','climb','wave','to-orb'].forEach(c=>wrap.classList.remove(c));if(m)wrap.classList.add(m)}
-function chatOpen(){const p=document.getElementById('gs-chat-popup');return p&&p.classList.contains('gs-active')}
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  function doBurst() { burstEl.classList.remove('pop'); void burstEl.offsetWidth; burstEl.classList.add('pop') }
+  function showBot() {
+    launcher.style.fontSize = '0';
+    const d = launcher.querySelector('.gs-notif-dot'); if (d) d.style.opacity = '0';
+    wrap.style.display = 'flex';
+  }
+  function hideBot() {
+    wrap.style.display = 'none';
+    launcher.style.fontSize = '';
+    const d = launcher.querySelector('.gs-notif-dot'); if (d) d.style.opacity = '';
+    wrap.style.transition = 'none'; wrap.style.bottom = '24px'; wrap.style.right = '24px'; wrap.style.transform = 'scaleX(1)';
+    ['walk', 'kick', 'climb', 'wave', 'to-orb'].forEach(c => wrap.classList.remove(c));
+    bubble.classList.remove('show');
+  }
+  function setMode(m) { ['walk', 'kick', 'climb', 'wave', 'to-orb'].forEach(c => wrap.classList.remove(c)); if (m) wrap.classList.add(m) }
+  function chatOpen() { const p = document.getElementById('gs-chat-popup'); return p && p.classList.contains('gs-active') }
 
-/* WALK – smooth 200px/s, 0.12s gait */
-async function walkTo(destRight,facingLeft){
-  wrap.style.transform=facingLeft?'scaleX(-1)':'scaleX(1)';
-  setMode('walk');
-  const startRight=parseFloat(wrap.style.right)||24;
-  const totalPx=Math.abs(startRight-destRight);
-  const dur=Math.max(totalPx/200,0.3);
-  wrap.style.transition=`right ${dur}s linear`;
-  wrap.style.right=destRight+'px';
-  await sleep(dur*1000+50);
-  setMode('');
-}
+  /* WALK – smooth 200px/s, 0.12s gait */
+  async function walkTo(destRight, facingLeft) {
+    wrap.style.transform = facingLeft ? 'scaleX(-1)' : 'scaleX(1)';
+    setMode('walk');
+    const startRight = parseFloat(wrap.style.right) || 24;
+    const totalPx = Math.abs(startRight - destRight);
+    const dur = Math.max(totalPx / 200, 0.3);
+    wrap.style.transition = `right ${dur}s linear`;
+    wrap.style.right = destRight + 'px';
+    await sleep(dur * 1000 + 50);
+    setMode('');
+  }
 
-/* ORB ROPEWAY – robot transforms into glowing orb matching the launcher,
-   antenna grips rope, glides home, morphs seamlessly back into launcher */
-async function orbRopeway(fromRight){
-  wrap.style.transform='scaleX(1)';
+  /* ORB ROPEWAY – robot transforms into glowing orb matching the launcher,
+     antenna grips rope, glides home, morphs seamlessly back into launcher */
+  async function orbRopeway(fromRight) {
+    wrap.style.transform = 'scaleX(1)';
 
-  // Collapse robot into orb
-  setMode('to-orb');
-  await sleep(350);
-  wrap.style.display='none'; // hide robot shell
+    // Collapse robot into orb
+    setMode('to-orb');
+    await sleep(350);
+    wrap.style.display = 'none'; // hide robot shell
 
-  // Orb matches launcher exactly: 68px orange circle with 🤖
-  const ORB=68,ANT=15;
-  const orbEl=document.createElement('div');
-  orbEl.style.cssText=`position:fixed;bottom:24px;right:${fromRight}px;
+    // Orb matches launcher exactly: 68px orange circle with 🤖
+    const ORB = 68, ANT = 15;
+    const orbEl = document.createElement('div');
+    orbEl.style.cssText = `position:fixed;bottom:24px;right:${fromRight}px;
     width:${ORB}px;height:${ORB}px;
     background:linear-gradient(135deg,#f59e0b,#d97706);
     border-radius:50%;border:3px solid #fff;
     box-shadow:0 6px 30px rgba(245,158,11,.85),0 0 0 4px rgba(245,158,11,.25);
-    z-index:10002;pointer-events:none;
+    z-index:9998;pointer-events:none;
     display:flex;align-items:center;justify-content:center;
     font-size:32px;line-height:1;
     animation:gs-orb-glow .6s ease-in-out infinite;`;
-  orbEl.textContent='🤖';
+    orbEl.textContent = '🤖';
 
-  // Antenna stem + ball on orb
-  const stem=document.createElement('div');
-  stem.style.cssText=`position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
+    // Antenna stem + ball on orb
+    const stem = document.createElement('div');
+    stem.style.cssText = `position:absolute;bottom:100%;left:50%;transform:translateX(-50%);
     width:2px;height:${ANT}px;background:#f59e0b;border-radius:1px;`;
-  const ball=document.createElement('div');
-  ball.style.cssText=`position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+    const ball = document.createElement('div');
+    ball.style.cssText = `position:absolute;top:-8px;left:50%;transform:translateX(-50%);
     width:7px;height:7px;background:#ef4444;border-radius:50%;
     box-shadow:0 0 8px rgba(239,68,68,.9);`;
-  stem.appendChild(ball);
-  orbEl.appendChild(stem);
-  document.body.appendChild(orbEl);
+    stem.appendChild(ball);
+    orbEl.appendChild(stem);
+    document.body.appendChild(orbEl);
 
-  // Rope at antenna ball level
-  const ropeBottom=24+ORB+ANT+2;
-  const ropeRight=Math.min(fromRight,24)-12;
-  const ropeWidth=Math.abs(fromRight-24)+80;
-  const ropeEl=document.createElement('div');
-  ropeEl.style.cssText=`position:fixed;bottom:${ropeBottom}px;right:${ropeRight}px;
+    // Rope at antenna ball level
+    const ropeBottom = 24 + ORB + ANT + 2;
+    const ropeRight = Math.min(fromRight, 24) - 12;
+    const ropeWidth = Math.abs(fromRight - 24) + 80;
+    const ropeEl = document.createElement('div');
+    ropeEl.style.cssText = `position:fixed;bottom:${ropeBottom}px;right:${ropeRight}px;
     width:${ropeWidth}px;height:3px;
     background:linear-gradient(90deg,rgba(245,158,11,.15),rgba(245,158,11,.9) 10%,rgba(245,158,11,.9) 90%,rgba(245,158,11,.15));
     border-radius:2px;box-shadow:0 1px 10px rgba(245,158,11,.6);
     pointer-events:none;z-index:9995;opacity:0;transition:opacity .25s ease;`;
-  document.body.appendChild(ropeEl);
+    document.body.appendChild(ropeEl);
 
-  // Fade rope in
-  await sleep(20);ropeEl.style.opacity='1';
-  await sleep(280);
+    // Fade rope in
+    await sleep(20); ropeEl.style.opacity = '1';
+    await sleep(280);
 
-  // Orb grabs rope – zoom home!
-  orbEl.style.transition='right 1.1s cubic-bezier(.3,0,.7,1)';
-  orbEl.style.right='24px';
-  await sleep(1200);
+    // Orb grabs rope – zoom home!
+    orbEl.style.transition = 'right 1.1s cubic-bezier(.3,0,.7,1)';
+    orbEl.style.right = '24px';
+    await sleep(1200);
 
-  // Orb arrives home — crossfade: orb fades out, launcher springs in
-  ropeEl.style.opacity='0';
-  orbEl.style.transition='transform .35s ease-in, opacity .35s ease-in';
-  orbEl.style.transform='scale(0)';
-  orbEl.style.opacity='0';
+    // Orb arrives home — morph into launcher simultaneously:
+    // 1. Orb shrinks to 0
+    // 2. Real launcher springs out from 0 at same time (no gap)
+    ropeEl.style.opacity = '0';
+    orbEl.style.transition = 'transform .35s ease-in, opacity .3s ease-in';
+    orbEl.style.transform = 'scale(0)';
+    orbEl.style.opacity = '0';
 
-  // Pop launcher in while orb shrinks (spring bounce)
-  launcher.style.transition='opacity .15s ease, transform .45s cubic-bezier(.34,1.56,.64,1), pointer-events 0s';
-  launcher.style.pointerEvents='none';
-  await sleep(20);
-  launcher.style.opacity='1';
-  launcher.style.transform='';
+    // Restore launcher icon and spring it in while orb shrinks
+    launcher.style.fontSize = '';
+    const nd = launcher.querySelector('.gs-notif-dot'); if (nd) nd.style.opacity = '';
+    launcher.style.transform = 'scale(0)';
+    launcher.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1)';
+    await sleep(20);
+    launcher.style.transform = '';
 
-  await sleep(500);
-  launcher.style.transition='';
-  launcher.style.pointerEvents='';
-  ropeEl.remove();
-  orbEl.remove();
-}
-
-/* PHASE 1 */
-async function phase1(){
-  if(chatOpen())return;
-  doBurst();
-  wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
-  showBot();await sleep(350);
-
-  const waBtn=document.querySelector('.whatsapp-float');
-  let destRight=waBtn?(window.innerWidth-waBtn.getBoundingClientRect().right-4):window.innerWidth-200;
-  destRight=Math.max(destRight,4);
-
-  await walkTo(destRight,true);
-
-  wrap.style.transform='scaleX(-1)';await sleep(60);
-  setMode('kick');
-  if(waBtn){
-    waBtn.style.transition='transform .15s ease';waBtn.style.transform='translateX(18px) rotate(10deg)';
-    setTimeout(()=>{waBtn.style.transform='translateX(-6px) rotate(-4deg)'},190);
-    setTimeout(()=>{waBtn.style.transform='translateX(4px)'},340);
-    setTimeout(()=>{waBtn.style.transform='';waBtn.style.transition=''},490);
+    await sleep(400);
+    launcher.style.transition = '';
+    ropeEl.remove();
+    orbEl.remove();
   }
-  await sleep(800);
 
-  // Robot transforms to orb → grips rope → glides home
-  const curRight=parseFloat(wrap.style.right)||destRight;
-  await orbRopeway(curRight);
+  /* PHASE 1 */
+  async function phase1() {
+    if (chatOpen()) return;
+    doBurst();
+    wrap.style.transition = 'none'; wrap.style.bottom = '24px'; wrap.style.right = '24px'; wrap.style.transform = 'scaleX(1)';
+    showBot(); await sleep(350);
 
-  doBurst();await sleep(300);hideBot();
-  await sleep(2000);
-}
+    const waBtn = document.querySelector('.whatsapp-float');
+    let destRight = waBtn ? (window.innerWidth - waBtn.getBoundingClientRect().right - 4) : window.innerWidth - 200;
+    destRight = Math.max(destRight, 4);
 
-/* PHASE 2 – Ladder climb */
-async function phase2(){
-  if(chatOpen())return;
-  const headerEl=document.getElementById('header')||document.querySelector('header');
-  const headerBot=headerEl?headerEl.getBoundingClientRect().bottom:80;
-  const ROBOT_H=82;
-  const climbPx=Math.max(window.innerHeight-24-ROBOT_H-headerBot-10,150);
+    await walkTo(destRight, true);
 
-  // Ladder: straight vertical, right:20px (safely on screen)
-  ladderEl.style.height=climbPx+'px';
-  ladderEl.style.bottom=(24+ROBOT_H)+'px';
-  ladderEl.style.display='flex';
-  for(const r of [...rungs].reverse()){r.classList.add('show');await sleep(55)}
-  await sleep(300);
-  if(chatOpen()){await retractLadder();return}
+    wrap.style.transform = 'scaleX(-1)'; await sleep(60);
+    setMode('kick');
+    if (waBtn) {
+      waBtn.style.transition = 'transform .15s ease'; waBtn.style.transform = 'translateX(18px) rotate(10deg)';
+      setTimeout(() => { waBtn.style.transform = 'translateX(-6px) rotate(-4deg)' }, 190);
+      setTimeout(() => { waBtn.style.transform = 'translateX(4px)' }, 340);
+      setTimeout(() => { waBtn.style.transform = ''; waBtn.style.transition = '' }, 490);
+    }
+    await sleep(800);
 
-  doBurst();
-  // Place robot aligned ON the ladder (right:18px ≈ ladder center at right:34px)
-  wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='18px';wrap.style.transform='scaleX(1)';
-  showBot();await sleep(350);
+    // Robot transforms to orb → grips rope → glides home
+    const curRight = parseFloat(wrap.style.right) || destRight;
+    await orbRopeway(curRight);
 
-  const STEP_MOVE=440,STEP_GRIP=360;
-  const stepPx=climbPx/RUNGS;
-  setMode('climb');
-  for(let i=1;i<=RUNGS;i++){
-    if(chatOpen())break;
-    wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
-    wrap.style.bottom=(24+i*stepPx)+'px';
-    await sleep(STEP_MOVE+STEP_GRIP);
+    doBurst(); await sleep(300); hideBot();
+    await sleep(2000);
   }
-  setMode('');bubble.classList.add('show');setMode('wave');await sleep(2000);
-  bubble.classList.remove('show');setMode('');await sleep(200);
 
-  setMode('climb');
-  for(let i=RUNGS-1;i>=0;i--){
-    wrap.style.transition=`bottom ${STEP_MOVE}ms ease-in-out`;
-    wrap.style.bottom=(24+i*stepPx)+'px';
-    await sleep(STEP_MOVE+STEP_GRIP);
+  /* PHASE 2 – Ladder climb */
+  async function phase2() {
+    if (chatOpen()) return;
+    const headerEl = document.getElementById('header') || document.querySelector('header');
+    const headerBot = headerEl ? headerEl.getBoundingClientRect().bottom : 80;
+    const ROBOT_H = 82;
+    const climbPx = Math.max(window.innerHeight - 24 - ROBOT_H - headerBot - 10, 150);
+
+    // Ladder: straight vertical, right:20px (safely on screen)
+    ladderEl.style.height = climbPx + 'px';
+    ladderEl.style.bottom = (24 + ROBOT_H) + 'px';
+    ladderEl.style.display = 'flex';
+    for (const r of [...rungs].reverse()) { r.classList.add('show'); await sleep(55) }
+    await sleep(300);
+    if (chatOpen()) { await retractLadder(); return }
+
+    doBurst();
+    // Place robot aligned ON the ladder (right:18px ≈ ladder center at right:34px)
+    wrap.style.transition = 'none'; wrap.style.bottom = '24px'; wrap.style.right = '18px'; wrap.style.transform = 'scaleX(1)';
+    showBot(); await sleep(350);
+
+    const STEP_MOVE = 440, STEP_GRIP = 360;
+    const stepPx = climbPx / RUNGS;
+    setMode('climb');
+    for (let i = 1; i <= RUNGS; i++) {
+      if (chatOpen()) break;
+      wrap.style.transition = `bottom ${STEP_MOVE}ms ease-in-out`;
+      wrap.style.bottom = (24 + i * stepPx) + 'px';
+      await sleep(STEP_MOVE + STEP_GRIP);
+    }
+    setMode(''); bubble.classList.add('show'); setMode('wave'); await sleep(2000);
+    bubble.classList.remove('show'); setMode(''); await sleep(200);
+
+    setMode('climb');
+    for (let i = RUNGS - 1; i >= 0; i--) {
+      wrap.style.transition = `bottom ${STEP_MOVE}ms ease-in-out`;
+      wrap.style.bottom = (24 + i * stepPx) + 'px';
+      await sleep(STEP_MOVE + STEP_GRIP);
+    }
+    setMode(''); doBurst(); await sleep(350);
+    wrap.style.right = '24px'; // snap back to home x
+    hideBot();
+    await retractLadder(); await sleep(2000);
   }
-  setMode('');doBurst();await sleep(350);
-  wrap.style.right='24px'; // snap back to home x
-  hideBot();
-  await retractLadder();await sleep(2000);
-}
 
-async function retractLadder(){
-  for(const r of rungs){r.classList.remove('show');await sleep(40)}
-  ladderEl.style.display='none';
-}
-
-async function loop(){
-  await sleep(3500);
-  while(true){
-    if(!chatOpen())await phase1();else{await sleep(1200);continue}
-    if(!chatOpen())await phase2();else await sleep(1200);
+  async function retractLadder() {
+    for (const r of rungs) { r.classList.remove('show'); await sleep(40) }
+    ladderEl.style.display = 'none';
   }
-}
-loop();
+
+  async function loop() {
+    await sleep(3500);
+    while (true) {
+      if (!chatOpen()) await phase1(); else { await sleep(1200); continue }
+      if (!chatOpen()) await phase2(); else await sleep(1200);
+    }
+  }
+  loop();
 })();
