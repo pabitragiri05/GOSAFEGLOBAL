@@ -1588,7 +1588,7 @@ input, textarea { font-family: inherit; }
 ================================================================ */
 .back-to-top {
   position: fixed;
-  bottom: 90px;
+  bottom: 115px;
   right: 24px;
   width: 46px;
   height: 46px;
