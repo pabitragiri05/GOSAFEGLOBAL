@@ -1,5 +1,5 @@
-// ================================================================
-//  GoSafe Global — Main JavaScript
+ï»¿// ================================================================
+//  GoSafe Global ï¿½ Main JavaScript
 // ================================================================
 
 // -- State --
@@ -124,7 +124,7 @@ function renderCartItems() {
   });
 
   const total = document.getElementById('cart-total-price');
-  if (total) total.textContent = `${state.cart.reduce((s, i) => s + i.qty, 0)} item(s) – Price on Request`;
+  if (total) total.textContent = `${state.cart.reduce((s, i) => s + i.qty, 0)} item(s) ï¿½ Price on Request`;
 }
 
 function openCart() {
@@ -496,7 +496,7 @@ function initCheckout() {
       showToast('Your cart is empty.', 'error');
       return;
     }
-    const items = state.cart.map(i => `• ${i.name} (x${i.qty})`).join('\n');
+    const items = state.cart.map(i => `ï¿½ ${i.name} (x${i.qty})`).join('\n');
     const msg = encodeURIComponent(`Hello GoSafe Global! I'd like to inquire about the following products:\n\n${items}\n\nPlease send me pricing and availability.`);
     window.open(`https://wa.me/919876543210?text=${msg}`, '_blank');
   });
@@ -897,6 +897,7 @@ function renderStep(step) {
 
   setTimeout(() => renderContinue(), 200);
 }
+
 
 
 
