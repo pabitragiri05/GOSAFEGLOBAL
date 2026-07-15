@@ -42,26 +42,26 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 /* ══════════════════════════════════════════════
    WALK  –  0.75s gait | knee bends | elbow swings
    ══════════════════════════════════════════════ */
-#gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-robo{animation:gs-walk-bob .38s ease-in-out infinite}
 @keyframes gs-walk-bob{0%,100%{transform:translateY(0) rotate(1.5deg)}25%,75%{transform:translateY(-3px) rotate(0)}50%{transform:translateY(0) rotate(-1.5deg)}}
 /* Left leg hip + knee */
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l{animation:gs-hip-l .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l{animation:gs-hip-l .38s ease-in-out infinite}
 @keyframes gs-hip-l{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(24deg)}}
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l .gs-lower-leg-w{animation:gs-knee-l .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-l .gs-lower-leg-w{animation:gs-knee-l .38s ease-in-out infinite}
 @keyframes gs-knee-l{0%{transform:rotate(5deg)}25%{transform:rotate(38deg)}50%{transform:rotate(6deg)}75%{transform:rotate(2deg)}100%{transform:rotate(5deg)}}
 /* Right leg hip + knee */
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r{animation:gs-hip-r .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r{animation:gs-hip-r .38s ease-in-out infinite}
 @keyframes gs-hip-r{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}
-#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-knee-r .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-leg-wrap.gs-leg-r .gs-lower-leg-w{animation:gs-knee-r .38s ease-in-out infinite}
 @keyframes gs-knee-r{0%{transform:rotate(6deg)}25%{transform:rotate(2deg)}50%{transform:rotate(5deg)}75%{transform:rotate(38deg)}100%{transform:rotate(6deg)}}
 /* Arms + elbows */
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l{animation:gs-shoulder-l .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l{animation:gs-shoulder-l .38s ease-in-out infinite}
 @keyframes gs-shoulder-l{0%,100%{transform:rotate(20deg)}50%{transform:rotate(-20deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l .gs-lower-arm-w{animation:gs-elbow-l .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-l .gs-lower-arm-w{animation:gs-elbow-l .38s ease-in-out infinite}
 @keyframes gs-elbow-l{0%,50%,100%{transform:rotate(12deg)}25%{transform:rotate(28deg)}75%{transform:rotate(22deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r{animation:gs-shoulder-r .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r{animation:gs-shoulder-r .38s ease-in-out infinite}
 @keyframes gs-shoulder-r{0%,100%{transform:rotate(-20deg)}50%{transform:rotate(20deg)}}
-#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-elbow-r .75s ease-in-out infinite}
+#gs-robo-wrap.walk .gs-arm-wrap.gs-arm-r .gs-lower-arm-w{animation:gs-elbow-r .38s ease-in-out infinite}
 @keyframes gs-elbow-r{0%,50%,100%{transform:rotate(12deg)}25%{transform:rotate(22deg)}75%{transform:rotate(28deg)}}
 
 /* ══════════════════════════════════════════════
@@ -217,7 +217,7 @@ async function stepWalk(destRight,facingLeft){
   setMode('walk');
   const startRight=parseFloat(wrap.style.right)||24;
   const totalPx=Math.abs(startRight-destRight);
-  const STEP_PX=48,STEP_MOVE=380,STEP_PAUSE=380;
+  const STEP_PX=48,STEP_MOVE=190,STEP_PAUSE=190;
   const steps=Math.max(Math.ceil(totalPx/STEP_PX),1);
   for(let i=1;i<=steps;i++){
     if(chatOpen())break;
@@ -352,3 +352,4 @@ async function loop(){
 }
 loop();
 })();
+
