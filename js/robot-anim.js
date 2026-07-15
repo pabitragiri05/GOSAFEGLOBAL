@@ -1,4 +1,4 @@
-﻿/* GoSafe Global – Robot Animation v9
+/* GoSafe Global – Robot Animation v9
    Ladder on screen | Robot on ladder | Orb-antenna ropeway return
    ================================================================ */
 (function(){
@@ -172,20 +172,21 @@ function hideBot(){
 function setMode(m){['walk','kick','climb','wave','to-orb'].forEach(c=>wrap.classList.remove(c));if(m)wrap.classList.add(m)}
 function chatOpen(){const p=document.getElementById('gs-chat-popup');return p&&p.classList.contains('gs-active')}
 
-/* WALK – smooth 500px/s, 0.12s gait */
+/* WALK – smooth 200px/s, 0.12s gait */
 async function walkTo(destRight,facingLeft){
   wrap.style.transform=facingLeft?'scaleX(-1)':'scaleX(1)';
   setMode('walk');
   const startRight=parseFloat(wrap.style.right)||24;
   const totalPx=Math.abs(startRight-destRight);
-  const dur=Math.max(totalPx/500,0.2);
+  const dur=Math.max(totalPx/200,0.3);
   wrap.style.transition=`right ${dur}s linear`;
   wrap.style.right=destRight+'px';
   await sleep(dur*1000+50);
   setMode('');
 }
 
-/* ORB ROPEWAY – robot transforms into glowing orb, antenna grips rope, glides home */
+/* ORB ROPEWAY – robot transforms into glowing orb matching the launcher,
+   antenna grips rope, glides home, morphs seamlessly back into launcher */
 async function orbRopeway(fromRight){
   wrap.style.transform='scaleX(1)';
 
@@ -194,16 +195,19 @@ async function orbRopeway(fromRight){
   await sleep(350);
   wrap.style.display='none'; // hide robot shell
 
-  // Create glowing orb rider (looks like chatbot icon)
-  const ORB=44,ANT=15;
+  // Orb matches launcher exactly: 68px orange circle with 🤖
+  const ORB=68,ANT=15;
   const orbEl=document.createElement('div');
   orbEl.style.cssText=`position:fixed;bottom:24px;right:${fromRight}px;
     width:${ORB}px;height:${ORB}px;
-    background:radial-gradient(circle at 35% 35%,#fde68a,#f59e0b 60%,#d97706);
-    border-radius:50%;border:3px solid #fbbf24;
-    box-shadow:0 0 24px rgba(245,158,11,.9),0 0 50px rgba(245,158,11,.4);
+    background:linear-gradient(135deg,#f59e0b,#d97706);
+    border-radius:50%;border:3px solid #fff;
+    box-shadow:0 6px 30px rgba(245,158,11,.85),0 0 0 4px rgba(245,158,11,.25);
     z-index:9998;pointer-events:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;line-height:1;
     animation:gs-orb-glow .6s ease-in-out infinite;`;
+  orbEl.textContent='🤖';
 
   // Antenna stem + ball on orb
   const stem=document.createElement('div');
@@ -218,7 +222,7 @@ async function orbRopeway(fromRight){
   document.body.appendChild(orbEl);
 
   // Rope at antenna ball level
-  const ropeBottom=24+ORB+ANT+1;
+  const ropeBottom=24+ORB+ANT+2;
   const ropeRight=Math.min(fromRight,24)-12;
   const ropeWidth=Math.abs(fromRight-24)+80;
   const ropeEl=document.createElement('div');
@@ -233,14 +237,29 @@ async function orbRopeway(fromRight){
   await sleep(20);ropeEl.style.opacity='1';
   await sleep(280);
 
-  // Orb grabs rope – zoom home fast!
+  // Orb grabs rope – zoom home!
   orbEl.style.transition='right 1.1s cubic-bezier(.3,0,.7,1)';
   orbEl.style.right='24px';
   await sleep(1200);
 
-  // Cleanup
+  // Orb arrives home — morph into launcher simultaneously:
+  // 1. Orb shrinks to 0
+  // 2. Real launcher springs out from 0 at same time (no gap)
   ropeEl.style.opacity='0';
-  await sleep(250);
+  orbEl.style.transition='transform .35s ease-in, opacity .3s ease-in';
+  orbEl.style.transform='scale(0)';
+  orbEl.style.opacity='0';
+
+  // Restore launcher icon and spring it in while orb shrinks
+  launcher.style.fontSize='';
+  const nd=launcher.querySelector('.gs-notif-dot');if(nd)nd.style.opacity='';
+  launcher.style.transform='scale(0)';
+  launcher.style.transition='transform .4s cubic-bezier(.34,1.56,.64,1)';
+  await sleep(20);
+  launcher.style.transform='';
+
+  await sleep(400);
+  launcher.style.transition='';
   ropeEl.remove();
   orbEl.remove();
 }
