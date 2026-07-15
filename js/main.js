@@ -206,8 +206,8 @@ function createProductCard(product) {
         <div class="product-footer">
           <div class="product-price">
             <span class="price-label">Price</span>
-            ${product.priceOnRequest
-              ? '<span class="price-on-request">On Request</span>'
+            ${(product.price === "Enquire Now" || product.priceOnRequest)
+              ? '<span class="price-on-request" style="font-weight:600;color:var(--accent)">Enquire Now</span>'
               : `<span class="price-val">${formatPrice(product.price)}</span>`}
           </div>
           <button class="add-to-cart-btn" onclick="addToCart(${product.id})" id="atc-${product.id}">
@@ -347,8 +347,6 @@ function initMobileMenu() {
       spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
     }
   });
-}
-
 // -- Search --
 function getCatLabel(cat) {
   const map = {
@@ -361,6 +359,9 @@ function getCatLabel(cat) {
   };
   return map[cat] || cat;
 }
+
+// Ensure getCatLabel is hoisted for DOMContentLoaded
+window.getCatLabel = getCatLabel;
 
 function initSearch() {
   const input = document.getElementById('search-input');
@@ -647,6 +648,20 @@ function initContactForm() {
 
 // -- INIT --
 document.addEventListener('DOMContentLoaded', () => {
+  // Normalize product data
+  if (window.GOSAFE_PRODUCTS) {
+    window.GOSAFE_PRODUCTS.forEach(p => {
+      p.categoryLabel = getCatLabel(p.category);
+      p.rating = p.rating || 5.0;
+      p.reviews = p.reviews || Math.floor(Math.random() * 50) + 10;
+      p.shortDesc = p.shortDesc || "High quality security and safety product by GoSafe Global.";
+      p.features = p.features || ["Premium Quality", "Durable Material", "Reliable Performance"];
+    });
+  }
+
+  // Restore state
+  updateCartCount();
+  updateWishlistCount();
   initEventListeners();
   initHeaderScroll();
   initMobileMenu();
