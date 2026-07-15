@@ -157,14 +157,18 @@ if(!launcher||!wrap)return;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function doBurst(){burstEl.classList.remove('pop');void burstEl.offsetWidth;burstEl.classList.add('pop')}
 function showBot(){
-  launcher.style.fontSize='0';
-  const d=launcher.querySelector('.gs-notif-dot');if(d)d.style.opacity='0';
+  // Fully hide launcher (opacity so layout preserved, pointerEvents so no mis-clicks)
+  launcher.style.opacity='0';
+  launcher.style.pointerEvents='none';
+  launcher.style.transform='scale(0)';
   wrap.style.display='flex';
 }
 function hideBot(){
   wrap.style.display='none';
-  launcher.style.fontSize='';
-  const d=launcher.querySelector('.gs-notif-dot');if(d)d.style.opacity='';
+  launcher.style.opacity='';
+  launcher.style.pointerEvents='';
+  launcher.style.transform='';
+  launcher.style.transition='';
   wrap.style.transition='none';wrap.style.bottom='24px';wrap.style.right='24px';wrap.style.transform='scaleX(1)';
   ['walk','kick','climb','wave','to-orb'].forEach(c=>wrap.classList.remove(c));
   bubble.classList.remove('show');
@@ -203,7 +207,7 @@ async function orbRopeway(fromRight){
     background:linear-gradient(135deg,#f59e0b,#d97706);
     border-radius:50%;border:3px solid #fff;
     box-shadow:0 6px 30px rgba(245,158,11,.85),0 0 0 4px rgba(245,158,11,.25);
-    z-index:9998;pointer-events:none;
+    z-index:10002;pointer-events:none;
     display:flex;align-items:center;justify-content:center;
     font-size:32px;line-height:1;
     animation:gs-orb-glow .6s ease-in-out infinite;`;
@@ -242,24 +246,22 @@ async function orbRopeway(fromRight){
   orbEl.style.right='24px';
   await sleep(1200);
 
-  // Orb arrives home — morph into launcher simultaneously:
-  // 1. Orb shrinks to 0
-  // 2. Real launcher springs out from 0 at same time (no gap)
+  // Orb arrives home — crossfade: orb fades out, launcher springs in
   ropeEl.style.opacity='0';
-  orbEl.style.transition='transform .35s ease-in, opacity .3s ease-in';
+  orbEl.style.transition='transform .35s ease-in, opacity .35s ease-in';
   orbEl.style.transform='scale(0)';
   orbEl.style.opacity='0';
 
-  // Restore launcher icon and spring it in while orb shrinks
-  launcher.style.fontSize='';
-  const nd=launcher.querySelector('.gs-notif-dot');if(nd)nd.style.opacity='';
-  launcher.style.transform='scale(0)';
-  launcher.style.transition='transform .4s cubic-bezier(.34,1.56,.64,1)';
+  // Pop launcher in while orb shrinks (spring bounce)
+  launcher.style.transition='opacity .15s ease, transform .45s cubic-bezier(.34,1.56,.64,1), pointer-events 0s';
+  launcher.style.pointerEvents='none';
   await sleep(20);
+  launcher.style.opacity='1';
   launcher.style.transform='';
 
-  await sleep(400);
+  await sleep(500);
   launcher.style.transition='';
+  launcher.style.pointerEvents='';
   ropeEl.remove();
   orbEl.remove();
 }
