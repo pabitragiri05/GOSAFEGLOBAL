@@ -8,14 +8,16 @@ from email.mime.multipart import MIMEMultipart
 import uuid
 
 # ==========================================
-# 1. CONFIGURATION — fill these in
+# 1. CONFIGURATION — set via environment variables
 # ==========================================
+# Local dev: create a .env file (see .env.example)
+# Vercel:    add these in Project Settings → Environment Variables
 
-SMTP_SERVER   = "smtp.gmail.com"
-SMTP_PORT     = 465
-SENDER_EMAIL  = "meenakshi16rp@gmail.com"    # <-- your Gmail address
-SENDER_PASSWORD = "smee wcek dktl filg"          # <-- Gmail App Password (not your login password)
-ALL_MAILS_TO    = "meenakshi16rp@gmail.com"
+SMTP_SERVER     = "smtp.gmail.com"
+SMTP_PORT       = 465
+SENDER_EMAIL    = os.environ.get("GOSAFE_SENDER_EMAIL", "")
+SENDER_PASSWORD = os.environ.get("GOSAFE_SENDER_PASSWORD", "")
+ALL_MAILS_TO    = os.environ.get("GOSAFE_RECIPIENT_EMAIL", SENDER_EMAIL)
 
 # ── Email Routing Table ────────────────────
 # Maps each chatbot action → (recipient email, subject)
@@ -27,12 +29,12 @@ EMAIL_ROUTING = {
     },
     # Path 3 – Book a Demo → Demos / Pre-sales team
     "schedule_demo_and_notify_sales": {
-        "to": ALL_MAILS_TO,        # change to actual demo team email
+        "to": ALL_MAILS_TO,
         "subject": "📅 New Demo Booking — GoSafe Chatbot"
     },
     # Path 4 – Technical Support → Support team
     "create_support_ticket": {
-        "to": ALL_MAILS_TO,       # change to actual support email
+        "to": ALL_MAILS_TO,
         "subject": "🔧 New Support Ticket — GoSafe Chatbot"
     },
     # Path 5a – Talk to Sales (Call / Email me)
@@ -40,7 +42,7 @@ EMAIL_ROUTING = {
         "to": ALL_MAILS_TO,
         "subject": "📞 Urgent Sales Contact Request — GoSafe Chatbot"
     },
-    # Path 5c – WhatsApp redirect  (still log it)
+    # Path 5c – WhatsApp redirect (still log it)
     "redirect_to_whatsapp": {
         "to": ALL_MAILS_TO,
         "subject": "💬 WhatsApp Redirect — GoSafe Chatbot"
@@ -91,8 +93,8 @@ class GoSafeChatbotAPI:
         print(f"[Email] Sending '{subject}' → {recipient}")
 
         # Build a nice HTML body
-        user_data     = session_data.get('user_data', {})
-        chat_history  = session_data.get('chat_history', [])
+        user_data    = session_data.get('user_data', {})
+        chat_history = session_data.get('chat_history', [])
 
         details_rows = "".join(
             f"<tr><td style='padding:6px 12px;font-weight:600;color:#1a0050;background:#f0ebff;'>"
@@ -145,8 +147,8 @@ class GoSafeChatbotAPI:
         msg.attach(MIMEText(html_body, 'html'))
 
         try:
-            if SENDER_PASSWORD == "your-app-password":
-                print("⚠️  Placeholder credentials — skipping real email send.")
+            if not SENDER_EMAIL or not SENDER_PASSWORD:
+                print("⚠️  Email credentials not set in environment — skipping send.")
                 print(f"   Would have sent to: {recipient}")
                 print(f"   Subject:           {subject}")
                 return

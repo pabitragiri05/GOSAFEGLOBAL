@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <style id="wishlist-style">.wishlist-item-actions{display:flex;align-items:center;gap:8px;margin-top:8px;}.wishlist-item-actions .btn-sm{padding:6px 12px;font-size:12px;white-space:nowrap;}</style>
 </head>
 <body>
 
@@ -17,7 +18,7 @@
   <div class="topbar" id="topbar">
     <div class="container">
       <div class="topbar-left">
-        <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+        <span><i class="fas fa-phone-alt"></i> +91 85120 20020</span>
         <span><i class="fas fa-envelope"></i> info@gosafeglobal.com</span>
       </div>
       <div class="topbar-right">
@@ -214,61 +215,71 @@
   <button class="back-to-top" id="back-to-top"><i class="fas fa-chevron-up"></i></button>
 
   <!-- WHATSAPP FLOAT -->
-  <a href="https://wa.me/919876543210?text=Hello, I'd like to inquire about your security products" class="whatsapp-float" target="_blank">
+  <a href="https://wa.me/918512020020?text=Hello, I'd like to inquire about your security products" class="whatsapp-float" target="_blank">
     <i class="fab fa-whatsapp"></i>
     <span>Chat With Us</span>
   </a>
 
   <!-- FOOTER -->
-  <footer class="footer" id="main-footer">
+    <footer class="footer" id="main-footer">
     <div class="footer-top">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
-            <div class="footer-logo">
-              <img src="images/logo_new.png" alt="GoSafe Global" class="footer-logo-img" />
-            </div>
-            <p>India's premier security equipment provider. Delivering trusted safety solutions since 2009.</p>
+            <div class="footer-logo"><a href="index.html"><img src="images/logo_new.png" alt="GoSafe Global" class="footer-logo-img" /></a></div>
+            <p>Our commitment to provide high quality, cost effective and innovative products enables us to meet the demands of growing marketplace. By offering innovative services and by focusing on quality, respect and integrity.</p>
             <div class="footer-socials">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
-              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/gosafe_global" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/home/?originalSubdomain=in" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <a href="https://wa.me/918512020020" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
           </div>
+
           <div class="footer-links">
-            <h4>Quick Links</h4>
+            <h4>Information</h4>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="products.html?cat=security-devices">Security Devices</a></li>
+              <li><a href="products.html?cat=parking-safety">Parking Safety</a></li>
+              <li><a href="products.html?cat=human-safety">Human Safety</a></li>
+              <li><a href="products.html?cat=porta-cabins">Porta Cabins</a></li>
+              <li><a href="products.html?cat=tools-lockers">Tools &amp; Lockers</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links">
+            <h4>Our Links</h4>
             <ul>
               <li><a href="index.html">Home</a></li>
               <li><a href="products.html">All Products</a></li>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="#">Be Our Partner</a></li>
+              <li><a href="#">Customer Support</a></li>
+              <li><a href="#">Join Us</a></li>
             </ul>
           </div>
-          <div class="footer-links">
-            <h4>Categories</h4>
-            <ul>
-              <li><a href="products.html?cat=metal">Metal Detectors</a></li>
-              <li><a href="products.html?cat=entrance">Entrance Automation</a></li>
-              <li><a href="products.html?cat=cctv">CCTV Cameras</a></li>
-              <li><a href="products.html?cat=xray">X-Ray Scanners</a></li>
-            </ul>
-          </div>
+
           <div class="footer-contact">
             <h4>Contact Us</h4>
             <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>#923Z DB Industrial Area, Gurugram -122001, (HR.) INDIA</p>
+            </div>
+            <div class="contact-item">
               <i class="fas fa-phone-alt"></i>
-              <p>+91 98765 43210</p>
+              <p>+91-851-20-200-20</p>
             </div>
             <div class="contact-item">
               <i class="fas fa-envelope"></i>
-              <p>info@gosafeglobal.com</p>
+              <p>sales@gosafeglobal.com</p>
             </div>
             <div class="footer-newsletter">
-              <h5>Newsletter</h5>
+              <h5>Subscribe to Newsletter</h5>
               <div class="newsletter-form">
-                <input type="email" id="newsletter-email" placeholder="Your email" />
-                <button id="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
+                <input type="email" id="newsletter-email" placeholder="Your email address" />
+                <button id="newsletter-btn" aria-label="Subscribe"><i class="fas fa-paper-plane"></i></button>
               </div>
             </div>
           </div>
@@ -277,10 +288,11 @@
     </div>
     <div class="footer-bottom">
       <div class="container">
-        <p>&copy; 2024 GoSafe Global. All rights reserved.</p>
+        <p>&copy; 2017-2026 GOSAFE GLOBAL. All rights reserved.</p>
         <div class="footer-bottom-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
+          <a href="#">Sitemap</a>
         </div>
       </div>
     </div>
@@ -717,6 +729,21 @@
   })();
   </script>
   <script src="js/robot-anim.js?v=13"></script>
+  <!-- ===== WISHLIST DRAWER ===== -->
+  <div class="cart-overlay" id="wishlist-overlay"></div>
+  <div class="cart-drawer" id="wishlist-drawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-heart"></i> My Wishlist</h3>
+      <button class="cart-close" id="wishlist-close" aria-label="Close wishlist"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="wishlist-items">
+      <div class="cart-empty" id="wishlist-empty" style="display:flex">
+        <i class="fas fa-heart"></i>
+        <p>Your wishlist is empty</p>
+        <a href="products.html" class="btn btn-primary btn-sm">Browse Products</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 

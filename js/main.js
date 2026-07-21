@@ -131,11 +131,64 @@ function openCart() {
   document.getElementById('cart-drawer')?.classList.add('open');
   document.getElementById('cart-overlay')?.classList.add('show');
   document.body.style.overflow = 'hidden';
+  closeWishlist();
 }
 function closeCart() {
   document.getElementById('cart-drawer')?.classList.remove('open');
   document.getElementById('cart-overlay')?.classList.remove('show');
   document.body.style.overflow = '';
+}
+
+// -- Wishlist Drawer --
+function openWishlist() {
+  renderWishlistItems();
+  document.getElementById('wishlist-drawer')?.classList.add('open');
+  document.getElementById('wishlist-overlay')?.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  closeCart();
+}
+function closeWishlist() {
+  document.getElementById('wishlist-drawer')?.classList.remove('open');
+  document.getElementById('wishlist-overlay')?.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function renderWishlistItems() {
+  const container = document.getElementById('wishlist-items');
+  const empty = document.getElementById('wishlist-empty');
+  if (!container) return;
+
+  const wishlisted = window.GOSAFE_PRODUCTS
+    ? window.GOSAFE_PRODUCTS.filter(p => state.wishlist.includes(p.id))
+    : [];
+
+  if (wishlisted.length === 0) {
+    if (empty) empty.style.display = 'flex';
+    container.querySelectorAll('.wishlist-item').forEach(el => el.remove());
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  container.querySelectorAll('.wishlist-item').forEach(el => el.remove());
+
+  wishlisted.forEach(product => {
+    const div = document.createElement('div');
+    div.className = 'wishlist-item';
+    div.innerHTML = `
+      <img class="cart-item-img" src="${product.image}" alt="${product.name}" onerror="this.src='images/handheld.png'">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${product.name}</div>
+        <div class="cart-item-cat">${product.categoryLabel || ''}</div>
+        <div class="wishlist-item-actions">
+          <button class="btn btn-primary btn-sm" onclick="addToCart(${product.id}); closeWishlist();" title="Add to inquiry cart">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <button class="cart-item-remove" onclick="toggleWishlist(${product.id}); renderWishlistItems();" title="Remove from wishlist">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>`;
+    container.appendChild(div);
+  });
 }
 
 // -- Wishlist Logic --
@@ -206,9 +259,9 @@ function createProductCard(product) {
         <div class="product-footer">
           <div class="product-price">
             <span class="price-label">Price</span>
-            ${(product.price === "Enquire Now" || product.priceOnRequest)
-              ? '<span class="price-on-request" style="font-weight:600;color:var(--accent)">Enquire Now</span>'
-              : `<span class="price-val">${formatPrice(product.price)}</span>`}
+              ${(!product.price || product.price === "Enquire Now" || product.priceOnRequest || isNaN(parseFloat(product.price)))
+                ? '<span class="price-on-request" style="font-weight:600;color:var(--accent)">On Enquiry</span>'
+                : `<span class="price-val">${formatPrice(product.price)}</span>`}
           </div>
           <button class="add-to-cart-btn" onclick="addToCart(${product.id})" id="atc-${product.id}">
             <i class="fas fa-plus"></i> Inquire
@@ -544,7 +597,7 @@ function initCheckout() {
     }
     const items = state.cart.map(i => `� ${i.name} (x${i.qty})`).join('\n');
     const msg = encodeURIComponent(`Hello GoSafe Global! I'd like to inquire about the following products:\n\n${items}\n\nPlease send me pricing and availability.`);
-    window.open(`https://wa.me/919876543210?text=${msg}`, '_blank');
+    window.open(`https://wa.me/918512020020?text=${msg}`, '_blank');
   });
 }
 
@@ -554,6 +607,11 @@ function initEventListeners() {
   document.getElementById('cart-btn')?.addEventListener('click', openCart);
   document.getElementById('cart-close')?.addEventListener('click', closeCart);
   document.getElementById('cart-overlay')?.addEventListener('click', closeCart);
+
+  // Wishlist
+  document.getElementById('wishlist-btn')?.addEventListener('click', openWishlist);
+  document.getElementById('wishlist-close')?.addEventListener('click', closeWishlist);
+  document.getElementById('wishlist-overlay')?.addEventListener('click', closeWishlist);
 
   // Modal
   document.getElementById('modal-close')?.addEventListener('click', closeModal);
@@ -566,7 +624,7 @@ function initEventListeners() {
 
   // Keyboard close
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal(); closeCart(); }
+    if (e.key === 'Escape') { closeModal(); closeCart(); closeWishlist(); }
   });
 }
 
@@ -669,7 +727,7 @@ function initContactForm() {
     const message = document.getElementById('cf-message')?.value;
 
     const wa = `Hello GoSafe Global! My name is ${name}.\n\nEmail: ${email}\nPhone: ${phone}\nProduct Interest: ${product}\n\nMessage: ${message}`;
-    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(wa)}`, '_blank');
+    window.open(`https://wa.me/918512020020?text=${encodeURIComponent(wa)}`, '_blank');
     showToast('Message sent! Our team will respond shortly ??');
     form.reset();
   });
@@ -763,200 +821,6 @@ function initHeroSlider() {
   });
 
   startAutoPlay();
-}
-
-
-
-
-
-// -- BotFlow Integration --
-function initBotFlow() {
-  const botHtml = "<!-- ── FLOATING BUTTON ── -->\n<div id=\"chat-launcher-wrap\"><button id=\"chat-launcher\" onclick=\"toggleChat()\" title=\"Chat with GoSafe\">\n  <div class=\"notif-dot\"></div>\n  <svg class=\"chat-icon\" width=\"28\" height=\"28\" viewBox=\"0 0 24 24\" fill=\"none\"\n       stroke=\"white\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n    <path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/>\n  </svg>\n  <svg class=\"close-icon\" style=\"display:none\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"\n       fill=\"none\" stroke=\"white\" stroke-width=\"2.5\" stroke-linecap=\"round\">\n    <line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/>\n  </svg>\n</button></div>\n\n<!-- ── CHAT POPUP ── -->\n<div id=\"chat-popup\">\n  <div class=\"chat-header\">\n    <div class=\"agent-avatar\">🛡️</div>\n    <div class=\"agent-info\">\n      <div class=\"agent-name\">GoSafe Assistant</div>\n      <div class=\"agent-status\"><span class=\"status-dot\"></span>Online now</div>\n    </div>\n    <button class=\"header-restart\" onclick=\"resetChat()\" title=\"Restart\">↺</button>\n  </div>\n\n  <div id=\"chat-messages\">\n    <div class=\"day-label\">Today</div>\n  </div>\n\n  <div class=\"chat-input-area\">\n    <input type=\"text\" id=\"user-text-input\" placeholder=\"Type your message…\" disabled />\n    <button id=\"send-btn\" disabled onclick=\"sendTyped()\">\n      <svg width=\"18\" height=\"18\" fill=\"none\" viewBox=\"0 0 24 24\"\n           stroke=\"white\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n        <line x1=\"22\" y1=\"2\" x2=\"11\" y2=\"13\"/>\n        <polygon points=\"22 2 15 22 11 13 2 9 22 2\"/>\n      </svg>\n    </button>\n  </div>\n</div>";
-  document.body.insertAdjacentHTML('beforeend', botHtml);
-}
-initBotFlow();
-
-const API = "/api/chat";
-let sessionId  = null;
-let isOpen     = false;
-let started    = false;
-
-const popup    = document.getElementById("chat-popup");
-const launcher = document.getElementById("chat-launcher");
-const messages = document.getElementById("chat-messages");
-const txtInput = document.getElementById("user-text-input");
-const sendBtn  = document.getElementById("send-btn");
-
-/* ── Toggle ── */
-function toggleChat() {
-  isOpen = !isOpen;
-  popup.classList.toggle("active", isOpen);
-  launcher.classList.toggle("open", isOpen);
-  const dot = launcher.querySelector(".notif-dot");
-  if (dot) dot.remove();
-  if (isOpen && !started) { started = true; callAPI(null); }
-  if (isOpen) setTimeout(() => messages.scrollTop = messages.scrollHeight, 100);
-}
-
-/* ── Reset ── */
-function resetChat() {
-  sessionId = null; started = false;
-  messages.innerHTML = '<div class="day-label">Today</div>';
-  disableInput();
-  callAPI(null);
-}
-
-/* ── Typing indicator ── */
-function showTyping(cb, delay = 850) {
-  const row = document.createElement("div");
-  row.className = "typing-row"; row.id = "typing";
-  row.innerHTML = `<div class="bot-avatar-sm">🛡️</div>
-    <div class="typing-dots"><span></span><span></span><span></span></div>`;
-  messages.appendChild(row);
-  messages.scrollTop = messages.scrollHeight;
-  setTimeout(() => { row.remove(); cb(); }, delay);
-}
-
-/* ── Bubbles ── */
-function addBot(html) {
-  const row = document.createElement("div");
-  row.className = "msg-row bot";
-  row.innerHTML = `<div class="bot-avatar-sm">🛡️</div><div class="bubble bot">${html}</div>`;
-  messages.appendChild(row);
-  messages.scrollTop = messages.scrollHeight;
-}
-function addUser(text) {
-  const row = document.createElement("div");
-  row.className = "msg-row user";
-  row.innerHTML = `<div class="bubble user">${esc(text)}</div>`;
-  messages.appendChild(row);
-  messages.scrollTop = messages.scrollHeight;
-}
-function esc(s) {
-  const d = document.createElement("div"); d.textContent = s; return d.innerHTML;
-}
-
-/* ── Option buttons ── */
-function renderOptions(options) {
-  const wrap = document.createElement("div");
-  wrap.className = "options-wrap";
-  options.forEach((opt, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "opt-btn";
-    btn.textContent = opt.label;
-    btn.onclick = () => {
-      wrap.querySelectorAll(".opt-btn").forEach(b => { b.disabled = true; });
-      btn.classList.add("selected");
-      addUser(opt.label);
-      callAPI(idx);
-    };
-    wrap.appendChild(btn);
-  });
-  messages.appendChild(wrap);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-/* ── Continue button ── */
-function renderContinue() {
-  const btn = document.createElement("button");
-  btn.className = "continue-btn"; btn.textContent = "Continue →";
-  btn.onclick = () => { btn.disabled = true; callAPI(null); };
-  messages.appendChild(btn);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-/* ── WhatsApp bubble ── */
-function renderWhatsApp(url) {
-  addBot(`Our team is ready to help you on WhatsApp!<br/><br/>
-    <a class="whatsapp-btn" href="${url}" target="_blank">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>Chat on WhatsApp
-    </a>`);
-}
-
-/* ── Input helpers ── */
-function enableInput(ph) {
-  txtInput.disabled = false; sendBtn.disabled = false;
-  txtInput.placeholder = ph || "Type here…"; txtInput.focus();
-}
-function disableInput() {
-  txtInput.disabled = true; sendBtn.disabled = true;
-  txtInput.value = ""; txtInput.placeholder = "Type your message…";
-}
-function sendTyped() {
-  const val = txtInput.value.trim(); if (!val) return;
-  addUser(val); disableInput(); callAPI(val);
-}
-txtInput.addEventListener("keydown", e => { if (e.key === "Enter") sendTyped(); });
-
-/* ── API call ── */
-async function callAPI(userInput) {
-  disableInput();
-  try {
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_input: userInput, session_id: sessionId })
-    });
-    const data = await res.json();
-    sessionId = data.session_id;
-    showTyping(() => renderStep(data.step), 700 + Math.random() * 400);
-  } catch {
-    showTyping(() => addBot(
-      "⚠️ Can't connect to server. Make sure <code>python app.py</code> is running!"
-    ), 600);
-  }
-}
-
-/* ── Render a step ── */
-const END_IDS = ["p2_step_9_close","p3_step_5_close","p4_step_5_close","p5_close"];
-
-function renderStep(step) {
-  // WhatsApp special
-  if (step.id === "p5_step_2c_whatsapp") {
-    addBot(esc(step.bot_message));
-    renderWhatsApp(step.whatsapp_url || "https://wa.me/918512020020");
-    return;
-  }
-
-  // Contact info (path 6)
-  if (step.contact_info) {
-    const ci = step.contact_info;
-    addBot(`${esc(step.bot_message)}<br/><br/>
-      📞 ${ci.phone}<br/>✉️ ${ci.email}<br/>
-      📍 ${ci.address}<br/>
-      🌐 <a href="${ci.website}" target="_blank" style="color:var(--teal)">${ci.website}</a>`);
-    if (step.follow_up) setTimeout(() =>
-      showTyping(() => addBot(esc(step.follow_up)), 700), 400);
-    setTimeout(() => callAPI(null), 1500);
-    return;
-  }
-
-  addBot(esc(step.bot_message));
-
-  if (step.options && step.options.length > 0) {
-    setTimeout(() => renderOptions(step.options), 200);
-    return;
-  }
-
-  const itype = step.input_type || "none";
-  if (itype === "text" || itype === "email" || itype === "phone") {
-    const ph = { text:"Type your response…", email:"your@email.com", phone:"+91 XXXXX XXXXX" };
-    setTimeout(() => enableInput(ph[itype]), 150);
-    return;
-  }
-
-  if (END_IDS.includes(step.id)) {
-    const notice = document.createElement("div");
-    notice.className = "chat-end-notice";
-    notice.textContent = "✓ Done! Our team will be in touch with you soon.";
-    messages.appendChild(notice);
-    messages.scrollTop = messages.scrollHeight;
-    return;
-  }
-
-  setTimeout(() => renderContinue(), 200);
 }
 
 

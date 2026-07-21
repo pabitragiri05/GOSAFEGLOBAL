@@ -1,6 +1,11 @@
 {
   "version": 2,
   "name": "gosafe-global",
+  "env": {
+    "GOSAFE_SENDER_EMAIL": "@gosafe-sender-email",
+    "GOSAFE_SENDER_PASSWORD": "@gosafe-sender-password",
+    "GOSAFE_RECIPIENT_EMAIL": "@gosafe-recipient-email"
+  },
   "builds": [
     {
       "src": "api/**/*.py",

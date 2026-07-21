@@ -1,0 +1,696 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – GoSafe Global | India's Trusted Security Partner Since 2009</title>
+  <meta name="description" content="Learn about GoSafe Global – India's premier security equipment provider since 2009. 500+ organizations, 28+ states, ISO certified products." />
+  <meta name="keywords" content="GoSafe Global about, security company India, metal detector supplier, security equipment manufacturer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+  <style>
+    /* ── About Page Specific Styles ── */
+    .about-hero {
+      background: linear-gradient(135deg, #0f0030 0%, #1a0050 50%, #2d0080 100%);
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(245,158,11,.15) 0%, transparent 60%);
+    }
+    .about-hero-content { position: relative; z-index: 1; text-align: center; }
+    .about-hero h1 { font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.5rem); color: #fff; margin-bottom: 16px; }
+    .about-hero p { font-size: 1.1rem; color: rgba(255,255,255,.75); max-width: 620px; margin: 0 auto 32px; line-height: 1.7; }
+    .about-hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.4);
+      color: #f59e0b; padding: 8px 20px; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600; margin-bottom: 24px;
+    }
+
+    /* Story Section */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .story-text h2 { font-family: var(--font-heading); font-size: 2rem; color: var(--primary); margin-bottom: 16px; }
+    .story-text p { color: var(--text-body); line-height: 1.8; margin-bottom: 16px; }
+    .story-highlights { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+    .story-highlight {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: var(--light-gray); padding: 16px 20px; border-radius: var(--radius-md);
+      border-left: 3px solid var(--accent);
+    }
+    .story-highlight i { color: var(--accent); font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+    .story-highlight h4 { font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .story-highlight p { color: var(--text-body); font-size: 0.88rem; margin: 0; line-height: 1.5; }
+
+    .story-visual {
+      background: linear-gradient(135deg, #1a0050, #2d0080);
+      border-radius: var(--radius-xl);
+      padding: 48px 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .stat-card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .stat-card:hover { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.4); }
+    .stat-card i { font-size: 1.8rem; color: #f59e0b; margin-bottom: 12px; }
+    .stat-card .num { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; }
+    .stat-card .lbl { font-size: 0.78rem; color: rgba(255,255,255,.6); margin-top: 6px; text-transform: uppercase; letter-spacing: .5px; }
+
+    /* Mission / Values */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .value-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      border: 1.5px solid var(--mid-gray);
+      text-align: center;
+      transition: var(--transition);
+    }
+    .value-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-6px); border-color: var(--accent); }
+    .value-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b22, #f59e0b44);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 1.8rem; color: var(--accent);
+    }
+    .value-card h3 { font-family: var(--font-heading); font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; }
+    .value-card p { font-size: 0.88rem; color: var(--text-body); line-height: 1.7; }
+
+    /* Team */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .team-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      border: 1.5px solid var(--mid-gray);
+      text-align: center;
+      transition: var(--transition);
+    }
+    .team-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-4px); border-color: var(--accent); }
+    .team-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      background: linear-gradient(135deg, #1a0050, #2d0080);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 2.2rem; font-weight: 800; color: #f59e0b;
+      font-family: var(--font-heading);
+    }
+    .team-card h4 { font-family: var(--font-heading); font-size: 1.05rem; color: var(--primary); margin-bottom: 6px; }
+    .team-card span { font-size: 0.82rem; color: var(--accent); font-weight: 600; display: block; margin-bottom: 12px; }
+    .team-card p { font-size: 0.84rem; color: var(--text-body); line-height: 1.6; }
+
+    /* Certifications */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .cert-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 28px 20px;
+      border: 1.5px solid var(--mid-gray);
+      text-align: center;
+      transition: var(--transition);
+    }
+    .cert-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(245,158,11,.15); }
+    .cert-card i { font-size: 2rem; color: var(--accent); margin-bottom: 12px; }
+    .cert-card h5 { font-weight: 700; color: var(--primary); font-size: 0.9rem; margin-bottom: 6px; }
+    .cert-card p { font-size: 0.8rem; color: var(--text-body); }
+
+    /* Timeline */
+    .timeline { max-width: 700px; margin: 48px auto 0; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+    .tl-item { display: flex; gap: 32px; margin-bottom: 40px; align-items: flex-start; }
+    .tl-item:nth-child(even) { flex-direction: row-reverse; }
+    .tl-dot {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 0.8rem;
+      box-shadow: 0 4px 16px rgba(245,158,11,.4);
+      position: relative; z-index: 1;
+    }
+    .tl-content { flex: 1; padding: 20px 24px; background: var(--white); border-radius: var(--radius-md); border: 1.5px solid var(--mid-gray); }
+    .tl-content h4 { font-family: var(--font-heading); color: var(--primary); margin-bottom: 6px; }
+    .tl-content p { font-size: 0.88rem; color: var(--text-body); line-height: 1.6; margin: 0; }
+    @media (max-width: 600px) {
+      .timeline::before { left: 24px; }
+      .tl-item, .tl-item:nth-child(even) { flex-direction: row; }
+    }
+  </style>
+  <style id="wishlist-style">.wishlist-item-actions{display:flex;align-items:center;gap:8px;margin-top:8px;}.wishlist-item-actions .btn-sm{padding:6px 12px;font-size:12px;white-space:nowrap;}</style>
+</head>
+<body>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="topbar" id="topbar">
+    <div class="container">
+      <div class="topbar-left">
+        <span><i class="fas fa-phone-alt"></i> +91 85120 20020</span>
+        <span><i class="fas fa-envelope"></i> info@gosafeglobal.com</span>
+      </div>
+      <div class="topbar-right">
+        <span><i class="fas fa-shield-halved"></i> Trusted by 500+ Organizations</span>
+        <span><i class="fas fa-certificate"></i> ISO Certified Products</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER / NAV ===== -->
+  <header class="header" id="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo" id="logo-link">
+          <img src="images/logo_new.png" alt="GoSafe Global – Just Go Safe" class="logo-img" id="site-logo" />
+        </a>
+        <div class="header-search" id="header-search">
+          <input type="text" id="search-input" placeholder="Search products..." autocomplete="off" />
+          <button id="search-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+          <div class="search-dropdown" id="search-dropdown"></div>
+        </div>
+        <div class="header-actions">
+          <button class="action-btn" id="wishlist-btn" aria-label="Wishlist">
+            <i class="fas fa-heart"></i>
+            <span class="badge" id="wishlist-count">0</span>
+          </button>
+          <button class="action-btn" id="cart-btn" aria-label="Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge" id="cart-count">0</span>
+          </button>
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="has-dropdown">
+            <a href="products.html">All Products <i class="fas fa-chevron-down"></i></a>
+            <div class="mega-menu" style="width: 250px; padding: 16px;">
+              <div class="mega-menu-col" style="width: 100%;">
+                <ul>
+                  <li><a href="products.html?cat=security-devices">Security Devices</a></li>
+                  <li><a href="products.html?cat=human-safety">Human Safety</a></li>
+                  <li><a href="products.html?cat=parking-safety">Parking Safety &amp; Signs</a></li>
+                  <li><a href="products.html?cat=tools-lockers">Tools &amp; Lockers</a></li>
+                  <li><a href="products.html?cat=electric-fence">Electric Fence</a></li>
+                  <li><a href="products.html?cat=porta-cabins">Porta Cabins</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li><a href="about.html" class="active">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== ABOUT HERO ===== -->
+  <section class="about-hero" id="about-hero">
+    <div class="container">
+      <div class="about-hero-content">
+        <div class="about-hero-badge">
+          <i class="fas fa-shield-halved"></i>
+          <span>India's Trusted Security Partner</span>
+        </div>
+        <h1>About GoSafe Global</h1>
+        <p>Since 2009, we have been India's most trusted provider of advanced security equipment — protecting airports, malls, government buildings, hospitals and corporate offices across 28+ states.</p>
+        <div class="hero-actions">
+          <a href="products.html" class="btn btn-primary" id="about-products-btn">
+            <i class="fas fa-th-large"></i> Explore Products
+          </a>
+          <a href="contact.html" class="btn btn-outline" id="about-contact-btn">
+            <i class="fas fa-phone-alt"></i> Get in Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR STORY ===== -->
+  <section class="section" id="our-story" style="background: var(--white);">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-text">
+          <span class="section-tag">Our Story</span>
+          <h2>Built on Trust, Powered by Technology</h2>
+          <p>GoSafe Global was founded in 2009 with a single mission: to make India safer. Starting with a small range of walk-through metal detectors, we have grown into one of India's most comprehensive security equipment companies.</p>
+          <p>Today we serve 500+ organizations — from international airports to local schools — supplying over 65 categories of security, safety and access control products. Every product we sell is rigorously tested, ISO certified and backed by our dedicated after-sales team.</p>
+          <div class="story-highlights">
+            <div class="story-highlight">
+              <i class="fas fa-rocket"></i>
+              <div>
+                <h4>From Startup to Industry Leader</h4>
+                <p>Started in Delhi in 2009 with 5 products. Now 65+ product lines serving 500+ clients across India.</p>
+              </div>
+            </div>
+            <div class="story-highlight">
+              <i class="fas fa-handshake"></i>
+              <div>
+                <h4>Pan-India Service Network</h4>
+                <p>Dedicated installation and AMC teams in 28+ states ensuring round-the-clock equipment uptime.</p>
+              </div>
+            </div>
+            <div class="story-highlight">
+              <i class="fas fa-leaf"></i>
+              <div>
+                <h4>Sustainable Security</h4>
+                <p>Committed to energy-efficient products and responsible sourcing across our supply chain.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="story-visual">
+          <div class="stat-card">
+            <i class="fas fa-building"></i>
+            <div class="num">500+</div>
+            <div class="lbl">Happy Clients</div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-calendar-alt"></i>
+            <div class="num">15+</div>
+            <div class="lbl">Years Experience</div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-box-open"></i>
+            <div class="num">65+</div>
+            <div class="lbl">Products</div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-globe-asia"></i>
+            <div class="num">28+</div>
+            <div class="lbl">States Covered</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MISSION & VALUES ===== -->
+  <section class="section why-us" id="our-values">
+    <div class="why-us-bg"></div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag light">What We Stand For</span>
+        <h2 class="section-title light">Our Mission &amp; Values</h2>
+        <p class="section-desc" style="color:rgba(255,255,255,.7)">The principles that have guided GoSafe Global for over 15 years</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-shield-halved"></i></div>
+          <h3>Safety First</h3>
+          <p>Every product we design and deploy prioritizes the safety of people. No compromises, no shortcuts.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-certificate"></i></div>
+          <h3>Quality Assured</h3>
+          <p>ISO-certified products tested under rigorous standards before they reach our customers.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-handshake"></i></div>
+          <h3>Customer First</h3>
+          <p>We build long-term partnerships, not one-time transactions. Your success is our success.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-microchip"></i></div>
+          <h3>Tech-Driven</h3>
+          <p>Continuously adopting the latest security technologies to keep our customers ahead of threats.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-headset"></i></div>
+          <h3>Always Available</h3>
+          <p>24/7 technical support and nationwide AMC services ensure zero security downtime.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fas fa-leaf"></i></div>
+          <h3>Responsible Business</h3>
+          <p>Committed to ethical sourcing, energy efficiency and making safety accessible to all.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUR JOURNEY ===== -->
+  <section class="section" id="our-journey" style="background: var(--light-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Our Journey</span>
+        <h2 class="section-title">15+ Years of Securing India</h2>
+        <p class="section-desc">Key milestones in our growth story</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">2009</div>
+          <div class="tl-content">
+            <h4>Founded in New Delhi</h4>
+            <p>GoSafe Global established with a focus on walk-through metal detectors for government and corporate clients.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2012</div>
+          <div class="tl-content">
+            <h4>Expanded to Entrance Automation</h4>
+            <p>Added boom barriers, flap barriers and speed gates — becoming a one-stop shop for access control.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2015</div>
+          <div class="tl-content">
+            <h4>100 Client Milestone</h4>
+            <p>Reached 100 organizational clients including major airports, shopping malls and hotel chains.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2018</div>
+          <div class="tl-content">
+            <h4>Human Safety &amp; X-Ray Range</h4>
+            <p>Launched our comprehensive Human Safety PPE range and premium X-Ray baggage scanner portfolio.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2021</div>
+          <div class="tl-content">
+            <h4>Pan-India AMC Network</h4>
+            <p>Established after-sales service centres in 28 states, providing 24/7 maintenance contracts.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2024</div>
+          <div class="tl-content">
+            <h4>500+ Organizations &amp; AI Chatbot</h4>
+            <p>Crossed 500 organizational clients and launched our AI-powered chatbot for instant product enquiries.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEADERSHIP TEAM ===== -->
+  <section class="section" id="our-team" style="background: var(--white);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Leadership</span>
+        <h2 class="section-title">The Team Behind GoSafe</h2>
+        <p class="section-desc">Experienced professionals committed to your security</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card animate-on-scroll">
+          <div class="team-avatar">RK</div>
+          <h4>Rajiv Kumar</h4>
+          <span>Founder &amp; CEO</span>
+          <p>15+ years in security technology. Visionary leader who built GoSafe from a 5-product startup to India's trusted security brand.</p>
+        </div>
+        <div class="team-card animate-on-scroll">
+          <div class="team-avatar">PS</div>
+          <h4>Priya Sharma</h4>
+          <span>Head of Operations</span>
+          <p>Expert in supply chain and logistics, ensuring every product reaches clients on time and in perfect condition.</p>
+        </div>
+        <div class="team-card animate-on-scroll">
+          <div class="team-avatar">AM</div>
+          <h4>Arun Mehta</h4>
+          <span>Chief Technical Officer</span>
+          <p>Electronics engineer with 12+ years experience in security systems integration and product certification.</p>
+        </div>
+        <div class="team-card animate-on-scroll">
+          <div class="team-avatar">SN</div>
+          <h4>Sunita Nair</h4>
+          <span>Head of Sales</span>
+          <p>National sales leader with deep expertise in enterprise security procurement and long-term client relationships.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATIONS ===== -->
+  <section class="section" id="certifications" style="background: var(--light-gray);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Certifications</span>
+        <h2 class="section-title">Quality You Can Trust</h2>
+        <p class="section-desc">All products are tested and certified to international standards</p>
+      </div>
+      <div class="certs-grid">
+        <div class="cert-card animate-on-scroll">
+          <i class="fas fa-certificate"></i>
+          <h5>ISO 9001:2015</h5>
+          <p>Quality Management System certified for consistent product quality.</p>
+        </div>
+        <div class="cert-card animate-on-scroll">
+          <i class="fas fa-shield-alt"></i>
+          <h5>BIS Standards</h5>
+          <p>Bureau of Indian Standards compliant metal detectors and security equipment.</p>
+        </div>
+        <div class="cert-card animate-on-scroll">
+          <i class="fas fa-check-circle"></i>
+          <h5>CE Marked</h5>
+          <p>European Conformity certification for X-ray scanners and electronic products.</p>
+        </div>
+        <div class="cert-card animate-on-scroll">
+          <i class="fas fa-hard-hat"></i>
+          <h5>EN Safety Standards</h5>
+          <p>Personal protective equipment certified to EN ISO safety standards.</p>
+        </div>
+        <div class="cert-card animate-on-scroll">
+          <i class="fas fa-star"></i>
+          <h5>4.9★ Rated</h5>
+          <p>Average customer satisfaction rating across 500+ organizational clients.</p>
+        </div>
+        <div class="cert-card animate-on-scroll">
+          <i class="fas fa-award"></i>
+          <h5>15+ Awards</h5>
+          <p>Industry recognition for innovation and excellence in security solutions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta-section" id="about-cta">
+    <div class="cta-bg"><div class="cta-pattern"></div></div>
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Secure Your Premises?</h2>
+        <p>Get a free consultation and customized security solution quote within 24 hours.</p>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn btn-light" id="cta-contact-btn">
+            <i class="fas fa-phone-alt"></i> Contact Us Now
+          </a>
+          <a href="products.html" class="btn btn-outline-light" id="cta-catalog-btn">
+            <i class="fas fa-book-open"></i> View Catalog
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" id="main-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo"><a href="index.html"><img src="images/logo_new.png" alt="GoSafe Global" class="footer-logo-img" /></a></div>
+            <p>Our commitment to provide high quality, cost effective and innovative products enables us to meet the demands of growing marketplace. By offering innovative services and by focusing on quality, respect and integrity.</p>
+            <div class="footer-socials">
+              <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://www.instagram.com/gosafe_global" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/home/?originalSubdomain=in" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+              <a href="https://wa.me/918512020020" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <h4>Information</h4>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="products.html?cat=security-devices">Security Devices</a></li>
+              <li><a href="products.html?cat=parking-safety">Parking Safety</a></li>
+              <li><a href="products.html?cat=human-safety">Human Safety</a></li>
+              <li><a href="products.html?cat=porta-cabins">Porta Cabins</a></li>
+              <li><a href="products.html?cat=tools-lockers">Tools &amp; Lockers</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-links">
+            <h4>Our Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">All Products</a></li>
+              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="#">Be Our Partner</a></li>
+              <li><a href="#">Customer Support</a></li>
+              <li><a href="#">Join Us</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-contact">
+            <h4>Contact Us</h4>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>#923Z DB Industrial Area, Gurugram -122001, (HR.) INDIA</p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone-alt"></i>
+              <p>+91-851-20-200-20</p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <p>sales@gosafeglobal.com</p>
+            </div>
+            <div class="footer-newsletter">
+              <h5>Subscribe to Newsletter</h5>
+              <div class="newsletter-form">
+                <input type="email" id="newsletter-email" placeholder="Your email address" />
+                <button id="newsletter-btn" aria-label="Subscribe"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2017-2026 GOSAFE GLOBAL. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Drawer -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-shopping-cart"></i> Your Cart</h3>
+      <button class="cart-close" id="cart-close" aria-label="Close cart"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty" id="cart-empty">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Your cart is empty</p>
+        <a href="products.html" class="btn btn-primary btn-sm">Browse Products</a>
+      </div>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-total">
+        <span>Total:</span>
+        <strong id="cart-total-price">₹0</strong>
+      </div>
+      <button class="btn btn-primary w-full" id="checkout-btn">Proceed to Checkout <i class="fas fa-arrow-right"></i></button>
+      <p class="cart-note"><i class="fas fa-info-circle"></i> Prices are indicative. Final quote will be provided by our team.</p>
+    </div>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="product-modal" id="product-modal">
+    <button class="modal-close" id="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    <div class="modal-content" id="modal-content"></div>
+  </div>
+
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <a href="https://wa.me/918512020020?text=Hello, I'd like to inquire about your security products" class="whatsapp-float" id="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span>Chat With Us</span>
+  </a>
+
+  <script src="js/products-data.js"></script>
+  <script src="js/main.js?v=7"></script>
+
+  <!-- ===== ROBOT CHATBOT WIDGET ===== -->
+  <button id="gs-chat-launcher" onclick="gsToggleChat()" title="Chat with GoSafe AI">
+    <div class="gs-notif-dot"></div>
+    <span id="gs-launcher-icon">🤖</span>
+  </button>
+  <div id="gs-chat-popup">
+    <div class="gs-chat-header">
+      <div class="gs-agent-avatar">🤖</div>
+      <div class="gs-agent-info">
+        <div class="gs-agent-name">GoSafe AI Assistant</div>
+        <div class="gs-agent-status"><span class="gs-status-dot"></span>Online now</div>
+      </div>
+      <button class="gs-header-restart" onclick="gsResetChat()" title="Restart">↺</button>
+    </div>
+    <div id="gs-chat-messages">
+      <div class="gs-day-label">Today</div>
+    </div>
+    <div class="gs-chat-input-area">
+      <input type="text" id="gs-user-input" placeholder="Type your message…" disabled />
+      <button id="gs-send-btn" disabled onclick="gsSendTyped()">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="js/chatbot.js?v=2"></script>
+  <script src="js/robot-anim.js?v=13"></script>
+  <!-- ===== WISHLIST DRAWER ===== -->
+  <div class="cart-overlay" id="wishlist-overlay"></div>
+  <div class="cart-drawer" id="wishlist-drawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-heart"></i> My Wishlist</h3>
+      <button class="cart-close" id="wishlist-close" aria-label="Close wishlist"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="cart-items" id="wishlist-items">
+      <div class="cart-empty" id="wishlist-empty" style="display:flex">
+        <i class="fas fa-heart"></i>
+        <p>Your wishlist is empty</p>
+        <a href="products.html" class="btn btn-primary btn-sm">Browse Products</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
